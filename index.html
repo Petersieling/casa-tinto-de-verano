@@ -162,6 +162,11 @@ textarea { resize: vertical; }
 .kies { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
 .kies .note, .kies .sum { margin: 0; }
 .kies .cta { margin: 0; justify-self: center; text-align: center; }
+.dk { border: 1px solid var(--gold); border-radius: .5rem; padding: 1rem; background: var(--paper); max-width: 23rem; box-shadow: 0 18px 36px -24px rgba(58, 35, 21, .5); }
+.dk-kop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; }
+.dk-kop button { padding: .25rem .8rem; font-size: .85rem; }
+.kal button:disabled { color: var(--line); cursor: default; background: transparent; }
+#aankomst, #vertrek { cursor: pointer; }
 .kies .note.fout { color: #A8431A; font-weight: 600; }
 .kal button.bezet { background: var(--gold-soft); }
 .stroom { background: var(--gold-soft); border-radius: .4rem; padding: .7rem .85rem; font-size: .92rem; margin: 0; }
@@ -350,10 +355,10 @@ section[id] { scroll-margin-top: 5.5rem; }
             <p class="note verplicht">Velden met <span class="ster">*</span> zijn verplicht.</p>
             <div class="fields">
               <label for="aankomst"><span>Aankomst <span class="ster" aria-hidden="true">*</span></span>
-                <input type="text" id="aankomst" inputmode="numeric" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
+                <input type="text" id="aankomst" inputmode="none" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
               </label>
               <label for="vertrek"><span>Vertrek <span class="ster" aria-hidden="true">*</span></span>
-                <input type="text" id="vertrek" inputmode="numeric" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
+                <input type="text" id="vertrek" inputmode="none" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
               </label>
               <label for="volwassenen"><span>Volwassenen <span class="ster" aria-hidden="true">*</span></span>
                 <select id="volwassenen" required>
@@ -369,6 +374,15 @@ section[id] { scroll-margin-top: 5.5rem; }
                 <p class="veldkop">Leeftijd van elk kind <span class="ster" aria-hidden="true">*</span></p>
                 <div class="fields" id="leeftijd-velden"></div>
               </div>
+            </div>
+            <div class="dk" id="dk" hidden>
+              <div class="dk-kop"><strong id="dk-kop">Kies je aankomstdag</strong><button type="button" class="ghost" id="dk-sluit">Sluiten</button></div>
+              <div class="kalnav">
+                <button type="button" class="ghost" id="dk-vorige" aria-label="Vorige maand">&lsaquo;</button>
+                <strong id="dk-titel"></strong>
+                <button type="button" class="ghost" id="dk-volgende" aria-label="Volgende maand">&rsaquo;</button>
+              </div>
+              <div class="kal" id="dk-dagen"></div>
             </div>
             <p class="note" id="gasten-melding" role="status" hidden></p>
             <p class="note" id="periode-melding" role="status">Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 10 nachten.</p>
@@ -662,6 +676,58 @@ function reken() {
   return { aankomst: a, vertrek: v };
 }
 $("aanvraag").addEventListener("input", reken);
+
+// ---- Uitklapkalender bij de velden Aankomst en Vertrek ----
+let dkVeld = null, dkJaar = nu.getFullYear(), dkMaand = nu.getMonth();
+function openDk(veld) {
+  dkVeld = veld;
+  const basis = leesDatum(veld) || (veld === "vertrek" && leesDatum("aankomst")) || vandaag;
+  dkJaar = +basis.slice(0, 4); dkMaand = +basis.slice(5, 7) - 1;
+  $("dk-kop").textContent = veld === "aankomst" ? "Kies je aankomstdag" : "Kies je vertrekdag";
+  $("dk").hidden = false;
+  tekenDk();
+}
+function tekenDk() {
+  const eerste = new Date(dkJaar, dkMaand, 1), blok = $("dk-dagen"), aank = leesDatum("aankomst"), nuGekozen = leesDatum(dkVeld);
+  $("dk-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
+  blok.replaceChildren();
+  for (const d of ["ma", "di", "wo", "do", "vr", "za", "zo"]) { const b = document.createElement("b"); b.textContent = d; blok.append(b); }
+  for (let i = (eerste.getDay() + 6) % 7; i > 0; i--) blok.append(document.createElement("i"));
+  const dagen = new Date(dkJaar, dkMaand + 1, 0).getDate();
+  for (let d = 1; d <= dagen; d++) {
+    const dag = iso(dkJaar, dkMaand, d);
+    // Als vertrekdag mag ook de eerste dag van een bezette periode: de volgende gast komt die dag pas aan.
+    const bezetHier = dkVeld === "vertrek" ? isBezet(dag) && !bezet.some((b) => b.van === dag) : isBezet(dag);
+    let s;
+    if (bezetHier) { s = document.createElement("span"); s.className = "bezet"; s.title = "Bezet"; }
+    else {
+      s = document.createElement("button"); s.type = "button";
+      s.disabled = dag < vandaag || (dkVeld === "vertrek" && aank && dag <= aank);
+      s.setAttribute("aria-label", "Kies " + kort(dag));
+      if (dag === nuGekozen) s.className = "gekozen";
+      s.addEventListener("click", () => {
+        $(dkVeld).value = alsDatum(dag);
+        if (dkVeld === "aankomst") { if (leesDatum("vertrek") <= dag) $("vertrek").value = ""; reken(); openDk("vertrek"); }
+        else { $("dk").hidden = true; reken(); }
+      });
+    }
+    s.textContent = d;
+    blok.append(s);
+  }
+  $("dk-vorige").disabled = dkJaar === nu.getFullYear() && dkMaand === nu.getMonth();
+}
+function bladerDk(stap) {
+  const d = new Date(dkJaar, dkMaand + stap, 1);
+  dkJaar = d.getFullYear(); dkMaand = d.getMonth();
+  tekenDk();
+}
+$("dk-vorige").addEventListener("click", () => bladerDk(-1));
+$("dk-volgende").addEventListener("click", () => bladerDk(1));
+$("dk-sluit").addEventListener("click", () => { $("dk").hidden = true; });
+for (const veld of ["aankomst", "vertrek"]) {
+  $(veld).addEventListener("focus", () => openDk(veld));
+  $(veld).addEventListener("click", () => openDk(veld));
+}
 
 $("aanvraag").addEventListener("submit", async (e) => {
   e.preventDefault();
