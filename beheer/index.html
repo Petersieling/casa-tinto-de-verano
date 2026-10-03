@@ -105,8 +105,8 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 .onder { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
 
 /* factuur */
-#factuurlaag { position: fixed; inset: 0; background: #fff; z-index: 10; overflow: auto; }
-#factuurlaag .balk { display: flex; gap: .5rem; justify-content: flex-end; padding: .75rem 1rem; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #fff; }
+#factuurlaag { position: fixed; inset: 0; background: var(--paper); z-index: 10; overflow: auto; }
+#factuurlaag .balk { display: flex; gap: .5rem; justify-content: flex-end; padding: .75rem 1rem; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--paper); }
 #factuur { max-width: 50rem; margin: 0 auto; padding: 2.5rem clamp(1rem, 5vw, 3rem) 3rem; color: var(--ink); font-size: .95rem; }
 #factuur p { margin: 0; white-space: pre-line; }
 .f-kop { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--gold); }
@@ -129,12 +129,14 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 .f-voet { margin-top: 1.4rem; text-align: center; color: var(--muted); font-size: .85rem; display: grid; gap: .3rem; break-inside: avoid; }
 .f-voet .f-slogan { font-family: "Pinyon Script", cursive; font-size: 1.9rem; color: var(--gold-text); line-height: 1.2; }
 @media (max-width: 34rem) { .f-partijen, .f-betaling { grid-template-columns: 1fr; } .f-kop { flex-direction: column; align-items: flex-start; } .f-titel, .f-titel dl { text-align: left; justify-content: start; } }
+@page { size: A4; margin: 0; }
 @media print {
-  html, body { background: #fff !important; }
+  /* De crème achtergrond van de website, tot aan de rand van het papier. */
+  html, body { background: var(--paper) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body > :not(#factuurlaag) { display: none !important; }
-  #factuurlaag { position: static; overflow: visible; }
+  #factuurlaag { position: static; overflow: visible; background: var(--paper); }
   #factuurlaag .balk { display: none; }
-  #factuur { padding: 0; max-width: none; }
+  #factuur { padding: 13mm 16mm; max-width: none; }
 }
 </style>
 </head>
