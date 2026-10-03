@@ -262,8 +262,9 @@ function formulier(titel, velden, waarden, opslaan, extra) {
 function datumKiezer(form, invoer, velden) {
   const datumVelden = velden.filter((v) => v.type === "date");
   if (!datumVelden.length) return;
-  const paneel = h("div", { class: "dk", hidden: true });
-  form.querySelector(".velden").after(paneel);
+  const paneel = h("div", { class: "dk breed", hidden: true });
+  // Direct onder de datumvelden, zodat de kalender in beeld staat.
+  invoer[datumVelden[datumVelden.length - 1].naam].closest("label").after(paneel);
   const actief = D.boekingen.filter((b) => ["bevestigd", "geblokkeerd", "aangevraagd"].includes(b.status));
   let veld = null, jaar = 0, maand = 0;
   const blader = (stap) => { const d = new Date(Date.UTC(jaar, maand + stap, 1)); jaar = d.getUTCFullYear(); maand = d.getUTCMonth(); teken(); };
