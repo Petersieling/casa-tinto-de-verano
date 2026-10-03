@@ -161,6 +161,7 @@ select, input, textarea { font: inherit; color: var(--ink); background: var(--pa
 .punten-kop { margin: 2.5rem 0 .9rem; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .punten-voet { margin: 2rem 0 0; }
 .punten-voet a { color: var(--gold-text); }
+.naar-reserveren { margin: 0; text-align: center; }
 
 /* contact */
 .contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
@@ -290,7 +291,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       <a href="impressie.html">Impressie</a>
       <a href="#prijzen">Prijzen</a>
       <a href="locatie.html">Locatie</a>
-      <a href="#contact">Reserveren</a>
+      <a href="reserveren.html">Reserveren</a>
       <a href="gastenboek.html">Gastenboek</a>
     </nav>
   </div>
@@ -412,7 +413,7 @@ section[id] { scroll-margin-top: 5.5rem; }
                 <div><dt>Borg</dt><dd id="kies-borg"></dd></div>
               </dl>
               <p class="stroom" id="kies-stroom" hidden></p>
-              <a class="cta" href="#contact" id="kies-knop" hidden>Vraag deze periode aan</a>
+              <a class="cta" href="reserveren.html" id="kies-knop" hidden>Vraag deze periode aan</a>
             </div>
           </div>
         </div>
@@ -443,109 +444,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9" r="1.800"/><circle cx="12" cy="6.500" r="1.800"/><circle cx="17" cy="9" r="1.800"/><path d="M12 12c-3 0-5 3-4 5.500 1 2 3 1 4 1s3 1 4-1c1-2.500-1-5.500-4-5.500z"/></svg><p><b>Geen huisdieren</b>Huisdieren zijn niet welkom in het penthouse.</p></li>
       </ul>
       <p class="punten-voet"><a href="huurvoorwaarden.html">Lees alle afspraken en huisregels in de huurvoorwaarden</a></p>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="wrap">
-      <div class="contact">
-        <div>
-          <h2>Reservering aanvragen</h2>
-          <p>Kies je periode en stuur je aanvraag in. Je reservering is pas definitief nadat je een bevestiging per e-mail hebt gekregen.</p>
-          <p class="leeftijd-regel">De hoofdhuurder is minimaal 24 jaar. We verhuren niet aan jongerengroepen. Kinderen zijn welkom met hun ouders.</p>
-          <form id="aanvraag" novalidate>
-            <p class="note verplicht">Velden met <span class="ster">*</span> zijn verplicht.</p>
-            <div class="fields">
-              <label for="aankomst"><span>Aankomst <span class="ster" aria-hidden="true">*</span></span>
-                <input type="text" id="aankomst" inputmode="none" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
-              </label>
-              <label for="vertrek"><span>Vertrek <span class="ster" aria-hidden="true">*</span></span>
-                <input type="text" id="vertrek" inputmode="none" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
-              </label>
-              <label for="volwassenen"><span>Volwassenen <span class="ster" aria-hidden="true">*</span></span>
-                <select id="volwassenen" required>
-                  <option value="">Kies…</option><option>1</option><option>2</option><option>3</option><option>4</option>
-                </select>
-              </label>
-              <label for="kinderen"><span>Kinderen (t/m 17 jaar) <span class="ster" aria-hidden="true">*</span></span>
-                <select id="kinderen" required>
-                  <option value="">Kies…</option><option value="0">Geen</option><option>1</option><option>2</option><option>3</option>
-                </select>
-              </label>
-              <div class="wide" id="leeftijden" hidden>
-                <p class="veldkop">Leeftijd van elk kind <span class="ster" aria-hidden="true">*</span></p>
-                <div class="fields" id="leeftijd-velden"></div>
-              </div>
-            </div>
-            <div class="dk" id="dk" hidden>
-              <div class="dk-kop"><strong id="dk-kop">Kies je aankomstdag</strong><button type="button" class="ghost" id="dk-sluit">Sluiten</button></div>
-              <div class="kalnav">
-                <button type="button" class="ghost" id="dk-vorige" aria-label="Vorige maand">&lsaquo;</button>
-                <strong id="dk-titel"></strong>
-                <button type="button" class="ghost" id="dk-volgende" aria-label="Volgende maand">&rsaquo;</button>
-              </div>
-              <div class="kal" id="dk-dagen"></div>
-            </div>
-            <p class="note" id="gasten-melding" role="status" hidden></p>
-            <p class="note" id="periode-melding" role="status">Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 10 nachten.</p>
-            <dl class="sum" id="som" hidden>
-              <div><dt id="huurlabel">Huur</dt><dd id="huur"></dd></div>
-              <div><dt>Eindschoonmaak</dt><dd id="schoonmaak"></dd></div>
-              <div class="total"><dt>Totaal verblijf</dt><dd id="totaal"></dd></div>
-              <div><dt>Borg</dt><dd id="borg"></dd></div>
-              </dl>
-            <p class="stroom" id="stroom" hidden></p>
-            <div id="gastvelden">
-              <div class="fields">
-                <label for="naam"><span>Naam <span class="ster" aria-hidden="true">*</span></span>
-                  <input type="text" id="naam" autocomplete="name" required>
-                </label>
-                <label for="email"><span>E-mailadres <span class="ster" aria-hidden="true">*</span></span>
-                  <input type="email" id="email" autocomplete="email" required>
-                </label>
-                <label for="telefoon">Telefoon (optioneel)
-                  <input type="tel" id="telefoon" autocomplete="tel">
-                </label>
-                <label class="wide" for="bericht">Bericht (optioneel)
-                  <textarea id="bericht" rows="3"></textarea>
-                </label>
-                <label class="hp" for="website" aria-hidden="true">Website
-                  <input type="text" id="website" tabindex="-1" autocomplete="off">
-                </label>
-              </div>
-              <label class="vink" for="akkoord">
-                <input type="checkbox" id="akkoord" required>
-                <span>Ik heb de <a href="huurvoorwaarden.html" target="_blank" rel="noopener">huurvoorwaarden</a> gelezen en ga ermee akkoord.</span>
-              </label>
-              <button type="submit" id="verstuur">Verstuur aanvraag</button>
-              <p class="note">We gebruiken je gegevens alleen om je aanvraag af te handelen. De prijs is een indicatie op basis van de prijslijst.</p>
-            </div>
-            <div id="mailhulp" hidden>
-              <p>Stuur je aanvraag per e-mail naar <strong>info@casatintodeverano.com</strong>. Dit bericht kun je kopiëren en plakken:</p>
-              <div class="msg" id="mailtekst" tabindex="0"></div>
-              <button type="button" id="kopieer-bericht">Kopieer bericht</button>
-            </div>
-            <p role="status" id="status"></p>
-          </form>
-          <div id="aanvraag-klaar" class="klaar" hidden tabindex="-1">
-            <h3>Je aanvraag is verstuurd</h3>
-            <p>We nemen per e-mail contact met je op. Je reservering is pas definitief na onze bevestiging.</p>
-          </div>
-        </div>
-        <div>
-          <h3>Contact</h3>
-          <div class="mail">
-            <span id="adres">info@casatintodeverano.com</span>
-            <button type="button" class="ghost" id="kopieer-adres">Kopieer e-mailadres</button>
-          </div>
-          <p role="status" id="adres-status"></p>
-          <ul class="where">
-            <li><a href="mailto:info@casatintodeverano.com">Stuur een e-mail</a></li>
-            <li>Punta Prima · Torrevieja · Costa Blanca · Spanje</li>
-            <li><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: <a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener">casa_tinto_de_verano</a></li>
-          </ul>
-        </div>
-      </div>
+      <p class="naar-reserveren"><a class="cta" href="reserveren.html">Reservering aanvragen</a></p>
     </div>
   </section>
 </main>
@@ -571,7 +470,7 @@ section[id] { scroll-margin-top: 5.5rem; }
     <div>
       <h2>Je verblijf</h2>
       <ul>
-        <li><a href="/#contact">Reservering aanvragen</a></li>
+        <li><a href="/reserveren">Reservering aanvragen</a></li>
         <li><a href="/#praktisch">Praktische informatie</a></li>
         <li><a href="/huurvoorwaarden">Huurvoorwaarden</a></li>
       </ul>
@@ -601,6 +500,8 @@ function stroomTekst(el, n) {
   el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString("nl-NL") + " kWh inbegrepen" }),
     " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
 }
+// Oude links naar het formulier op deze pagina gaan door naar de reserveerpagina.
+if (location.hash === "#contact") location.replace("reserveren.html");
 const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
 // ---- Prijslijst ----
@@ -651,8 +552,7 @@ function rekenKeuze() {
     $("kies-totaal").textContent = euro(huur + SCHOONMAAK);
     $("kies-borg").textContent = euro(BORG);
     stroomTekst($("kies-stroom"), n);
-    $("aankomst").value = alsDatum(keuze.aankomst); $("vertrek").value = alsDatum(keuze.vertrek);
-    reken();
+    $("kies-knop").href = "reserveren.html?aankomst=" + keuze.aankomst + "&vertrek=" + keuze.vertrek;
   }
   tekenKalender();
 }
@@ -705,178 +605,9 @@ async function laadBeschikbaarheid() {
     $("kal-blok").hidden = true;
     $("kal-status").textContent = "De actuele beschikbaarheid hoor je bij je aanvraag.";
   }
-  $("gastvelden").hidden = !online;
-  $("mailhulp").hidden = online;
   tekenKalender();
-  reken();
 }
 
-// ---- Gezelschap: volwassenen, kinderen en leeftijden zijn verplicht ----
-function tekenLeeftijden() {
-  const k = +$("kinderen").value || 0, blok = $("leeftijd-velden");
-  $("leeftijden").hidden = k === 0;
-  while (blok.children.length > k) blok.lastChild.remove();
-  for (let i = blok.children.length + 1; i <= k; i++) {
-    const lab = document.createElement("label"), inp = document.createElement("input");
-    lab.htmlFor = inp.id = "leeftijd-" + i; lab.textContent = "Kind " + i;
-    Object.assign(inp, { type: "number", min: "0", max: "17", step: "1", required: true, inputMode: "numeric", placeholder: "jaar" });
-    lab.append(inp); blok.append(lab);
-  }
-}
-function gezelschap() {
-  const v = $("volwassenen").value, k = $("kinderen").value;
-  if (!v) return { fout: "Kies het aantal volwassenen.", veld: "volwassenen" };
-  if (k === "") return { fout: "Kies het aantal kinderen. Kies Geen als er geen kinderen meekomen.", veld: "kinderen" };
-  if (+v + +k > MAX_PERSONEN) return { fout: `Het penthouse is voor maximaal ${MAX_PERSONEN} personen.`, veld: "kinderen" };
-  const leeftijden = [];
-  for (let i = 1; i <= +k; i++) {
-    const veld = $("leeftijd-" + i), w = veld ? veld.value : "";
-    if (w === "" || !(+w >= 0 && +w <= 17) || !Number.isInteger(+w)) return { fout: `Vul de leeftijd van kind ${i} in (0 tot en met 17 jaar).`, veld: "leeftijd-" + i };
-    leeftijden.push(+w);
-  }
-  return { volwassenen: +v, kinderen: +k, leeftijden };
-}
-const gezelschapTekst = (g) => g.fout ? "(nog invullen)" : `${g.volwassenen} ${g.volwassenen === 1 ? "volwassene" : "volwassenen"}` + (g.kinderen ? ` en ${g.kinderen} ${g.kinderen === 1 ? "kind" : "kinderen"} (${g.leeftijden.join(", ")} jaar)` : ", geen kinderen");
-$("kinderen").addEventListener("input", tekenLeeftijden);
-$("kinderen").addEventListener("change", tekenLeeftijden);
-
-// ---- Aanvraag ----
-// Datums typ je als dag-maand-jaar, bijvoorbeeld 04-07-2027. Intern rekenen we met jaar-maand-dag.
-function leesDatum(id) {
-  const m = /^\s*(\d{1,2})[-\/. ](\d{1,2})[-\/. ](\d{4})\s*$/.exec($(id).value);
-  if (!m) return "";
-  const s = `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
-  return isDatum(s) ? s : "";
-}
-const alsDatum = (s) => `${s.slice(8, 10)}-${s.slice(5, 7)}-${s.slice(0, 4)}`;
-$("schoonmaak").textContent = euro(SCHOONMAAK);
-$("borg").textContent = euro(BORG);
-
-function reken() {
-  const a = leesDatum("aankomst"), v = leesDatum("vertrek"), melding = $("periode-melding");
-  let fout = "";
-  if (!a || !v) fout = `Vul je aankomst- en vertrekdatum in als dag-maand-jaar, bijvoorbeeld 04-07-2027. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
-  else if (a < vandaag) fout = "De aankomstdatum ligt in het verleden.";
-  else if (nachten(a, v) < MIN_NACHTEN) fout = `Dit kan niet: je koos ${Math.max(nachten(a, v), 0)} nachten. Een verblijf is alleen mogelijk vanaf ${MIN_NACHTEN} nachten.`;
-  else if (bezet.some((b) => b.van < v && b.tot > a)) fout = "Deze periode is (deels) al bezet. Kies andere data.";
-  melding.textContent = fout;
-  melding.hidden = !fout;
-  $("som").hidden = !!fout;
-  $("stroom").hidden = !!fout;
-  if (fout) { $("mailtekst").textContent = "Kies eerst je data."; return null; }
-  const n = nachten(a, v), huur = huurprijs(a, v);
-  $("huurlabel").textContent = `Huur (${n} nachten)`;
-  $("huur").textContent = euro(huur);
-  $("totaal").textContent = euro(huur + SCHOONMAAK);
-  stroomTekst($("stroom"), n);
-  $("mailtekst").textContent =
-    "Hallo,\n\nIk wil graag Casa Tinto de Verano reserveren.\n\n" +
-    "Aankomst: " + lang(a) + "\nVertrek: " + lang(v) + " (" + n + " nachten)\n" +
-    "Gezelschap: " + gezelschapTekst(gezelschap()) + "\n\n" +
-    "Volgens de prijslijst kom ik op " + euro(huur + SCHOONMAAK) + " (huur " + euro(huur) + " en eindschoonmaak " + euro(SCHOONMAAK) + "), plus " + euro(BORG) + " borg.\n\n" +
-    "Is het penthouse dan beschikbaar?\n\nMet vriendelijke groet,\n";
-  return { aankomst: a, vertrek: v };
-}
-$("aanvraag").addEventListener("input", reken);
-
-// ---- Uitklapkalender bij de velden Aankomst en Vertrek ----
-let dkVeld = null, dkJaar = nu.getFullYear(), dkMaand = nu.getMonth();
-function openDk(veld) {
-  dkVeld = veld;
-  const basis = leesDatum(veld) || (veld === "vertrek" && leesDatum("aankomst")) || vandaag;
-  dkJaar = +basis.slice(0, 4); dkMaand = +basis.slice(5, 7) - 1;
-  $("dk-kop").textContent = veld === "aankomst" ? "Kies je aankomstdag" : "Kies je vertrekdag";
-  $("dk").hidden = false;
-  tekenDk();
-}
-function tekenDk() {
-  const eerste = new Date(dkJaar, dkMaand, 1), blok = $("dk-dagen"), aank = leesDatum("aankomst"), nuGekozen = leesDatum(dkVeld);
-  $("dk-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
-  blok.replaceChildren();
-  for (const d of ["ma", "di", "wo", "do", "vr", "za", "zo"]) { const b = document.createElement("b"); b.textContent = d; blok.append(b); }
-  for (let i = (eerste.getDay() + 6) % 7; i > 0; i--) blok.append(document.createElement("i"));
-  const dagen = new Date(dkJaar, dkMaand + 1, 0).getDate();
-  for (let d = 1; d <= dagen; d++) {
-    const dag = iso(dkJaar, dkMaand, d);
-    // Als vertrekdag mag ook de eerste dag van een bezette periode: de volgende gast komt die dag pas aan.
-    const bezetHier = dkVeld === "vertrek" ? isBezet(dag) && !bezet.some((b) => b.van === dag) : isBezet(dag);
-    let s;
-    if (bezetHier) { s = document.createElement("span"); s.className = "bezet"; s.title = "Bezet"; }
-    else {
-      s = document.createElement("button"); s.type = "button";
-      s.disabled = dag < vandaag || (dkVeld === "vertrek" && aank && dag <= aank);
-      s.setAttribute("aria-label", "Kies " + kort(dag));
-      if (dag === nuGekozen) s.className = "gekozen";
-      s.addEventListener("click", () => {
-        $(dkVeld).value = alsDatum(dag);
-        if (dkVeld === "aankomst") { if (leesDatum("vertrek") <= dag) $("vertrek").value = ""; reken(); openDk("vertrek"); }
-        else { $("dk").hidden = true; reken(); }
-      });
-    }
-    s.textContent = d;
-    blok.append(s);
-  }
-  $("dk-vorige").disabled = dkJaar === nu.getFullYear() && dkMaand === nu.getMonth();
-}
-function bladerDk(stap) {
-  const d = new Date(dkJaar, dkMaand + stap, 1);
-  dkJaar = d.getFullYear(); dkMaand = d.getMonth();
-  tekenDk();
-}
-$("dk-vorige").addEventListener("click", () => bladerDk(-1));
-$("dk-volgende").addEventListener("click", () => bladerDk(1));
-$("dk-sluit").addEventListener("click", () => { $("dk").hidden = true; });
-for (const veld of ["aankomst", "vertrek"]) {
-  $(veld).addEventListener("focus", () => openDk(veld));
-  $(veld).addEventListener("click", () => openDk(veld));
-}
-
-$("aanvraag").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const status = $("status"), per = reken();
-  status.textContent = "";
-  if (!online) return;
-  if (!per) { status.textContent = $("periode-melding").textContent; return; }
-  const g = gezelschap();
-  $("gasten-melding").hidden = !g.fout;
-  $("gasten-melding").textContent = g.fout || "";
-  if (g.fout) { status.textContent = g.fout; $(g.veld).focus(); return; }
-  const naam = $("naam").value.trim(), email = $("email").value.trim();
-  if (naam.length < 2) { status.textContent = "Vul je naam in."; $("naam").focus(); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = "Vul een geldig e-mailadres in."; $("email").focus(); return; }
-  if (!$("akkoord").checked) { status.textContent = "Ga akkoord met de huurvoorwaarden om je aanvraag te versturen."; $("akkoord").focus(); return; }
-  const knop = $("verstuur");
-  knop.disabled = true; knop.textContent = "Bezig met versturen…";
-  try {
-    const r = await fetch("/api/aanvraag", {
-      method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, naam, email, telefoon: $("telefoon").value, bericht: $("bericht").value, website: $("website").value })
-    });
-    const data = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar info@casatintodeverano.com.");
-    $("aanvraag").hidden = true;
-    $("aanvraag-klaar").hidden = false;
-    $("aanvraag-klaar").focus();
-  } catch (err) {
-    status.textContent = err.message;
-    knop.disabled = false; knop.textContent = "Verstuur aanvraag";
-  }
-});
-
-// ---- Kopiëren ----
-function kopieer(el, statusEl, wat) {
-  const klaar = () => { statusEl.textContent = wat + " gekopieerd."; };
-  const selecteer = () => {
-    const r = document.createRange(); r.selectNodeContents(el);
-    const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-    statusEl.textContent = "Kopiëren lukte niet. De tekst is geselecteerd, kopieer hem zelf.";
-  };
-  try { navigator.clipboard.writeText(el.textContent).then(klaar, selecteer); } catch (e) { selecteer(); }
-}
-$("kopieer-adres").addEventListener("click", () => kopieer($("adres"), $("adres-status"), "E-mailadres"));
-$("kopieer-bericht").addEventListener("click", () => kopieer($("mailtekst"), $("status"), "Bericht"));
-
-reken();
 laadBeschikbaarheid();
 </script>
 

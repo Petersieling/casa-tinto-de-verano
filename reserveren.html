@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vraag een reservering aan voor Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Reserveren · Casa Tinto de Verano</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
+:root {
+  --paper: #FDFAF5;
+  --panel: #F7EFE0;
+  --ink: #3A2315;
+  --muted: #7B6552;
+  --gold: #B98A2E;
+  --gold-text: #8A6016;
+  --gold-soft: #F3DDB0;
+  --line: #E6D8BE;
+  --orange: #D6731B;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+  --body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+a { color: var(--gold-text); }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--orange); outline-offset: 2px;
+}
+.wrap { max-width: 68rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+/* kop */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .7rem; }
+.brand { font-family: var(--display); font-weight: 600; font-size: 1.25rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.top nav { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.top nav a { color: var(--ink); text-decoration: none; font-size: .95rem; padding-block: .15rem; border-bottom: 1px solid transparent; }
+.top nav a:hover { border-bottom-color: var(--gold); }
+
+/* hero */
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; padding-block: clamp(2rem, 6vw, 4.5rem); }
+.eyebrow { font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1rem; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+h3 { font-size: 1.45rem; }
+.script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.25em; line-height: 1; }
+.lead { font-size: 1.2rem; max-width: 34rem; margin: 1.25rem 0 0; color: var(--ink); }
+.facts { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin: 2rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid var(--line); list-style: none; }
+.facts li { display: flex; flex-direction: column; }
+.facts b { font-family: var(--display); font-weight: 600; font-size: 1.9rem; line-height: 1.1; }
+.facts span { font-size: .85rem; color: var(--muted); }
+.cta { display: inline-block; margin-top: 2rem; background: var(--ink); color: var(--paper); text-decoration: none; padding: .8rem 1.5rem; border-radius: 999px; font-weight: 500; }
+.cta:hover { background: var(--gold-text); }
+.crest { justify-self: center; width: min(100%, 26rem); }
+.crest img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); mask-composite: intersect; }
+
+/* secties */
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.band { background: var(--panel); border-block: 1px solid var(--line); }
+.head { max-width: 40rem; margin-bottom: 2rem; }
+.head p { color: var(--muted); margin: .75rem 0 0; }
+
+.rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
+.rooms h3 { font-size: 1.75rem; color: var(--gold-text); padding-bottom: .55rem; border-bottom: 2px solid var(--gold); }
+.rooms ul { list-style: none; margin: 0; padding: 0; }
+.rooms li:first-child { border-top: 0; }
+.rooms li { padding: .8rem 0; border-top: 1px solid var(--line); font-family: var(--display); font-weight: 500; font-size: 1.35rem; line-height: 1.2; }
+.rooms li small { display: block; font-family: var(--body); font-weight: 400; color: var(--muted); font-size: .9rem; line-height: 1.4; margin-top: .15rem; }
+
+/* prijslijst */
+.prices { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.tablebox { min-width: 0; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+caption { text-align: left; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-bottom: .6rem; }
+th, td { padding: .7rem .75rem; border-top: 1px solid var(--line); text-align: left; font-weight: 400; }
+thead th { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+td.amt, th.amt { text-align: right; white-space: nowrap; font-weight: 600; }
+td.bar { width: 38%; }
+td.bar i { display: block; height: .5rem; border-radius: 999px; background: var(--gold); }
+tr.peak th, tr.peak td { background: var(--gold-soft); }
+tr.peak td.bar i { background: var(--orange); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+.prijsrijen { list-style: none; margin: 0; padding: 0; }
+.prijsrijen li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .62rem 0; border-top: 1px solid var(--line); }
+.prijsrijen li:first-child { border-top: 0; }
+.prijsrijen span { font-family: var(--display); font-weight: 500; font-size: 1.3rem; line-height: 1.2; }
+.prijsrijen b { font-family: var(--display); font-weight: 600; font-size: 1.35rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prijsrijen .piek b { color: var(--gold-text); }
+.hart { font-style: normal; color: var(--gold); font-size: .7rem; vertical-align: .15em; }
+.prijskaart .legenda .hart { margin-right: .4rem; width: auto; height: auto; border: 0; }
+
+/* prijzen en beschikbaarheid als één geheel */
+.duo { border: 1px solid var(--gold); outline: 1px solid var(--gold); outline-offset: 7px; border-radius: clamp(8rem, 22vw, 18rem) clamp(8rem, 22vw, 18rem) .75rem .75rem; padding: clamp(3.5rem, 9vw, 6rem) clamp(1.25rem, 5vw, 4rem) clamp(1.75rem, 4vw, 2.75rem); margin: 7px; }
+.duo-kop { text-align: center; margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+.duo-kop .eyebrow { margin-bottom: .6rem; }
+.duo-kop .hartje { color: var(--gold); font-size: 1rem; margin: 1rem 0 0; }
+.duo .prices { gap: 0; align-items: stretch; }
+.duo .calc { border: 0; border-radius: 0; padding: 0; background: transparent; }
+.duo .prices > :first-child { padding-right: clamp(1.5rem, 4vw, 3.25rem); border-right: 1px solid var(--line); }
+.duo .prices > :last-child { padding-left: clamp(1.5rem, 4vw, 3.25rem); }
+.duo .calc h3 { font-family: var(--body); font-weight: 500; font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 1.1rem; }
+.duo .prijsrijen li { border-top: 0; padding: .55rem 0; gap: .6rem; }
+.duo .stip { flex: 1; border-bottom: 1px dotted var(--muted); opacity: .5; transform: translateY(-.3rem); }
+.duo .calc .sub { margin-top: 0; }
+.duo-noot { text-align: center; color: var(--muted); font-size: .88rem; margin: clamp(1.5rem, 3vw, 2.25rem) auto 0; max-width: 34rem; }
+@media (max-width: 52rem) {
+  .duo .prices > :first-child { padding-right: 0; border-right: 0; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .duo .prices > :last-child { padding-left: 0; padding-top: 2rem; }
+}
+
+/* rekenhulp */
+.calc { background: var(--paper); border: 1px solid var(--gold); border-radius: 10rem 10rem .75rem .75rem; padding: 3.25rem clamp(1.1rem, 3vw, 1.75rem) 1.5rem; min-width: 0; }
+.calc h3 { text-align: center; }
+.calc .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: .4rem 0 1.25rem; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .9rem; }
+.fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
+.fields .wide { grid-column: 1 / -1; }
+select, input, textarea { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
+.sum { margin: 1.25rem 0 0; font-variant-numeric: tabular-nums; }
+.sum div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid var(--line); }
+.sum dt { color: var(--muted); }
+.sum dd { margin: 0; white-space: nowrap; }
+.sum .total dt, .sum .total dd { color: var(--ink); font-weight: 600; font-size: 1.15rem; }
+.note { font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
+
+/* praktisch */
+.terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0 clamp(1.5rem, 4vw, 3rem); margin: 0; }
+.terms div { padding: 1rem 0; border-top: 1px solid var(--line); }
+.terms dt { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.terms dd { margin: .3rem 0 0; }
+.terms dd b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.2; display: block; }
+
+.punten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 0 clamp(1.5rem, 4vw, 3rem); }
+.punten li { display: flex; gap: 1rem; align-items: flex-start; padding: 1.15rem 0; border-top: 1px solid var(--line); }
+.punten svg { flex: none; color: var(--gold); margin-top: .15rem; }
+.punten p { margin: 0; font-size: .92rem; color: var(--muted); line-height: 1.5; }
+/* onderste groep: naam als rustige kop, uitleg eronder */
+.punten b { display: block; font-family: var(--display); font-weight: 500; font-size: 1.3rem; color: var(--ink); line-height: 1.2; margin-bottom: .2rem; }
+/* bovenste groep: klein label, daaronder de waarde groot */
+.punten.kern .lab { display: block; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.punten.kern b { font-weight: 600; font-size: 1.75rem; line-height: 1.15; margin: .15rem 0 0; }
+.punten.kern .uitleg { display: block; margin-top: .35rem; }
+.punten.kern svg { margin-top: .9rem; }
+.punten-kop { margin: 2.5rem 0 .9rem; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.punten-voet { margin: 2rem 0 0; }
+.punten-voet a { color: var(--gold-text); }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.contact > * { min-width: 0; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1rem 0 0; }
+.mail span { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; user-select: all; }
+button { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .55rem 1.1rem; }
+button:hover { background: var(--gold-text); }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+button.ghost:hover { background: var(--ink); color: var(--paper); }
+.where { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+.where li { padding: .6rem 0; border-top: 1px solid var(--line); }
+.msg { background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; margin: 1rem 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--body); font-size: .95rem; line-height: 1.55; user-select: all; }
+[role="status"] { font-size: .85rem; color: var(--gold-text); min-height: 1.3em; margin: .5rem 0 0; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2rem; text-align: center; color: var(--muted); font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; }
+
+.fields + .note { margin-top: .9rem; }
+#aanvraag { margin-top: 1.5rem; display: grid; gap: 1rem; }
+#aanvraag .sum, #aanvraag .note { margin: 0; }
+#gastvelden { display: grid; gap: 1rem; justify-items: start; }
+#gastvelden .fields { width: 100%; }
+textarea { resize: vertical; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.klaar { margin-top: 1.5rem; background: var(--panel); border: 1px solid var(--gold); border-radius: .5rem; padding: 1.25rem; }
+.klaar p { margin: .5rem 0 0; }
+.kalnav { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .75rem; }
+.kalnav strong { font-family: var(--display); font-size: 1.3rem; text-transform: capitalize; }
+.kalnav button { padding: .2rem .85rem; font-size: 1.2rem; line-height: 1.2; }
+.kalnav button:disabled { opacity: .3; cursor: default; }
+.kal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; font-variant-numeric: tabular-nums; }
+.kal b { font-weight: 500; font-size: .75rem; color: var(--muted); padding-bottom: .25rem; }
+.kal span { padding: .45rem 0; border-radius: .3rem; font-size: .95rem; }
+.kal span.bezet { background: var(--gold-soft); color: var(--muted); text-decoration: line-through; }
+.kal span.voorbij { color: var(--line); }
+.legenda { display: flex; justify-content: center; gap: 1.25rem; font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
+.legenda i { display: inline-block; width: .85rem; height: .85rem; border-radius: .2rem; margin-right: .35rem; vertical-align: -1px; border: 1px solid var(--line); }
+.legenda i.bezet { background: var(--gold-soft); }
+.legenda i.gekozen { background: var(--ink); border-color: var(--ink); }
+.kal button { font: inherit; font-size: .95rem; padding: .45rem 0; border: 0; border-radius: .3rem; background: transparent; color: var(--ink); cursor: pointer; }
+.kal button:hover { background: var(--gold-soft); color: var(--ink); }
+.kal button.gekozen, .kal button.gekozen:hover { background: var(--ink); color: var(--paper); }
+.kal button.start { outline: 2px solid var(--gold); outline-offset: -2px; }
+.kies { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
+.kies .note, .kies .sum { margin: 0; }
+.kies .cta { margin: 0; justify-self: center; text-align: center; }
+.dk { border: 1px solid var(--gold); border-radius: .5rem; padding: 1rem; background: var(--paper); max-width: 23rem; box-shadow: 0 18px 36px -24px rgba(58, 35, 21, .5); }
+.dk-kop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; }
+.dk-kop button { padding: .25rem .8rem; font-size: .85rem; }
+.kal button:disabled { color: var(--line); cursor: default; background: transparent; }
+#aankomst, #vertrek { cursor: pointer; }
+.kies .note.fout { color: #A8431A; font-weight: 600; }
+.kal button.bezet { background: var(--gold-soft); }
+.stroom { background: var(--gold-soft); border-radius: .4rem; padding: .7rem .85rem; font-size: .92rem; margin: 0; }
+.stroom strong { white-space: nowrap; }
+.vink { display: flex; flex-direction: row; align-items: flex-start; gap: .6rem; font-size: 1rem; color: var(--ink); }
+.vink input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex: none; }
+.terms dd a, footer a { color: var(--gold-text); }
+footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; }
+.ster { color: #A8431A; font-weight: 600; }
+.locatie { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.locatie p { max-width: 36rem; }
+.locatie .lead { margin: 1rem 0; }
+.tips { text-align: center; display: grid; justify-items: center; gap: .35rem; }
+.tips svg { color: var(--gold); margin-bottom: .25rem; }
+.tips .sub { margin: 0 0 .5rem; }
+.tips .cta { margin: .5rem 0 0; }
+.tips .note { margin: .6rem 0 0; }
+@media (max-width: 52rem) { .locatie { grid-template-columns: minmax(0, 1fr); } }
+.veldkop { font-size: .85rem; color: var(--muted); margin: 0 0 .3rem; }
+#gasten-melding { color: var(--orange); }
+@media (max-width: 52rem) {
+  .hero .wrap, .prices, .contact { grid-template-columns: minmax(0, 1fr); }
+  .crest { order: -1; width: min(100%, 17rem); }
+  td.bar { display: none; }
+  thead th.bar { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  td.bar i { transition: width .3s; }
+}
+section[id] { scroll-margin-top: 5.5rem; }
+
+/* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
+.menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
+.menu-knop:hover { background: var(--panel); color: var(--ink); }
+@media (max-width: 40rem) {
+  .top .wrap { align-items: center; }
+  .brand { font-size: 1rem; letter-spacing: .07em; }
+  .menu-knop { display: inline-block; padding: .3rem .9rem; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
+
+/* voettekst */
+.voet { background: var(--ink); color: #EFE3D0; border-top: 0; padding-block: 0; text-align: left; text-transform: none; letter-spacing: 0; font-size: .95rem; line-height: 1.6; }
+.voet > .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3rem); padding-block: 3rem 2.5rem; }
+@media (min-width: 60rem) { .voet > .wrap { grid-template-columns: 1.25fr .9fr 1fr 1.6fr; } }
+.voet h2 { font-family: var(--body); font-weight: 500; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: #E0B45C; margin: 0 0 .8rem; }
+.voet ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.voet p { margin: 0; }
+.voet a { display: inline; margin: 0; color: inherit; font-size: inherit; letter-spacing: 0; text-decoration: none; overflow-wrap: anywhere; }
+.voet a:hover { text-decoration: underline; text-decoration-color: #E0B45C; text-underline-offset: 3px; }
+.voet a:focus-visible { outline: 2px solid #E0B45C; outline-offset: 2px; }
+.voet-naam { font-family: var(--display); font-weight: 600; font-size: 1.45rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; margin-bottom: .6rem !important; }
+.voet-slogan { font-family: var(--script); color: #E0B45C; font-size: 1.7rem; line-height: 1.2; margin-top: .9rem !important; }
+.voet-onder { border-top: 1px solid rgba(239, 227, 208, .18); color: #C9B79C; font-size: .82rem; }
+.voet-ster { color: #E0B45C; letter-spacing: .12em; font-size: 1rem; margin-right: .5rem; }
+.voet-ster i { font-style: normal; color: rgba(239, 227, 208, .3); }
+.voet-onder a { color: #EFE3D0; }
+.voet-onder .wrap { padding-block: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; }
+
+.cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
+.voet .cam { color: #E0B45C; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Casa Tinto de Verano</a>
+    <button type="button" class="menu-knop" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav id="menu" aria-label="Onderdelen">
+      <a href="index.html#penthouse">Het penthouse</a>
+      <a href="impressie.html">Impressie</a>
+      <a href="index.html#prijzen">Prijzen</a>
+      <a href="locatie.html">Locatie</a>
+      <a href="reserveren.html" aria-current="page">Reserveren</a>
+      <a href="gastenboek.html">Gastenboek</a>
+    </nav>
+  </div>
+</header>
+<script>
+(function () {
+  var knop = document.querySelector(".menu-knop"), menu = document.getElementById("menu");
+  if (!knop || !menu) return;
+  function zet(open) { menu.classList.toggle("open", open); knop.setAttribute("aria-expanded", open ? "true" : "false"); knop.textContent = open ? "Sluiten" : "Menu"; }
+  knop.addEventListener("click", function () { zet(!menu.classList.contains("open")); });
+  menu.addEventListener("click", function (e) { if (e.target.tagName === "A") zet(false); });
+  // Gemiddelde beoordeling uit het gastenboek, rechts onderin de voettekst.
+  fetch("/api/gastenboek").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
+    var met = (d.berichten || []).filter(function (b) { return b.sterren; }), el = document.getElementById("voet-sterren");
+    if (!met.length || !el) return;
+    var gem = met.reduce(function (t, b) { return t + b.sterren; }, 0) / met.length, vol = Math.round(gem);
+    var link = document.createElement("a"), ster = document.createElement("span"), leeg = document.createElement("i");
+    link.href = "/gastenboek"; ster.className = "voet-ster";
+    ster.textContent = "★★★★★".slice(0, vol); leeg.textContent = "★★★★★".slice(vol); ster.append(leeg);
+    link.setAttribute("aria-label", "Beoordeling: " + gem.toFixed(1).replace(".", ",") + " van 5 sterren uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen") + ". Naar het gastenboek.");
+    link.append(ster, document.createTextNode(gem.toFixed(1).replace(".", ",") + " uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen")));
+    el.replaceChildren(link);
+  }).catch(function () {});
+})();
+</script>
+
+<main id="top">
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2>Reservering aanvragen</h2>
+          <p>Kies je periode en stuur je aanvraag in. De vrije dagen zie je bij <a href="index.html#prijzen">prijzen en beschikbaarheid</a>. Je reservering is pas definitief nadat je een bevestiging per e-mail hebt gekregen.</p>
+          <p class="leeftijd-regel">De hoofdhuurder is minimaal 24 jaar. We verhuren niet aan jongerengroepen. Kinderen zijn welkom met hun ouders.</p>
+          <form id="aanvraag" novalidate>
+            <p class="note verplicht">Velden met <span class="ster">*</span> zijn verplicht.</p>
+            <div class="fields">
+              <label for="aankomst"><span>Aankomst <span class="ster" aria-hidden="true">*</span></span>
+                <input type="text" id="aankomst" inputmode="none" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
+              </label>
+              <label for="vertrek"><span>Vertrek <span class="ster" aria-hidden="true">*</span></span>
+                <input type="text" id="vertrek" inputmode="none" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
+              </label>
+              <label for="volwassenen"><span>Volwassenen <span class="ster" aria-hidden="true">*</span></span>
+                <select id="volwassenen" required>
+                  <option value="">Kies…</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                </select>
+              </label>
+              <label for="kinderen"><span>Kinderen (t/m 17 jaar) <span class="ster" aria-hidden="true">*</span></span>
+                <select id="kinderen" required>
+                  <option value="">Kies…</option><option value="0">Geen</option><option>1</option><option>2</option><option>3</option>
+                </select>
+              </label>
+              <div class="wide" id="leeftijden" hidden>
+                <p class="veldkop">Leeftijd van elk kind <span class="ster" aria-hidden="true">*</span></p>
+                <div class="fields" id="leeftijd-velden"></div>
+              </div>
+            </div>
+            <div class="dk" id="dk" hidden>
+              <div class="dk-kop"><strong id="dk-kop">Kies je aankomstdag</strong><button type="button" class="ghost" id="dk-sluit">Sluiten</button></div>
+              <div class="kalnav">
+                <button type="button" class="ghost" id="dk-vorige" aria-label="Vorige maand">&lsaquo;</button>
+                <strong id="dk-titel"></strong>
+                <button type="button" class="ghost" id="dk-volgende" aria-label="Volgende maand">&rsaquo;</button>
+              </div>
+              <div class="kal" id="dk-dagen"></div>
+            </div>
+            <p class="note" id="gasten-melding" role="status" hidden></p>
+            <p class="note" id="periode-melding" role="status">Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 10 nachten.</p>
+            <dl class="sum" id="som" hidden>
+              <div><dt id="huurlabel">Huur</dt><dd id="huur"></dd></div>
+              <div><dt>Eindschoonmaak</dt><dd id="schoonmaak"></dd></div>
+              <div class="total"><dt>Totaal verblijf</dt><dd id="totaal"></dd></div>
+              <div><dt>Borg</dt><dd id="borg"></dd></div>
+              </dl>
+            <p class="stroom" id="stroom" hidden></p>
+            <div id="gastvelden">
+              <div class="fields">
+                <label for="naam"><span>Naam <span class="ster" aria-hidden="true">*</span></span>
+                  <input type="text" id="naam" autocomplete="name" required>
+                </label>
+                <label for="email"><span>E-mailadres <span class="ster" aria-hidden="true">*</span></span>
+                  <input type="email" id="email" autocomplete="email" required>
+                </label>
+                <label for="telefoon">Telefoon (optioneel)
+                  <input type="tel" id="telefoon" autocomplete="tel">
+                </label>
+                <label class="wide" for="bericht">Bericht (optioneel)
+                  <textarea id="bericht" rows="3"></textarea>
+                </label>
+                <label class="hp" for="website" aria-hidden="true">Website
+                  <input type="text" id="website" tabindex="-1" autocomplete="off">
+                </label>
+              </div>
+              <label class="vink" for="akkoord">
+                <input type="checkbox" id="akkoord" required>
+                <span>Ik heb de <a href="huurvoorwaarden.html" target="_blank" rel="noopener">huurvoorwaarden</a> gelezen en ga ermee akkoord.</span>
+              </label>
+              <button type="submit" id="verstuur">Verstuur aanvraag</button>
+              <p class="note">We gebruiken je gegevens alleen om je aanvraag af te handelen. De prijs is een indicatie op basis van de prijslijst.</p>
+            </div>
+            <div id="mailhulp" hidden>
+              <p>Stuur je aanvraag per e-mail naar <strong>info@casatintodeverano.com</strong>. Dit bericht kun je kopiëren en plakken:</p>
+              <div class="msg" id="mailtekst" tabindex="0"></div>
+              <button type="button" id="kopieer-bericht">Kopieer bericht</button>
+            </div>
+            <p role="status" id="status"></p>
+          </form>
+          <div id="aanvraag-klaar" class="klaar" hidden tabindex="-1">
+            <h3>Je aanvraag is verstuurd</h3>
+            <p>We nemen per e-mail contact met je op. Je reservering is pas definitief na onze bevestiging.</p>
+          </div>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <div class="mail">
+            <span id="adres">info@casatintodeverano.com</span>
+            <button type="button" class="ghost" id="kopieer-adres">Kopieer e-mailadres</button>
+          </div>
+          <p role="status" id="adres-status"></p>
+          <ul class="where">
+            <li><a href="mailto:info@casatintodeverano.com">Stuur een e-mail</a></li>
+            <li>Punta Prima · Torrevieja · Costa Blanca · Spanje</li>
+            <li><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: <a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener">casa_tinto_de_verano</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="voet">
+  <div class="wrap">
+    <div>
+      <p class="voet-naam">Casa Tinto de Verano</p>
+      <p>Penthouse met groot dakterras in Punta Prima, aan de Costa Blanca.</p>
+      <p class="voet-slogan">Your place under the sun</p>
+    </div>
+    <nav aria-label="Voettekst">
+      <h2>Ontdek</h2>
+      <ul>
+        <li><a href="/#penthouse">Het penthouse</a></li>
+        <li><a href="/impressie">Impressie</a></li>
+        <li><a href="/#prijzen">Prijzen en beschikbaarheid</a></li>
+        <li><a href="/locatie">Locatie en omgeving</a></li>
+        <li><a href="/gastenboek">Gastenboek</a></li>
+        <li><a href="/over-ons">Over ons</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>Je verblijf</h2>
+      <ul>
+        <li><a href="/reserveren">Reservering aanvragen</a></li>
+        <li><a href="/#praktisch">Praktische informatie</a></li>
+        <li><a href="/huurvoorwaarden">Huurvoorwaarden</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><a href="mailto:info@casatintodeverano.com">info@casatintodeverano.com</a></li>
+        <li><a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener"><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: casa_tinto_de_verano</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
+</footer>
+
+<script type="module">
+import { SCHOONMAAK, BORG, MIN_NACHTEN, MAX_PERSONEN, KWH_PRIJS, huurprijs, nachten, isDatum, naarTijd, naarIso, kwhInbegrepen } from "./src/prijzen.js";
+
+const $ = (id) => document.getElementById(id);
+const euro = (n) => "€ " + n.toLocaleString("nl-NL");
+const iso = (j, m, d) => `${j}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+const nu = new Date();
+const vandaag = iso(nu.getFullYear(), nu.getMonth(), nu.getDate());
+const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
+const kwhPrijs = "€ " + KWH_PRIJS.toFixed(2).replace(".", ",");
+function stroomTekst(el, n) {
+  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString("nl-NL") + " kWh inbegrepen" }),
+    " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
+}
+const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+// ---- Beschikbaarheid ----
+let bezet = [], online = false;
+const isBezet = (d) => bezet.some((b) => b.van <= d && d < b.tot);
+async function laadBeschikbaarheid() {
+  try {
+    const r = await fetch("/api/beschikbaarheid");
+    if (!r.ok) throw new Error();
+    bezet = (await r.json()).bezet || [];
+    online = true;
+  } catch (e) { online = false; }
+  $("gastvelden").hidden = !online;
+  $("mailhulp").hidden = online;
+  reken();
+}
+
+// ---- Gezelschap: volwassenen, kinderen en leeftijden zijn verplicht ----
+function tekenLeeftijden() {
+  const k = +$("kinderen").value || 0, blok = $("leeftijd-velden");
+  $("leeftijden").hidden = k === 0;
+  while (blok.children.length > k) blok.lastChild.remove();
+  for (let i = blok.children.length + 1; i <= k; i++) {
+    const lab = document.createElement("label"), inp = document.createElement("input");
+    lab.htmlFor = inp.id = "leeftijd-" + i; lab.textContent = "Kind " + i;
+    Object.assign(inp, { type: "number", min: "0", max: "17", step: "1", required: true, inputMode: "numeric", placeholder: "jaar" });
+    lab.append(inp); blok.append(lab);
+  }
+}
+function gezelschap() {
+  const v = $("volwassenen").value, k = $("kinderen").value;
+  if (!v) return { fout: "Kies het aantal volwassenen.", veld: "volwassenen" };
+  if (k === "") return { fout: "Kies het aantal kinderen. Kies Geen als er geen kinderen meekomen.", veld: "kinderen" };
+  if (+v + +k > MAX_PERSONEN) return { fout: `Het penthouse is voor maximaal ${MAX_PERSONEN} personen.`, veld: "kinderen" };
+  const leeftijden = [];
+  for (let i = 1; i <= +k; i++) {
+    const veld = $("leeftijd-" + i), w = veld ? veld.value : "";
+    if (w === "" || !(+w >= 0 && +w <= 17) || !Number.isInteger(+w)) return { fout: `Vul de leeftijd van kind ${i} in (0 tot en met 17 jaar).`, veld: "leeftijd-" + i };
+    leeftijden.push(+w);
+  }
+  return { volwassenen: +v, kinderen: +k, leeftijden };
+}
+const gezelschapTekst = (g) => g.fout ? "(nog invullen)" : `${g.volwassenen} ${g.volwassenen === 1 ? "volwassene" : "volwassenen"}` + (g.kinderen ? ` en ${g.kinderen} ${g.kinderen === 1 ? "kind" : "kinderen"} (${g.leeftijden.join(", ")} jaar)` : ", geen kinderen");
+$("kinderen").addEventListener("input", tekenLeeftijden);
+$("kinderen").addEventListener("change", tekenLeeftijden);
+
+// ---- Aanvraag ----
+// Datums typ je als dag-maand-jaar, bijvoorbeeld 04-07-2027. Intern rekenen we met jaar-maand-dag.
+function leesDatum(id) {
+  const m = /^\s*(\d{1,2})[-\/. ](\d{1,2})[-\/. ](\d{4})\s*$/.exec($(id).value);
+  if (!m) return "";
+  const s = `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+  return isDatum(s) ? s : "";
+}
+const alsDatum = (s) => `${s.slice(8, 10)}-${s.slice(5, 7)}-${s.slice(0, 4)}`;
+$("schoonmaak").textContent = euro(SCHOONMAAK);
+$("borg").textContent = euro(BORG);
+
+function reken() {
+  const a = leesDatum("aankomst"), v = leesDatum("vertrek"), melding = $("periode-melding");
+  let fout = "";
+  if (!a || !v) fout = `Vul je aankomst- en vertrekdatum in als dag-maand-jaar, bijvoorbeeld 04-07-2027. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
+  else if (a < vandaag) fout = "De aankomstdatum ligt in het verleden.";
+  else if (nachten(a, v) < MIN_NACHTEN) fout = `Dit kan niet: je koos ${Math.max(nachten(a, v), 0)} nachten. Een verblijf is alleen mogelijk vanaf ${MIN_NACHTEN} nachten.`;
+  else if (bezet.some((b) => b.van < v && b.tot > a)) fout = "Deze periode is (deels) al bezet. Kies andere data.";
+  melding.textContent = fout;
+  melding.hidden = !fout;
+  $("som").hidden = !!fout;
+  $("stroom").hidden = !!fout;
+  if (fout) { $("mailtekst").textContent = "Kies eerst je data."; return null; }
+  const n = nachten(a, v), huur = huurprijs(a, v);
+  $("huurlabel").textContent = `Huur (${n} nachten)`;
+  $("huur").textContent = euro(huur);
+  $("totaal").textContent = euro(huur + SCHOONMAAK);
+  stroomTekst($("stroom"), n);
+  $("mailtekst").textContent =
+    "Hallo,\n\nIk wil graag Casa Tinto de Verano reserveren.\n\n" +
+    "Aankomst: " + lang(a) + "\nVertrek: " + lang(v) + " (" + n + " nachten)\n" +
+    "Gezelschap: " + gezelschapTekst(gezelschap()) + "\n\n" +
+    "Volgens de prijslijst kom ik op " + euro(huur + SCHOONMAAK) + " (huur " + euro(huur) + " en eindschoonmaak " + euro(SCHOONMAAK) + "), plus " + euro(BORG) + " borg.\n\n" +
+    "Is het penthouse dan beschikbaar?\n\nMet vriendelijke groet,\n";
+  return { aankomst: a, vertrek: v };
+}
+$("aanvraag").addEventListener("input", reken);
+
+// ---- Uitklapkalender bij de velden Aankomst en Vertrek ----
+let dkVeld = null, dkJaar = nu.getFullYear(), dkMaand = nu.getMonth();
+function openDk(veld) {
+  dkVeld = veld;
+  const basis = leesDatum(veld) || (veld === "vertrek" && leesDatum("aankomst")) || vandaag;
+  dkJaar = +basis.slice(0, 4); dkMaand = +basis.slice(5, 7) - 1;
+  $("dk-kop").textContent = veld === "aankomst" ? "Kies je aankomstdag" : "Kies je vertrekdag";
+  $("dk").hidden = false;
+  tekenDk();
+}
+function tekenDk() {
+  const eerste = new Date(dkJaar, dkMaand, 1), blok = $("dk-dagen"), aank = leesDatum("aankomst"), nuGekozen = leesDatum(dkVeld);
+  $("dk-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
+  blok.replaceChildren();
+  for (const d of ["ma", "di", "wo", "do", "vr", "za", "zo"]) { const b = document.createElement("b"); b.textContent = d; blok.append(b); }
+  for (let i = (eerste.getDay() + 6) % 7; i > 0; i--) blok.append(document.createElement("i"));
+  const dagen = new Date(dkJaar, dkMaand + 1, 0).getDate();
+  for (let d = 1; d <= dagen; d++) {
+    const dag = iso(dkJaar, dkMaand, d);
+    // Als vertrekdag mag ook de eerste dag van een bezette periode: de volgende gast komt die dag pas aan.
+    const bezetHier = dkVeld === "vertrek" ? isBezet(dag) && !bezet.some((b) => b.van === dag) : isBezet(dag);
+    let s;
+    if (bezetHier) { s = document.createElement("span"); s.className = "bezet"; s.title = "Bezet"; }
+    else {
+      s = document.createElement("button"); s.type = "button";
+      s.disabled = dag < vandaag || (dkVeld === "vertrek" && aank && dag <= aank);
+      s.setAttribute("aria-label", "Kies " + kort(dag));
+      if (dag === nuGekozen) s.className = "gekozen";
+      s.addEventListener("click", () => {
+        $(dkVeld).value = alsDatum(dag);
+        if (dkVeld === "aankomst") { if (leesDatum("vertrek") <= dag) $("vertrek").value = ""; reken(); openDk("vertrek"); }
+        else { $("dk").hidden = true; reken(); }
+      });
+    }
+    s.textContent = d;
+    blok.append(s);
+  }
+  $("dk-vorige").disabled = dkJaar === nu.getFullYear() && dkMaand === nu.getMonth();
+}
+function bladerDk(stap) {
+  const d = new Date(dkJaar, dkMaand + stap, 1);
+  dkJaar = d.getFullYear(); dkMaand = d.getMonth();
+  tekenDk();
+}
+$("dk-vorige").addEventListener("click", () => bladerDk(-1));
+$("dk-volgende").addEventListener("click", () => bladerDk(1));
+$("dk-sluit").addEventListener("click", () => { $("dk").hidden = true; });
+for (const veld of ["aankomst", "vertrek"]) {
+  $(veld).addEventListener("focus", () => openDk(veld));
+  $(veld).addEventListener("click", () => openDk(veld));
+}
+
+$("aanvraag").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const status = $("status"), per = reken();
+  status.textContent = "";
+  if (!online) return;
+  if (!per) { status.textContent = $("periode-melding").textContent; return; }
+  const g = gezelschap();
+  $("gasten-melding").hidden = !g.fout;
+  $("gasten-melding").textContent = g.fout || "";
+  if (g.fout) { status.textContent = g.fout; $(g.veld).focus(); return; }
+  const naam = $("naam").value.trim(), email = $("email").value.trim();
+  if (naam.length < 2) { status.textContent = "Vul je naam in."; $("naam").focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = "Vul een geldig e-mailadres in."; $("email").focus(); return; }
+  if (!$("akkoord").checked) { status.textContent = "Ga akkoord met de huurvoorwaarden om je aanvraag te versturen."; $("akkoord").focus(); return; }
+  const knop = $("verstuur");
+  knop.disabled = true; knop.textContent = "Bezig met versturen…";
+  try {
+    const r = await fetch("/api/aanvraag", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, naam, email, telefoon: $("telefoon").value, bericht: $("bericht").value, website: $("website").value })
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar info@casatintodeverano.com.");
+    $("aanvraag").hidden = true;
+    $("aanvraag-klaar").hidden = false;
+    $("aanvraag-klaar").focus();
+  } catch (err) {
+    status.textContent = err.message;
+    knop.disabled = false; knop.textContent = "Verstuur aanvraag";
+  }
+});
+
+// ---- Kopiëren ----
+function kopieer(el, statusEl, wat) {
+  const klaar = () => { statusEl.textContent = wat + " gekopieerd."; };
+  const selecteer = () => {
+    const r = document.createRange(); r.selectNodeContents(el);
+    const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    statusEl.textContent = "Kopiëren lukte niet. De tekst is geselecteerd, kopieer hem zelf.";
+  };
+  try { navigator.clipboard.writeText(el.textContent).then(klaar, selecteer); } catch (e) { selecteer(); }
+}
+$("kopieer-adres").addEventListener("click", () => kopieer($("adres"), $("adres-status"), "E-mailadres"));
+$("kopieer-bericht").addEventListener("click", () => kopieer($("mailtekst"), $("status"), "Bericht"));
+
+// Datums die op de voorpagina in de kalender zijn gekozen, staan in het adres van deze pagina.
+const gekozen = new URLSearchParams(location.search);
+for (const veld of ["aankomst", "vertrek"]) { const w = gekozen.get(veld) || ""; if (isDatum(w)) $(veld).value = alsDatum(w); }
+
+reken();
+laadBeschikbaarheid();
+</script>
+
+</body>
+</html>
