@@ -152,6 +152,19 @@ section[id] { scroll-margin-top: 5.5rem; }
 .about .cta { margin-top: 2rem; }
 .top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
 
+/* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
+.menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
+.menu-knop:hover { background: var(--panel); color: var(--ink); }
+@media (max-width: 40rem) {
+  .top .wrap { align-items: center; }
+  .brand { font-size: 1rem; letter-spacing: .07em; }
+  .menu-knop { display: inline-block; padding: .3rem .9rem; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
+
 /* voettekst */
 .voet { background: var(--ink); color: #EFE3D0; border-top: 0; padding-block: 0; text-align: left; text-transform: none; letter-spacing: 0; font-size: .95rem; line-height: 1.6; }
 .voet > .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3rem); padding-block: 3rem 2.5rem; }
@@ -175,18 +188,25 @@ section[id] { scroll-margin-top: 5.5rem; }
 <header class="top">
   <div class="wrap">
     <a class="brand" href="index.html">Casa Tinto de Verano</a>
-    <nav aria-label="Onderdelen">
+    <button type="button" class="menu-knop" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav id="menu" aria-label="Onderdelen">
       <a href="index.html#penthouse">Het penthouse</a>
       <a href="impressie.html">Impressie</a>
       <a href="index.html#prijzen">Prijzen</a>
-      <a href="index.html#praktisch">Praktisch</a>
       <a href="locatie.html">Locatie</a>
       <a href="index.html#contact">Reserveren</a>
-      <a href="gastenboek.html">Gastenboek</a>
-      <a href="over-ons.html" aria-current="page">Over ons</a>
     </nav>
   </div>
 </header>
+<script>
+(function () {
+  var knop = document.querySelector(".menu-knop"), menu = document.getElementById("menu");
+  if (!knop || !menu) return;
+  function zet(open) { menu.classList.toggle("open", open); knop.setAttribute("aria-expanded", open ? "true" : "false"); knop.textContent = open ? "Sluiten" : "Menu"; }
+  knop.addEventListener("click", function () { zet(!menu.classList.contains("open")); });
+  menu.addEventListener("click", function (e) { if (e.target.tagName === "A") zet(false); });
+})();
+</script>
 
 <main>
   <section>
