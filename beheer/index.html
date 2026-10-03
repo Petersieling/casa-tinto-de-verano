@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Beheer | Casa Tinto de Verano</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Albert+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #FDFAF5; --panel: #F7EFE0; --ink: #3A2315; --muted: #7B6552; --gold: #B98A2E; --gold-text: #8A6016;
+  --gold-soft: #F3DDB0; --line: #E6D8BE; --orange: #D6731B; --ok: #2F6B3C; --ok-soft: #DDEBD9; --stop: #9B2C1F; --grey: #CFC6B8;
+  --display: "Cormorant Garamond", Georgia, serif; --body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.5 var(--body); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.15; margin: 0; }
+h1 { font-size: 1.9rem; } h2 { font-size: 1.6rem; } h3 { font-size: 1.25rem; }
+a { color: var(--gold-text); }
+.wrap { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1rem, 3vw, 2rem); }
+button, .knop { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); border-radius: 999px; padding: .45rem 1rem; text-decoration: none; display: inline-block; }
+button:hover, .knop:hover { background: var(--gold-text); border-color: var(--gold-text); }
+button.licht, .knop.licht { background: transparent; color: var(--ink); }
+button.licht:hover, .knop.licht:hover { background: var(--ink); color: var(--paper); }
+button.rood { background: transparent; color: var(--stop); border-color: var(--stop); }
+button.rood:hover { background: var(--stop); color: var(--paper); }
+button.klein, .knop.klein { padding: .25rem .7rem; font-size: .875rem; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+input, select, textarea { font: inherit; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: .4rem; padding: .5rem .6rem; width: 100%; }
+label { display: flex; flex-direction: column; gap: .25rem; font-size: .875rem; color: var(--muted); }
+label.vink { flex-direction: row; align-items: center; gap: .5rem; color: var(--ink); font-size: 1rem; }
+label.vink input { width: auto; }
+
+/* inloggen */
+#login { min-height: 100vh; display: grid; place-items: center; padding: 1rem; }
+#login form { width: min(100%, 22rem); display: grid; gap: 1rem; background: var(--panel); border: 1px solid var(--line); border-radius: .75rem; padding: 2rem; }
+.fout { color: var(--stop); font-size: .9rem; min-height: 1.3em; margin: 0; }
+
+/* kop */
+.top { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 3; }
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; padding-block: .7rem; }
+.top .merk { font-family: var(--display); font-weight: 600; font-size: 1.2rem; letter-spacing: .08em; text-transform: uppercase; margin-right: auto; }
+.tabs { display: flex; flex-wrap: wrap; gap: .25rem; }
+.tabs button { background: transparent; color: var(--ink); border-color: transparent; padding: .35rem .8rem; }
+.tabs button:hover { background: var(--panel); color: var(--ink); border-color: var(--line); }
+.tabs button[aria-current="true"] { background: var(--ink); color: var(--paper); }
+.teller { background: var(--orange); color: #fff; border-radius: 999px; padding: 0 .45rem; font-size: .8rem; margin-left: .35rem; }
+
+main { padding-block: 1.75rem 4rem; display: grid; gap: 1.5rem; }
+.kopregel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+.leeg { color: var(--muted); background: var(--panel); border: 1px dashed var(--line); border-radius: .5rem; padding: 1.25rem; margin: 0; }
+.uitleg { color: var(--muted); margin: 0; max-width: 44rem; }
+
+/* aanvragen */
+.kaarten { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
+.kaart { border: 1px solid var(--line); border-left: 4px solid var(--orange); border-radius: .5rem; padding: 1rem 1.1rem; background: #fff; display: grid; gap: .5rem; min-width: 0; }
+.kaart p { margin: 0; overflow-wrap: anywhere; }
+.kaart .bericht { background: var(--panel); border-radius: .4rem; padding: .6rem .75rem; white-space: pre-wrap; font-size: .95rem; }
+.acties { display: flex; flex-wrap: wrap; gap: .4rem; }
+.klein-tekst { font-size: .875rem; color: var(--muted); }
+
+/* tabellen */
+.tabel { overflow-x: auto; border: 1px solid var(--line); border-radius: .5rem; background: #fff; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { padding: .6rem .75rem; text-align: left; border-top: 1px solid var(--line); vertical-align: top; }
+thead th { border-top: 0; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; white-space: nowrap; }
+td.bedrag, th.bedrag { text-align: right; white-space: nowrap; }
+.pil { display: inline-block; border-radius: 999px; padding: .05rem .6rem; font-size: .8rem; white-space: nowrap; }
+.pil.bevestigd { background: var(--gold-soft); } .pil.geblokkeerd { background: var(--grey); }
+.pil.aangevraagd { background: #FBE3CD; } .pil.afgewezen, .pil.geannuleerd { background: #EFE9E0; color: var(--muted); }
+.pil.betaald { background: var(--ok-soft); color: var(--ok); } .pil.open { background: #F6DDD9; color: var(--stop); }
+
+/* agenda */
+.maanden { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1.25rem; }
+.maand { border: 1px solid var(--line); border-radius: .5rem; padding: .75rem; background: #fff; }
+.maand h3 { text-transform: capitalize; margin-bottom: .5rem; }
+.dagen { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: .85rem; }
+.dagen span { color: var(--muted); font-size: .7rem; padding-bottom: .2rem; }
+.dagen button { border: 0; border-radius: .25rem; padding: .3rem 0; background: transparent; color: var(--ink); font-size: .85rem; }
+.dagen button:hover { background: var(--panel); color: var(--ink); }
+.dagen button.voorbij { color: var(--grey); }
+.dagen button.bevestigd { background: var(--gold); color: #fff; }
+.dagen button.geblokkeerd { background: var(--grey); color: var(--ink); }
+.dagen button.aangevraagd { background: #FBE3CD; outline: 1px dashed var(--orange); outline-offset: -1px; }
+.dagen button.nu { font-weight: 600; text-decoration: underline; }
+.legenda { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-size: .875rem; color: var(--muted); }
+.legenda i { display: inline-block; width: .9rem; height: .9rem; border-radius: .2rem; vertical-align: -2px; margin-right: .35rem; }
+.koppel { background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; display: grid; gap: .5rem; }
+.koppel code { overflow-wrap: anywhere; font-size: .85rem; user-select: all; }
+
+/* dialoog */
+dialog { border: 1px solid var(--line); border-radius: .75rem; padding: 0; width: min(100% - 2rem, 34rem); color: var(--ink); background: var(--paper); }
+dialog::backdrop { background: rgba(58, 35, 21, .45); }
+dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
+.velden { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: .8rem; }
+.velden .breed { grid-column: 1 / -1; }
+.onder { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
+
+/* factuur */
+#factuurlaag { position: fixed; inset: 0; background: #fff; z-index: 10; overflow: auto; }
+#factuurlaag .balk { display: flex; gap: .5rem; justify-content: flex-end; padding: .75rem 1rem; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #fff; }
+#factuur { max-width: 48rem; margin: 0 auto; padding: 2.5rem clamp(1rem, 5vw, 3rem); color: #222; }
+#factuur h1 { font-size: 2.2rem; }
+#factuur .twee { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-block: 2rem; }
+#factuur p { margin: 0; white-space: pre-line; }
+#factuur .label { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: #777; margin-bottom: .25rem; }
+#factuur table { margin-top: 1rem; }
+#factuur th, #factuur td { border-top: 1px solid #ddd; padding-inline: 0; }
+#factuur tfoot td { font-weight: 600; font-size: 1.1rem; border-top: 2px solid #222; }
+#factuur .voet { margin-top: 2rem; display: grid; gap: .75rem; font-size: .95rem; }
+@media print {
+  body > :not(#factuurlaag) { display: none !important; }
+  #factuurlaag { position: static; overflow: visible; }
+  #factuurlaag .balk { display: none; }
+  #factuur { padding: 0; max-width: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="login" hidden>
+  <form id="loginform">
+    <h1>Beheer</h1>
+    <label for="wachtwoord">Wachtwoord
+      <input type="password" id="wachtwoord" autocomplete="current-password" required>
+    </label>
+    <button type="submit">Inloggen</button>
+    <p class="fout" id="loginfout" role="alert"></p>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header class="top">
+    <div class="wrap">
+      <span class="merk">Casa Tinto de Verano</span>
+      <nav class="tabs" id="tabs" aria-label="Onderdelen"></nav>
+      <button type="button" class="licht klein" id="uitloggen">Uitloggen</button>
+    </div>
+  </header>
+  <main class="wrap" id="view"></main>
+</div>
+
+<dialog id="dlg"></dialog>
+<div id="factuurlaag" hidden>
+  <div class="balk">
+    <button type="button" id="afdrukken">Afdrukken of opslaan als pdf</button>
+    <button type="button" class="licht" id="factuursluit">Sluiten</button>
+  </div>
+  <div id="factuur"></div>
+</div>
+
+<script type="module">
+import { huurprijs, nachten, isDatum, SCHOONMAAK, BORG } from "../src/prijzen.js";
+
+const $ = (s) => document.querySelector(s);
+// Bouwt een element op zonder HTML-tekst, zodat invoer van bezoekers nooit als code wordt uitgevoerd.
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "class") el.className = v;
+    else if (k in el && k !== "list" && k !== "form") el[k] = v;
+    else el.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid);
+  return el;
+}
+const euro = (n) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" }).format(n || 0);
+const datum = (iso, lang) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: lang ? "long" : "short", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
+const periode = (b) => `${datum(b.aankomst)} t/m ${datum(b.vertrek)}`;
+const totaal = (b) => (b.huur || 0) + (b.schoonmaak || 0);
+const STATUS = { aangevraagd: "Aangevraagd", bevestigd: "Bevestigd", geblokkeerd: "Geblokkeerd", afgewezen: "Afgewezen", geannuleerd: "Geannuleerd" };
+
+let D = null, tab = "aanvragen";
+
+async function api(pad, method = "GET", body) {
+  const r = await fetch("/api/" + pad, { method, headers: body ? { "content-type": "application/json" } : {}, body: body ? JSON.stringify(body) : undefined });
+  const data = await r.json().catch(() => ({}));
+  if (r.status === 401 && pad.startsWith("beheer/")) { toonLogin(); throw new Error("Je bent uitgelogd. Log opnieuw in."); }
+  if (!r.ok) throw new Error(data.fout || "Er ging iets mis.");
+  return data;
+}
+function toonLogin() { $("#app").hidden = true; $("#login").hidden = false; $("#wachtwoord").focus(); }
+async function laad() {
+  D = await api("beheer/overzicht");
+  $("#login").hidden = true; $("#app").hidden = false;
+  render();
+}
+async function doe(fn) {
+  try { await fn(); await laad(); return true; } catch (e) { alert(e.message); return false; }
+}
+
+$("#loginform").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("#loginfout").textContent = "";
+  try { await api("login", "POST", { wachtwoord: $("#wachtwoord").value }); $("#wachtwoord").value = ""; await laad(); }
+  catch (err) { $("#loginfout").textContent = err.message; }
+});
+$("#uitloggen").addEventListener("click", async () => { await api("logout", "POST", {}); toonLogin(); });
+
+// ---- Formulier in een dialoogvenster ----
+function formulier(titel, velden, waarden, opslaan, extra) {
+  const dlg = $("#dlg");
+  const foutEl = h("p", { class: "fout", role: "alert" });
+  const invoer = {};
+  const rij = velden.map((v) => {
+    let el;
+    if (v.type === "select") el = h("select", { id: "f-" + v.naam }, v.opties.map(([w, t]) => h("option", { value: w }, t)));
+    else if (v.type === "textarea") el = h("textarea", { id: "f-" + v.naam, rows: v.rijen || 3 });
+    else el = h("input", { id: "f-" + v.naam, type: v.type || "text", step: v.type === "number" ? "0.01" : null, min: v.type === "number" ? "0" : null });
+    if (v.type === "checkbox") el.checked = !!waarden[v.naam]; else el.value = waarden[v.naam] ?? "";
+    invoer[v.naam] = el;
+    const lab = v.type === "checkbox" ? h("label", { class: "vink breed", for: el.id }, el, v.label) : h("label", { class: v.breed ? "breed" : "", for: el.id }, v.label, el);
+    if (v.groep) lab.dataset.groep = v.groep;
+    return lab;
+  });
+  const lees = () => Object.fromEntries(velden.map((v) => [v.naam, v.type === "checkbox" ? invoer[v.naam].checked : invoer[v.naam].value]));
+  const form = h("form", { onsubmit: async (e) => {
+    e.preventDefault(); foutEl.textContent = "";
+    try { await opslaan(lees()); dlg.close(); await laad(); } catch (err) { foutEl.textContent = err.message; }
+  } },
+    h("h2", null, titel),
+    h("div", { class: "velden" }, rij),
+    foutEl,
+    h("div", { class: "onder" }, h("button", { type: "button", class: "licht", onclick: () => dlg.close() }, "Annuleren"), h("button", { type: "submit" }, "Opslaan")));
+  dlg.replaceChildren(form);
+  if (extra) extra(invoer, form);
+  dlg.showModal();
+}
+
+function boekingFormulier(b, nieuw) {
+  const klantOpties = [["", "Nieuwe gast"]].concat(D.klanten.map((k) => [String(k.id), k.naam + (k.email ? ` (${k.email})` : "")]));
+  const velden = [
+    nieuw && { naam: "soort", label: "Wat wil je invoeren?", type: "select", opties: [["boeking", "Boeking van een gast"], ["blokkade", "Bezet zetten zonder gast"]], breed: true },
+    { naam: "aankomst", label: "Aankomst", type: "date" },
+    { naam: "vertrek", label: "Vertrek", type: "date" },
+    nieuw && { naam: "klant_id", label: "Klant", type: "select", opties: klantOpties, breed: true, groep: "gast" },
+    { naam: "naam", label: "Naam gast", groep: "gast nieuw" },
+    { naam: "email", label: "E-mail", type: "email", groep: "gast nieuw" },
+    { naam: "telefoon", label: "Telefoon", groep: "gast nieuw" },
+    { naam: "personen", label: "Personen", type: "number", groep: "gast" },
+    { naam: "huur", label: "Huur (€)", type: "number", groep: "gast" },
+    { naam: "schoonmaak", label: "Eindschoonmaak (€)", type: "number", groep: "gast" },
+    { naam: "borg", label: "Borg (€)", type: "number", groep: "gast" },
+    !nieuw && { naam: "betaald", label: "Betaald", type: "checkbox", groep: "gast" },
+    { naam: "notitie", label: "Notitie (alleen voor jou)", type: "textarea", breed: true }
+  ].filter(Boolean);
+  const blok = !nieuw && b.status === "geblokkeerd";
+  formulier(nieuw ? "Nieuwe boeking of blokkade" : blok ? "Blokkade bewerken" : "Boeking bewerken", velden, b,
+    (w) => nieuw ? api("beheer/boeking", "POST", w) : api("beheer/boeking/" + b.id, "PUT", w),
+    (inv, form) => {
+      let huurAangeraakt = !nieuw;
+      const werk = () => {
+        const isBlok = nieuw ? inv.soort.value === "blokkade" : blok;
+        const bestaandeKlant = nieuw && inv.klant_id.value;
+        form.querySelectorAll("[data-groep]").forEach((el) => {
+          el.hidden = (isBlok && el.dataset.groep.includes("gast")) || (bestaandeKlant && el.dataset.groep.includes("nieuw"));
+        });
+        if (!huurAangeraakt && isDatum(inv.aankomst.value) && isDatum(inv.vertrek.value) && nachten(inv.aankomst.value, inv.vertrek.value) > 0) {
+          inv.huur.value = huurprijs(inv.aankomst.value, inv.vertrek.value);
+        }
+      };
+      inv.huur.addEventListener("input", () => { huurAangeraakt = true; });
+      form.addEventListener("input", werk);
+      werk();
+    });
+}
+const nieuweBoeking = (aankomst) => boekingFormulier({ soort: "boeking", aankomst: aankomst || "", vertrek: "", personen: 2, schoonmaak: SCHOONMAAK, borg: BORG }, true);
+
+function klantFormulier(k) {
+  formulier(k.id ? "Klant bewerken" : "Nieuwe klant", [
+    { naam: "naam", label: "Naam", breed: true },
+    { naam: "email", label: "E-mail", type: "email" },
+    { naam: "telefoon", label: "Telefoon" },
+    { naam: "adres", label: "Adres (komt op de factuur)", type: "textarea", breed: true },
+    { naam: "notitie", label: "Notitie", type: "textarea", breed: true }
+  ], k, (w) => k.id ? api("beheer/klant/" + k.id, "PUT", w) : api("beheer/klant", "POST", w));
+}
+
+// ---- Mail aan de gast (opent je eigen mailprogramma) ----
+function mailLink(b, soort) {
+  const groet = `Beste ${b.naam || "gast"},\n\n`;
+  const tekst = soort === "bevestig"
+    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nAantal personen: ${b.personen || ""}\n\nHuur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nMet vriendelijke groet,\n${D.instellingen.afzender_naam || "Casa Tinto de Verano"}`
+    : `${groet}Bedankt voor je aanvraag voor Casa Tinto de Verano van ${datum(b.aankomst, true)} t/m ${datum(b.vertrek, true)}. Helaas kunnen we deze periode niet voor je reserveren.\n\nMet vriendelijke groet,\n${D.instellingen.afzender_naam || "Casa Tinto de Verano"}`;
+  const onderwerp = soort === "bevestig" ? "Bevestiging reservering Casa Tinto de Verano" : "Je aanvraag voor Casa Tinto de Verano";
+  return `mailto:${encodeURIComponent(b.email || "")}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(tekst)}`;
+}
+
+// ---- Onderdelen ----
+const TABS = [["aanvragen", "Aanvragen"], ["agenda", "Agenda"], ["boekingen", "Boekingen"], ["klanten", "Klanten"], ["facturen", "Facturen"], ["instellingen", "Instellingen"]];
+function render() {
+  const open = D.boekingen.filter((b) => b.status === "aangevraagd").length;
+  $("#tabs").replaceChildren(...TABS.map(([id, naam]) => h("button", { type: "button", "aria-current": String(tab === id), onclick: () => { tab = id; render(); } },
+    naam, id === "aanvragen" && open ? h("span", { class: "teller" }, String(open)) : null)));
+  $("#view").replaceChildren(...VIEWS[tab]().filter(Boolean));
+}
+
+const VIEWS = {
+  aanvragen() {
+    const lijst = D.boekingen.filter((b) => b.status === "aangevraagd");
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Aanvragen")),
+      h("p", { class: "uitleg" }, "Aanvragen via de website staan hier. Een periode is pas bezet op de website nadat je de aanvraag hebt bevestigd."),
+      lijst.length ? h("div", { class: "kaarten" }, lijst.map((b) => h("div", { class: "kaart" },
+        h("h3", null, b.naam || "Onbekende gast"),
+        h("p", null, `${periode(b)} · ${nachten(b.aankomst, b.vertrek)} nachten · ${b.personen || "?"} personen`),
+        h("p", null, `Indicatie: ${euro(totaal(b))} (huur ${euro(b.huur)}, schoonmaak ${euro(b.schoonmaak)}), borg ${euro(b.borg)}`),
+        h("p", { class: "klein-tekst" }, [b.email, b.telefoon].filter(Boolean).join(" · ")),
+        b.bericht ? h("p", { class: "bericht" }, b.bericht) : null,
+        h("p", { class: "klein-tekst" }, "Ontvangen op " + new Date(b.aangemaakt).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" })),
+        h("div", { class: "acties" },
+          h("button", { type: "button", class: "klein", onclick: async () => { if (await doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "bevestigd" }))) { tab = "boekingen"; render(); } } }, "Bevestigen"),
+          h("button", { type: "button", class: "klein licht", onclick: () => boekingFormulier(b, false) }, "Prijs of data aanpassen"),
+          h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Deze aanvraag afwijzen?")) doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "afgewezen" })); } }, "Afwijzen"),
+          b.email ? h("a", { class: "knop klein licht", href: mailLink(b, "afwijs") }, "Mail afwijzing") : null)
+      ))) : h("p", { class: "leeg" }, "Er zijn geen open aanvragen. Nieuwe aanvragen via de website verschijnen hier.")
+    ];
+  },
+
+  agenda() {
+    const actief = D.boekingen.filter((b) => ["bevestigd", "geblokkeerd", "aangevraagd"].includes(b.status));
+    const rang = { bevestigd: 3, geblokkeerd: 2, aangevraagd: 1 };
+    const opDag = (iso) => actief.filter((b) => b.aankomst <= iso && iso < b.vertrek).sort((a, b) => rang[b.status] - rang[a.status])[0];
+    const [j, m] = [+D.vandaag.slice(0, 4), +D.vandaag.slice(5, 7) - 1];
+    const maanden = Array.from({ length: 14 }, (_, i) => {
+      const eerste = new Date(Date.UTC(j, m + i, 1)), jaar = eerste.getUTCFullYear(), mnd = eerste.getUTCMonth();
+      const dagen = new Date(Date.UTC(jaar, mnd + 1, 0)).getUTCDate(), leeg = (eerste.getUTCDay() + 6) % 7;
+      return h("div", { class: "maand" },
+        h("h3", null, new Intl.DateTimeFormat("nl-NL", { month: "long", year: "numeric", timeZone: "UTC" }).format(eerste)),
+        h("div", { class: "dagen" }, ["ma", "di", "wo", "do", "vr", "za", "zo"].map((d) => h("span", null, d)), Array.from({ length: leeg }, () => h("i")),
+          Array.from({ length: dagen }, (_, d) => {
+            const iso = `${jaar}-${String(mnd + 1).padStart(2, "0")}-${String(d + 1).padStart(2, "0")}`, b = opDag(iso);
+            return h("button", { type: "button", class: [b ? b.status : "", iso < D.vandaag ? "voorbij" : "", iso === D.vandaag ? "nu" : ""].join(" "),
+              title: b ? `${STATUS[b.status]}: ${b.naam || b.notitie || ""} (${periode(b)})` : "Vrij",
+              onclick: () => b ? boekingFormulier(b, false) : nieuweBoeking(iso) }, String(d + 1));
+          })));
+    });
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Agenda"), h("button", { type: "button", onclick: () => nieuweBoeking() }, "Boeking of blokkade toevoegen")),
+      h("p", { class: "uitleg" }, "Klik op een vrije dag om een boeking of blokkade in te voeren, of op een bezette dag om die te bewerken. De vertrekdag telt als vrij, zodat een nieuwe gast dezelfde dag kan aankomen."),
+      h("div", { class: "legenda" },
+        h("span", null, h("i", { style: "background:var(--gold)" }), "Bevestigde boeking"),
+        h("span", null, h("i", { style: "background:var(--grey)" }), "Geblokkeerd"),
+        h("span", null, h("i", { style: "background:#FBE3CD;outline:1px dashed var(--orange)" }), "Aanvraag, nog niet bezet op de website")),
+      h("div", { class: "maanden" }, maanden),
+      h("div", { class: "koppel" },
+        h("h3", null, "Koppelen aan de agenda op je telefoon"),
+        h("p", { class: "uitleg" }, "Voeg deze link in je agenda-app toe als agenda-abonnement (in Google Agenda: Andere agenda's, Via URL). Je ziet dan alle boekingen, blokkades en aanvragen. Houd de link geheim."),
+        h("code", null, D.agendaUrl))
+    ];
+  },
+
+  boekingen() {
+    const factuurVan = Object.fromEntries(D.facturen.map((f) => [f.boeking_id, f]));
+    const rij = (b) => {
+      const f = factuurVan[b.id], gast = b.status === "geblokkeerd" ? (b.notitie || "Geblokkeerd") : (b.naam || "");
+      return h("tr", null,
+        h("td", null, periode(b), h("div", { class: "klein-tekst" }, `${nachten(b.aankomst, b.vertrek)} nachten`)),
+        h("td", null, gast, b.status !== "geblokkeerd" && b.personen ? h("div", { class: "klein-tekst" }, `${b.personen} personen`) : null),
+        h("td", null, h("span", { class: "pil " + b.status }, STATUS[b.status])),
+        h("td", { class: "bedrag" }, b.status === "geblokkeerd" ? "" : euro(totaal(b))),
+        h("td", null, b.status === "bevestigd" ? h("button", { type: "button", class: "pil " + (b.betaald ? "betaald" : "open"), style: "border:0;cursor:pointer", title: "Klik om te wisselen",
+          onclick: () => doe(() => api("beheer/boeking/" + b.id, "PUT", { ...b, betaald: !b.betaald })) }, b.betaald ? "Betaald" : "Niet betaald") : ""),
+        h("td", null, h("div", { class: "acties" },
+          b.status === "bevestigd" && (f ? h("button", { type: "button", class: "klein licht", onclick: () => toonFactuur(f) }, "Factuur " + f.nummer)
+            : h("button", { type: "button", class: "klein", onclick: () => doe(() => api("beheer/factuur", "POST", { boeking_id: b.id })) }, "Maak factuur")),
+          b.status === "bevestigd" && b.email ? h("a", { class: "knop klein licht", href: mailLink(b, "bevestig") }, "Mail bevestiging") : null,
+          h("button", { type: "button", class: "klein licht", onclick: () => boekingFormulier(b, false) }, "Bewerken"),
+          b.status === "bevestigd" ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Deze boeking annuleren? De periode komt weer vrij op de website.")) doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "geannuleerd" })); } }, "Annuleren") : null,
+          b.status !== "bevestigd" ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Definitief verwijderen?")) doe(() => api("beheer/boeking/" + b.id, "DELETE")); } }, "Verwijderen") : null)));
+    };
+    const tabel = (lijst) => h("div", { class: "tabel" }, h("table", null,
+      h("thead", null, h("tr", null, ["Periode", "Gast", "Status", "Totaal", "Betaling", ""].map((t, i) => h("th", { class: i === 3 ? "bedrag" : "" }, t)))),
+      h("tbody", null, lijst.map(rij))));
+    const lopend = D.boekingen.filter((b) => ["bevestigd", "geblokkeerd"].includes(b.status) && b.vertrek >= D.vandaag);
+    const voorbij = D.boekingen.filter((b) => ["bevestigd", "geblokkeerd"].includes(b.status) && b.vertrek < D.vandaag).reverse();
+    const vervallen = D.boekingen.filter((b) => ["afgewezen", "geannuleerd"].includes(b.status)).reverse();
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Boekingen"), h("button", { type: "button", onclick: () => nieuweBoeking() }, "Boeking of blokkade toevoegen")),
+      lopend.length ? tabel(lopend) : h("p", { class: "leeg" }, "Er zijn geen komende boekingen of blokkades."),
+      voorbij.length ? h("details", null, h("summary", null, `Afgelopen verblijven (${voorbij.length})`), tabel(voorbij)) : null,
+      vervallen.length ? h("details", null, h("summary", null, `Afgewezen en geannuleerd (${vervallen.length})`), tabel(vervallen)) : null
+    ];
+  },
+
+  klanten() {
+    const aantal = (k) => D.boekingen.filter((b) => b.klant_id === k.id && b.status === "bevestigd").length;
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Klanten"), h("button", { type: "button", onclick: () => klantFormulier({}) }, "Klant toevoegen")),
+      D.klanten.length ? h("div", { class: "tabel" }, h("table", null,
+        h("thead", null, h("tr", null, ["Naam", "Contact", "Adres", "Verblijven", ""].map((t) => h("th", null, t)))),
+        h("tbody", null, D.klanten.map((k) => h("tr", null,
+          h("td", null, k.naam, k.notitie ? h("div", { class: "klein-tekst" }, k.notitie) : null),
+          h("td", null, k.email ? h("a", { href: "mailto:" + encodeURIComponent(k.email) }, k.email) : "", k.telefoon ? h("div", null, k.telefoon) : null),
+          h("td", { style: "white-space:pre-line" }, k.adres || ""),
+          h("td", null, String(aantal(k))),
+          h("td", null, h("div", { class: "acties" },
+            h("button", { type: "button", class: "klein licht", onclick: () => klantFormulier(k) }, "Bewerken"),
+            h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Deze klant verwijderen?")) doe(() => api("beheer/klant/" + k.id, "DELETE")); } }, "Verwijderen")))))))
+      ) : h("p", { class: "leeg" }, "Nog geen klanten. Een klant wordt automatisch aangemaakt zodra je een aanvraag bevestigt of zelf een boeking invoert.")
+    ];
+  },
+
+  facturen() {
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Facturen")),
+      h("p", { class: "uitleg" }, "Een factuur maak je bij Boekingen, vanuit een bevestigde boeking. De nummering loopt per jaar door. Alleen de laatst gemaakte factuur kun je verwijderen."),
+      D.facturen.length ? h("div", { class: "tabel" }, h("table", null,
+        h("thead", null, h("tr", null, ["Nummer", "Datum", "Klant", "Totaal", ""].map((t, i) => h("th", { class: i === 3 ? "bedrag" : "" }, t)))),
+        h("tbody", null, D.facturen.map((f, i) => h("tr", null,
+          h("td", null, f.nummer), h("td", null, datum(f.datum)), h("td", null, f.gegevens.klant?.naam || ""), h("td", { class: "bedrag" }, euro(f.totaal)),
+          h("td", null, h("div", { class: "acties" },
+            h("button", { type: "button", class: "klein", onclick: () => toonFactuur(f) }, "Bekijken of afdrukken"),
+            i === 0 ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm(`Factuur ${f.nummer} verwijderen?`)) doe(() => api("beheer/factuur/" + f.id, "DELETE")); } }, "Verwijderen") : null)))))))
+        : h("p", { class: "leeg" }, "Nog geen facturen.")
+    ];
+  },
+
+  instellingen() {
+    const velden = [
+      ["afzender_naam", "Je naam (afzender op de factuur)"], ["afzender_adres", "Je adres", true], ["afzender_email", "E-mail"], ["afzender_telefoon", "Telefoon"],
+      ["afzender_nummer", "Fiscaal nummer (bijvoorbeeld NIE of NIF), als dat op de factuur moet"], ["iban", "IBAN"], ["iban_naam", "Rekening op naam van"],
+      ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true]
+    ];
+    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Graag het totaalbedrag overmaken onder vermelding van het factuurnummer." };
+    const inv = {};
+    const form = h("form", { style: "display:grid;gap:1rem;max-width:44rem", onsubmit: async (e) => {
+      e.preventDefault();
+      if (await doe(() => api("beheer/instellingen", "PUT", Object.fromEntries(velden.map(([s]) => [s, inv[s].value]))))) alert("Opgeslagen.");
+    } },
+      h("div", { class: "velden" }, velden.map(([s, label, groot]) => {
+        inv[s] = groot ? h("textarea", { id: "i-" + s, rows: 3 }) : h("input", { id: "i-" + s });
+        inv[s].value = D.instellingen[s] ?? standaard[s] ?? "";
+        return h("label", { class: groot ? "breed" : "", for: "i-" + s }, label, inv[s]);
+      })),
+      h("div", null, h("button", { type: "submit" }, "Opslaan")));
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Instellingen")),
+      h("p", { class: "uitleg" }, "Deze gegevens komen op je facturen. Laat de opmaak en de btw-regel één keer controleren door je boekhouder of gestor."),
+      form
+    ];
+  }
+};
+
+// ---- Factuur tonen en afdrukken ----
+function toonFactuur(f) {
+  const g = f.gegevens, a = g.afzender || {};
+  $("#factuur").replaceChildren(
+    h("h1", null, "Factuur"),
+    h("div", { class: "twee" },
+      h("div", null, h("p", { class: "label" }, "Van"), h("p", null, [a.afzender_naam, a.afzender_adres, a.afzender_email, a.afzender_telefoon, a.afzender_nummer].filter(Boolean).join("\n"))),
+      h("div", null, h("p", { class: "label" }, "Aan"), h("p", null, [g.klant?.naam, g.klant?.adres, g.klant?.email].filter(Boolean).join("\n")))),
+    h("div", { class: "twee" },
+      h("div", null, h("p", { class: "label" }, "Factuurnummer"), h("p", null, f.nummer)),
+      h("div", null, h("p", { class: "label" }, "Factuurdatum"), h("p", null, datum(f.datum, true)))),
+    h("table", null,
+      h("thead", null, h("tr", null, h("th", null, "Omschrijving"), h("th", { class: "bedrag" }, "Bedrag"))),
+      h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
+      h("tfoot", null, h("tr", null, h("td", null, "Totaal"), h("td", { class: "bedrag" }, euro(f.totaal))))),
+    h("div", { class: "voet" },
+      a.btw_regel ? h("p", null, a.btw_regel) : null,
+      g.borg ? h("p", null, `Daarnaast te voldoen: borg ${euro(g.borg)}.`) : null,
+      a.betaal_tekst ? h("p", null, a.betaal_tekst) : null,
+      a.iban ? h("p", null, `IBAN: ${a.iban}` + (a.iban_naam ? `\nTen name van: ${a.iban_naam}` : "")) : null));
+  $("#factuurlaag").hidden = false;
+}
+$("#factuursluit").addEventListener("click", () => { $("#factuurlaag").hidden = true; });
+$("#afdrukken").addEventListener("click", () => window.print());
+
+laad().catch(() => toonLogin());
+</script>
+</body>
+</html>
