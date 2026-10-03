@@ -406,7 +406,7 @@ section[id] { scroll-margin-top: 5.5rem; }
               <p class="note">We gebruiken je gegevens alleen om je aanvraag af te handelen. De prijs is een indicatie op basis van de prijslijst.</p>
             </div>
             <div id="mailhulp" hidden>
-              <p>Stuur je aanvraag per e-mail naar <strong>casatintodeverano@gmail.com</strong>. Dit bericht kun je kopiëren en plakken:</p>
+              <p>Stuur je aanvraag per e-mail naar <strong>info@casatintodeverano.com</strong>. Dit bericht kun je kopiëren en plakken:</p>
               <div class="msg" id="mailtekst" tabindex="0"></div>
               <button type="button" id="kopieer-bericht">Kopieer bericht</button>
             </div>
@@ -420,12 +420,12 @@ section[id] { scroll-margin-top: 5.5rem; }
         <div>
           <h3>Contact</h3>
           <div class="mail">
-            <span id="adres">casatintodeverano@gmail.com</span>
+            <span id="adres">info@casatintodeverano.com</span>
             <button type="button" class="ghost" id="kopieer-adres">Kopieer e-mailadres</button>
           </div>
           <p role="status" id="adres-status"></p>
           <ul class="where">
-            <li><a href="mailto:casatintodeverano@gmail.com">Stuur een e-mail</a></li>
+            <li><a href="mailto:info@casatintodeverano.com">Stuur een e-mail</a></li>
             <li>Punta Prima · Torrevieja · Costa Blanca · Spanje</li>
             <li><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: <a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener">casa_tinto_de_verano</a></li>
           </ul>
@@ -462,7 +462,7 @@ section[id] { scroll-margin-top: 5.5rem; }
     <div>
       <h2>Contact</h2>
       <ul>
-        <li><a href="mailto:casatintodeverano@gmail.com">casatintodeverano@gmail.com</a></li>
+        <li><a href="mailto:info@casatintodeverano.com">info@casatintodeverano.com</a></li>
         <li>Punta Prima · Torrevieja<br>Costa Blanca · Spanje</li>
         <li><a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener"><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: casa_tinto_de_verano</a></li>
       </ul>
@@ -674,7 +674,7 @@ $("aanvraag").addEventListener("submit", async (e) => {
       body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, naam, email, telefoon: $("telefoon").value, bericht: $("bericht").value, website: $("website").value })
     });
     const data = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar casatintodeverano@gmail.com.");
+    if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar info@casatintodeverano.com.");
     $("aanvraag").hidden = true;
     $("aanvraag-klaar").hidden = false;
     $("aanvraag-klaar").focus();
