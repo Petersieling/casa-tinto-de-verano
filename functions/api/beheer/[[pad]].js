@@ -39,17 +39,19 @@ export const onRequest = veilig(async ({ request, env, params }) => {
 
   // ---- Alles in één keer ophalen ----
   if (deel === "overzicht" && m === "GET") {
-    const [bo, kl, fa, ins] = await d.batch([
+    const [bo, kl, fa, ins, gb] = await d.batch([
       d.prepare("SELECT * FROM boekingen ORDER BY aankomst"),
       d.prepare("SELECT * FROM klanten ORDER BY naam COLLATE NOCASE"),
       d.prepare("SELECT * FROM facturen ORDER BY id DESC"),
-      d.prepare("SELECT * FROM instellingen")
+      d.prepare("SELECT * FROM instellingen"),
+      d.prepare("SELECT * FROM gastenboek ORDER BY id DESC")
     ]);
     const u = new URL(request.url);
     return json({
       vandaag: vandaag(),
       boekingen: bo.results,
       klanten: kl.results,
+      gastenboek: gb.results,
       facturen: fa.results.map((f) => ({ ...f, gegevens: JSON.parse(f.gegevens || "{}") })),
       instellingen: Object.fromEntries(ins.results.map((r) => [r.sleutel, r.waarde])),
       agendaUrl: `${u.origin}/api/agenda?sleutel=${await agendaSleutel(env)}`
@@ -168,6 +170,16 @@ export const onRequest = veilig(async ({ request, env, params }) => {
     const laatste = await d.prepare("SELECT id FROM facturen ORDER BY id DESC LIMIT 1").first();
     if (!laatste || laatste.id !== id) throw new Melding("Alleen de laatst gemaakte factuur kan worden verwijderd, zodat de nummering doorloopt.", 409);
     await d.prepare("DELETE FROM facturen WHERE id = ?").bind(id).run();
+    return json({ ok: true });
+  }
+
+  // ---- Gastenboek ----
+  if (deel === "gastenboek" && id && m === "POST") {
+    await d.prepare("UPDATE gastenboek SET zichtbaar = ? WHERE id = ?").bind(b.zichtbaar ? 1 : 0, id).run();
+    return json({ ok: true });
+  }
+  if (deel === "gastenboek" && id && m === "DELETE") {
+    await d.prepare("DELETE FROM gastenboek WHERE id = ?").bind(id).run();
     return json({ ok: true });
   }
 

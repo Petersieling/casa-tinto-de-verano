@@ -304,11 +304,13 @@ function mailLink(b, soort) {
 }
 
 // ---- Onderdelen ----
-const TABS = [["aanvragen", "Aanvragen"], ["agenda", "Agenda"], ["boekingen", "Boekingen"], ["klanten", "Klanten"], ["facturen", "Facturen"], ["instellingen", "Instellingen"]];
+const TABS = [["aanvragen", "Aanvragen"], ["agenda", "Agenda"], ["boekingen", "Boekingen"], ["klanten", "Klanten"], ["facturen", "Facturen"], ["gastenboek", "Gastenboek"], ["instellingen", "Instellingen"]];
 function render() {
   const open = D.boekingen.filter((b) => b.status === "aangevraagd").length;
+  const wacht = (D.gastenboek || []).filter((g) => !g.zichtbaar).length;
   $("#tabs").replaceChildren(...TABS.map(([id, naam]) => h("button", { type: "button", "aria-current": String(tab === id), onclick: () => { tab = id; render(); } },
-    naam, id === "aanvragen" && open ? h("span", { class: "teller" }, String(open)) : null)));
+    naam, id === "aanvragen" && open ? h("span", { class: "teller" }, String(open)) : null,
+    id === "gastenboek" && wacht ? h("span", { class: "teller" }, String(wacht)) : null)));
   $("#view").replaceChildren(...VIEWS[tab]().filter(Boolean));
 }
 
@@ -431,6 +433,25 @@ const VIEWS = {
             h("button", { type: "button", class: "klein", onclick: () => toonFactuur(f) }, "Bekijken of afdrukken"),
             i === 0 ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm(`Factuur ${f.nummer} verwijderen?`)) doe(() => api("beheer/factuur/" + f.id, "DELETE")); } }, "Verwijderen") : null)))))))
         : h("p", { class: "leeg" }, "Nog geen facturen.")
+    ];
+  },
+
+  gastenboek() {
+    const lijst = D.gastenboek || [];
+    return [
+      h("div", { class: "kopregel" }, h("h1", null, "Gastenboek"), h("a", { class: "knop licht", href: "/gastenboek", target: "_blank", rel: "noopener" }, "Bekijk op de website")),
+      h("p", { class: "uitleg" }, "Nieuwe berichten staan pas op de website nadat je ze hebt goedgekeurd."),
+      lijst.length ? h("div", { class: "kaarten" }, lijst.map((g) => h("div", { class: "kaart", style: g.zichtbaar ? "border-left-color:var(--ok)" : "" },
+        h("h3", null, g.naam),
+        g.verblijf ? h("p", { class: "klein-tekst" }, "Verblijf: " + g.verblijf) : null,
+        h("p", { class: "bericht" }, g.bericht),
+        h("p", { class: "klein-tekst" }, new Date(g.aangemaakt).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" }) + " · " + (g.zichtbaar ? "Staat op de website" : "Wacht op goedkeuring")),
+        h("div", { class: "acties" },
+          g.zichtbaar
+            ? h("button", { type: "button", class: "klein licht", onclick: () => doe(() => api("beheer/gastenboek/" + g.id, "POST", { zichtbaar: false })) }, "Van de website halen")
+            : h("button", { type: "button", class: "klein", onclick: () => doe(() => api("beheer/gastenboek/" + g.id, "POST", { zichtbaar: true })) }, "Goedkeuren"),
+          h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Dit bericht definitief verwijderen?")) doe(() => api("beheer/gastenboek/" + g.id, "DELETE")); } }, "Verwijderen"))
+      ))) : h("p", { class: "leeg" }, "Er zijn nog geen berichten.")
     ];
   },
 

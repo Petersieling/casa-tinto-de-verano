@@ -12,7 +12,8 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS boekingen (id INTEGER PRIMARY KEY AUTOINCREMENT, status TEXT NOT NULL, aankomst TEXT NOT NULL, vertrek TEXT NOT NULL, personen INTEGER, naam TEXT, email TEXT, telefoon TEXT, klant_id INTEGER, volwassenen INTEGER, kinderen INTEGER, leeftijden TEXT, huur REAL DEFAULT 0, schoonmaak REAL DEFAULT 0, borg REAL DEFAULT 0, betaald INTEGER DEFAULT 0, bron TEXT, bericht TEXT, notitie TEXT, aangemaakt TEXT)`,
   `CREATE TABLE IF NOT EXISTS facturen (id INTEGER PRIMARY KEY AUTOINCREMENT, nummer TEXT UNIQUE NOT NULL, boeking_id INTEGER UNIQUE, datum TEXT, gegevens TEXT, totaal REAL)`,
   `CREATE TABLE IF NOT EXISTS instellingen (sleutel TEXT PRIMARY KEY, waarde TEXT)`,
-  `CREATE TABLE IF NOT EXISTS pogingen (soort TEXT, ip TEXT, tijd INTEGER)`
+  `CREATE TABLE IF NOT EXISTS pogingen (soort TEXT, ip TEXT, tijd INTEGER)`,
+  `CREATE TABLE IF NOT EXISTS gastenboek (id INTEGER PRIMARY KEY AUTOINCREMENT, naam TEXT NOT NULL, verblijf TEXT, bericht TEXT NOT NULL, zichtbaar INTEGER DEFAULT 0, aangemaakt TEXT)`
 ];
 let schemaKlaar = false;
 export async function db(env) {

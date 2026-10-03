@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Foto's van Casa Tinto de Verano: de woonkamer met open keuken, de slaapkamer en de badkamer van het penthouse in Punta Prima.">
+<meta name="description" content="Gastenboek van Casa Tinto de Verano: lees wat gasten over hun verblijf in het penthouse in Punta Prima schrijven en laat zelf een bericht achter.">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Impressie | Casa Tinto de Verano</title>
+<title>Gastenboek | Casa Tinto de Verano</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
@@ -148,29 +148,27 @@ section[id] { scroll-margin-top: 5.5rem; }
 </style>
 <style>
 .top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
-.impressie .head { margin: 0 auto 2.5rem; text-align: center; }
-.impressie .head p:last-child { color: var(--muted); }
-.hartje { color: var(--gold); text-align: center; font-size: 1.1rem; margin: 0 0 2rem; letter-spacing: 1.2em; padding-left: 1.2em; }
-.fotos { max-width: 40rem; margin-inline: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 2.75rem); align-items: start; }
-.fotos figure { margin: 0; min-width: 0; text-align: center; }
-.fotos .breed { grid-column: 1 / -1; max-width: 30rem; margin-inline: auto; width: 100%; }
-.lijst { padding: .55rem; background: var(--paper); border: 1px solid var(--gold); border-radius: .5rem; box-shadow: 0 22px 44px -26px rgba(58, 35, 21, .55); }
-.fotos img { display: block; width: 100%; height: auto; border-radius: .25rem; background: var(--panel); }
-.fotos .breed .lijst { border-radius: 50% 50% .5rem .5rem / 44% 44% .5rem .5rem; }
-.fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; border-radius: 50% 50% .25rem .25rem / 44% 44% .25rem .25rem; }
-.fotos .staand .lijst { border-radius: 12rem 12rem .5rem .5rem; }
-.fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12rem 12rem .25rem .25rem; }
-.fotos .staand + .staand { margin-top: 2.5rem; }
-.fotos figcaption { margin-top: 1rem; font-family: var(--script); color: var(--gold-text); font-size: 2rem; line-height: 1.1; }
-.fotos figcaption small { display: block; font-family: var(--body); font-size: .88rem; color: var(--muted); margin-top: .3rem; letter-spacing: .04em; }
-.impressie .slot { text-align: center; }
-.impressie .cta { margin-top: 3rem; }
-@media (max-width: 34rem) {
-  .fotos { grid-template-columns: minmax(0, 1fr); }
-  .fotos .staand { max-width: 17rem; margin-inline: auto; width: 100%; }
-  .fotos .staand + .staand { margin-top: 0; }
-}
-
+.gb { max-width: 46rem; margin-inline: auto; }
+.gb .head { margin: 0 auto 2.5rem; text-align: center; }
+.gb .head p:last-child { color: var(--muted); }
+.berichten { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+.berichten li { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+.berichten blockquote { margin: 0; font-family: var(--display); font-weight: 500; font-size: 1.45rem; line-height: 1.35; white-space: pre-line; overflow-wrap: anywhere; }
+.berichten .van { margin: .9rem 0 0; color: var(--muted); font-size: .92rem; }
+.berichten .van b { font-family: var(--script); font-weight: 400; font-size: 1.7rem; color: var(--gold-text); margin-right: .5rem; }
+.leeg { text-align: center; color: var(--muted); border: 1px dashed var(--gold); border-radius: .5rem; padding: 1.5rem; margin: 0; }
+.schrijf { margin-top: 3.5rem; background: var(--panel); border: 1px solid var(--line); border-radius: .75rem; padding: clamp(1.25rem, 4vw, 2rem); display: grid; gap: 1rem; }
+.schrijf .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .9rem; }
+.schrijf label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
+.schrijf .wide { grid-column: 1 / -1; }
+.schrijf input, .schrijf textarea { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
+.schrijf textarea { resize: vertical; }
+.schrijf button { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .7rem 1.4rem; justify-self: start; }
+.schrijf button:hover { background: var(--gold-text); }
+.schrijf .note { font-size: .85rem; color: var(--muted); margin: 0; }
+.schrijf [role="status"] { margin: 0; color: #A8431A; min-height: 1.3em; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.ster { color: #A8431A; font-weight: 600; }
 /* voettekst */
 .voet { background: var(--ink); color: #EFE3D0; border-top: 0; padding-block: 0; text-align: left; text-transform: none; letter-spacing: 0; font-size: .95rem; line-height: 1.6; }
 .voet > .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3rem); padding-block: 3rem 2.5rem; }
@@ -196,43 +194,50 @@ section[id] { scroll-margin-top: 5.5rem; }
     <a class="brand" href="index.html">Casa Tinto de Verano</a>
     <nav aria-label="Onderdelen">
       <a href="index.html#penthouse">Het penthouse</a>
-      <a href="impressie.html" aria-current="page">Impressie</a>
+      <a href="impressie.html">Impressie</a>
       <a href="index.html#prijzen">Prijzen</a>
       <a href="index.html#praktisch">Praktisch</a>
       <a href="index.html#contact">Reserveren</a>
-      <a href="gastenboek.html">Gastenboek</a>
+      <a href="gastenboek.html" aria-current="page">Gastenboek</a>
       <a href="over-ons.html">Over ons</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <section class="impressie">
+  <section>
     <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
-        <h1>Een <span class="script">impressie</span></h1>
-        <p>Zo ziet het penthouse er van binnen uit.</p>
-      </div>
-      <p class="hartje" aria-hidden="true">&#9829;</p>
+      <div class="gb">
+        <div class="head">
+          <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
+          <h1>Ons <span class="script">gastenboek</span></h1>
+          <p>Ben je bij ons te gast geweest? We lezen graag hoe je het hebt gehad.</p>
+        </div>
 
-      <!-- FOTO TOEVOEGEN: kopieer een <figure>-blok en pas de bestandsnaam en de tekst aan. Gebruik class="breed" voor een liggende foto en class="staand" voor een staande. -->
-      <div class="fotos">
-        <figure class="breed">
-          <div class="lijst"><img src="fotos/woonkamer.jpg?v=2" width="1400" height="1087" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div>
-          <figcaption>Woonkamer<small>met eethoek en open keuken</small></figcaption>
-        </figure>
-        <figure class="staand">
-          <div class="lijst"><img src="fotos/slaapkamer.jpg" width="962" height="1282" loading="lazy" alt="Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur"></div>
-          <figcaption>Slaapkamer 2<small>met twee losse bedden</small></figcaption>
-        </figure>
-        <figure class="staand">
-          <div class="lijst"><img src="fotos/badkamer.jpg" width="962" height="1282" loading="lazy" alt="Badkamer met inloopdouche, wastafel en ronde spiegel"></div>
-          <figcaption>Badkamer<small>met inloopdouche</small></figcaption>
-        </figure>
-      </div>
+        <ul class="berichten" id="berichten" aria-live="polite"></ul>
+        <p class="leeg" id="leeg">Berichten laden…</p>
 
-      <p class="slot"><a class="cta" href="index.html#prijzen">Bekijk prijzen en beschikbaarheid</a></p>
+        <form class="schrijf" id="schrijf" novalidate>
+          <h2>Schrijf een bericht</h2>
+          <div class="fields">
+            <label for="gb-naam"><span>Naam <span class="ster" aria-hidden="true">*</span></span>
+              <input type="text" id="gb-naam" autocomplete="name" maxlength="60" required>
+            </label>
+            <label for="gb-verblijf">Wanneer was je er? (optioneel)
+              <input type="text" id="gb-verblijf" maxlength="60" placeholder="bijvoorbeeld juli 2027">
+            </label>
+            <label class="wide" for="gb-bericht"><span>Je bericht <span class="ster" aria-hidden="true">*</span></span>
+              <textarea id="gb-bericht" rows="5" maxlength="1200" required></textarea>
+            </label>
+            <label class="hp" for="gb-website" aria-hidden="true">Website
+              <input type="text" id="gb-website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+          <button type="submit" id="gb-knop">Plaats bericht</button>
+          <p role="status" id="gb-status"></p>
+          <p class="note">Je bericht verschijnt nadat wij het hebben gelezen. Je naam en je bericht komen op deze pagina te staan.</p>
+        </form>
+      </div>
     </div>
   </section>
 </main>
@@ -273,5 +278,46 @@ section[id] { scroll-margin-top: 5.5rem; }
   </div>
   <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span>Punta Prima · Costa Blanca</span></div></div>
 </footer>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function toon(lijst) {
+    var ul = $("berichten");
+    ul.replaceChildren();
+    lijst.forEach(function (b) {
+      var li = document.createElement("li"), q = document.createElement("blockquote"), van = document.createElement("p"), naam = document.createElement("b");
+      q.textContent = b.bericht;
+      van.className = "van"; naam.textContent = b.naam; van.append(naam);
+      if (b.verblijf) van.append(document.createTextNode(b.verblijf));
+      li.append(q, van); ul.append(li);
+    });
+    $("leeg").hidden = lijst.length > 0;
+    $("leeg").textContent = "Er staan nog geen berichten. Schrijf jij het eerste?";
+  }
+  fetch("/api/gastenboek").then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) { toon(d.berichten || []); })
+    .catch(function () { $("leeg").textContent = "De berichten kunnen nu niet worden geladen. Probeer het later opnieuw."; });
+
+  $("schrijf").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var status = $("gb-status"), knop = $("gb-knop");
+    var naam = $("gb-naam").value.trim(), bericht = $("gb-bericht").value.trim();
+    status.textContent = "";
+    if (naam.length < 2) { status.textContent = "Vul je naam in."; $("gb-naam").focus(); return; }
+    if (bericht.length < 10) { status.textContent = "Schrijf een bericht van minimaal 10 tekens."; $("gb-bericht").focus(); return; }
+    knop.disabled = true; knop.textContent = "Bezig met versturen…";
+    fetch("/api/gastenboek", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ naam: naam, verblijf: $("gb-verblijf").value, bericht: bericht, website: $("gb-website").value }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw new Error(d.fout || "Versturen lukte niet. Probeer het later opnieuw."); }); })
+      .then(function () {
+        var klaar = document.createElement("p");
+        klaar.className = "leeg"; klaar.tabIndex = -1; klaar.style.marginTop = "3.5rem";
+        klaar.textContent = "Bedankt voor je bericht. Het verschijnt hier nadat wij het hebben gelezen.";
+        $("schrijf").replaceWith(klaar); klaar.focus();
+      })
+      .catch(function (err) { status.textContent = err.message; knop.disabled = false; knop.textContent = "Plaats bericht"; });
+  });
+})();
+</script>
 </body>
 </html>
