@@ -163,7 +163,7 @@ select, input, textarea { font: inherit; color: var(--ink); background: var(--pa
 .punten-voet a { color: var(--gold-text); }
 
 /* contact */
-.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.contact { display: grid; grid-template-columns: minmax(0, 40rem); justify-content: center; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
 .contact > * { min-width: 0; }
 .mail { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1rem 0 0; }
 .mail span { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; user-select: all; }
@@ -404,19 +404,6 @@ section[id] { scroll-margin-top: 5.5rem; }
             <p>We nemen per e-mail contact met je op. Je reservering is pas definitief na onze bevestiging.</p>
           </div>
         </div>
-        <div>
-          <h3>Contact</h3>
-          <div class="mail">
-            <span id="adres">info@casatintodeverano.com</span>
-            <button type="button" class="ghost" id="kopieer-adres">Kopieer e-mailadres</button>
-          </div>
-          <p role="status" id="adres-status"></p>
-          <ul class="where">
-            <li><a href="mailto:info@casatintodeverano.com">Stuur een e-mail</a></li>
-            <li>Punta Prima · Torrevieja · Costa Blanca · Spanje</li>
-            <li><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: <a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener">casa_tinto_de_verano</a></li>
-          </ul>
-        </div>
       </div>
     </div>
   </section>
@@ -652,7 +639,6 @@ function kopieer(el, statusEl, wat) {
   };
   try { navigator.clipboard.writeText(el.textContent).then(klaar, selecteer); } catch (e) { selecteer(); }
 }
-$("kopieer-adres").addEventListener("click", () => kopieer($("adres"), $("adres-status"), "E-mailadres"));
 $("kopieer-bericht").addEventListener("click", () => kopieer($("mailtekst"), $("status"), "Bericht"));
 
 // Datums die op de voorpagina in de kalender zijn gekozen, staan in het adres van deze pagina.
