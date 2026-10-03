@@ -154,6 +154,17 @@ textarea { resize: vertical; }
 .legenda { display: flex; justify-content: center; gap: 1.25rem; font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
 .legenda i { display: inline-block; width: .85rem; height: .85rem; border-radius: .2rem; margin-right: .35rem; vertical-align: -1px; border: 1px solid var(--line); }
 .legenda i.bezet { background: var(--gold-soft); }
+.legenda i.gekozen { background: var(--ink); border-color: var(--ink); }
+.kal button { font: inherit; font-size: .95rem; padding: .45rem 0; border: 0; border-radius: .3rem; background: transparent; color: var(--ink); cursor: pointer; }
+.kal button:hover { background: var(--gold-soft); color: var(--ink); }
+.kal button.gekozen, .kal button.gekozen:hover { background: var(--ink); color: var(--paper); }
+.kal button.start { outline: 2px solid var(--gold); outline-offset: -2px; }
+.kies { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
+.kies .note, .kies .sum { margin: 0; }
+.kies .cta { margin: 0; justify-self: center; text-align: center; }
+.kies input { font-size: 1.15rem; font-weight: 600; text-align: center; }
+.stroom { background: var(--gold-soft); border-radius: .4rem; padding: .7rem .85rem; font-size: .92rem; margin: 0; }
+.stroom strong { white-space: nowrap; }
 @media (max-width: 52rem) {
   .hero .wrap, .prices, .contact { grid-template-columns: minmax(0, 1fr); }
   .crest { order: -1; width: min(100%, 17rem); }
@@ -265,7 +276,25 @@ section[id] { scroll-margin-top: 5.5rem; }
               <button type="button" class="ghost" id="kal-volgende" aria-label="Volgende maand">&rsaquo;</button>
             </div>
             <div class="kal" id="kal"></div>
-            <p class="legenda"><span><i class="vrij"></i>Vrij</span><span><i class="bezet"></i>Bezet</span></p>
+            <p class="legenda"><span><i class="vrij"></i>Vrij</span><span><i class="bezet"></i>Bezet</span><span><i class="gekozen"></i>Jouw keuze</span></p>
+            <div class="kies">
+              <p class="note" id="kies-uitleg" role="status">Tik op een vrije dag om je aankomstdag te kiezen.</p>
+              <div class="fields" id="kies-velden" hidden>
+                <label class="wide" for="kies-nachten">Aantal nachten (minimaal 10)
+                  <input type="number" id="kies-nachten" min="10" max="120" step="1" value="14" inputmode="numeric">
+                </label>
+              </div>
+              <dl class="sum" id="kies-som" hidden>
+                <div><dt>Aankomst</dt><dd id="kies-aankomst"></dd></div>
+                <div><dt>Vertrek</dt><dd id="kies-vertrek"></dd></div>
+                <div><dt id="kies-huurlabel">Huur</dt><dd id="kies-huur"></dd></div>
+                <div><dt>Eindschoonmaak</dt><dd id="kies-schoonmaak"></dd></div>
+                <div class="total"><dt>Totaal verblijf</dt><dd id="kies-totaal"></dd></div>
+                <div><dt>Borg</dt><dd id="kies-borg"></dd></div>
+              </dl>
+              <p class="stroom" id="kies-stroom" hidden></p>
+              <a class="cta" href="#contact" id="kies-knop" hidden>Vraag deze periode aan</a>
+            </div>
           </div>
         </div>
       </div>
@@ -312,8 +341,8 @@ section[id] { scroll-margin-top: 5.5rem; }
               <div><dt>Eindschoonmaak</dt><dd id="schoonmaak"></dd></div>
               <div class="total"><dt>Totaal verblijf</dt><dd id="totaal"></dd></div>
               <div><dt>Borg</dt><dd id="borg"></dd></div>
-              <div><dt>Elektriciteit inbegrepen</dt><dd id="kwh"></dd></div>
-            </dl>
+              </dl>
+            <p class="stroom" id="stroom" hidden></p>
             <div id="gastvelden">
               <div class="fields">
                 <label for="naam">Naam
@@ -368,13 +397,19 @@ section[id] { scroll-margin-top: 5.5rem; }
 <footer><div class="wrap">Your place under the sun</div></footer>
 
 <script type="module">
-import { PERIODES, SCHOONMAAK, BORG, MIN_NACHTEN, KWH_PER_WEEK, huurprijs, nachten, isDatum } from "./src/prijzen.js";
+import { PERIODES, SCHOONMAAK, BORG, MIN_NACHTEN, KWH_PRIJS, huurprijs, nachten, isDatum, naarTijd, naarIso, kwhInbegrepen } from "./src/prijzen.js";
 
 const $ = (id) => document.getElementById(id);
 const euro = (n) => "€ " + n.toLocaleString("nl-NL");
 const iso = (j, m, d) => `${j}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 const nu = new Date();
 const vandaag = iso(nu.getFullYear(), nu.getMonth(), nu.getDate());
+const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
+const kwhPrijs = "€ " + KWH_PRIJS.toFixed(2).replace(".", ",");
+function stroomTekst(el, n) {
+  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString("nl-NL") + " kWh inbegrepen" }),
+    " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
+}
 const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
 // ---- Prijslijst ----
@@ -392,6 +427,42 @@ for (const p of PERIODES) {
 let bezet = [], online = false;
 const isBezet = (d) => bezet.some((b) => b.van <= d && d < b.tot);
 let kalJaar = nu.getFullYear(), kalMaand = nu.getMonth();
+let keuze = null; // { aankomst, vertrek } van de dag die in de kalender is aangetikt
+
+// Aankomstdag aantikken, aantal nachten intypen, bedrag meteen zien.
+function kiesAankomst(dag) {
+  keuze = { aankomst: dag, vertrek: dag };
+  $("kies-velden").hidden = false;
+  rekenKeuze();
+  $("kies-nachten").focus({ preventScroll: true });
+}
+function rekenKeuze() {
+  if (!keuze) return;
+  const n = Math.trunc(+$("kies-nachten").value), uitleg = $("kies-uitleg");
+  let fout = "";
+  if (!(n >= MIN_NACHTEN)) fout = `Aankomst op ${kort(keuze.aankomst)}. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
+  else if (n > 120) fout = "Neem voor een verblijf langer dan 120 nachten contact op per e-mail.";
+  const vertrek = naarIso(naarTijd(keuze.aankomst) + (fout ? 0 : n) * 864e5);
+  if (!fout && bezet.some((b) => b.van < vertrek && b.tot > keuze.aankomst)) fout = `Vanaf ${kort(keuze.aankomst)} zijn geen ${n} nachten vrij. Kies minder nachten of een andere aankomstdag.`;
+  keuze.vertrek = fout ? keuze.aankomst : vertrek;
+  uitleg.textContent = fout || "Tik op een andere dag om je aankomst te wijzigen.";
+  for (const id of ["kies-som", "kies-stroom", "kies-knop"]) $(id).hidden = !!fout;
+  if (!fout) {
+    const huur = huurprijs(keuze.aankomst, vertrek);
+    $("kies-aankomst").textContent = kort(keuze.aankomst);
+    $("kies-vertrek").textContent = kort(vertrek);
+    $("kies-huurlabel").textContent = `Huur (${n} nachten)`;
+    $("kies-huur").textContent = euro(huur);
+    $("kies-schoonmaak").textContent = euro(SCHOONMAAK);
+    $("kies-totaal").textContent = euro(huur + SCHOONMAAK);
+    $("kies-borg").textContent = euro(BORG);
+    stroomTekst($("kies-stroom"), n);
+    $("aankomst").value = keuze.aankomst; $("vertrek").value = vertrek;
+    reken();
+  }
+  tekenKalender();
+}
+$("kies-nachten").addEventListener("input", rekenKeuze);
 function tekenKalender() {
   const eerste = new Date(kalJaar, kalMaand, 1);
   $("kal-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
@@ -401,10 +472,18 @@ function tekenKalender() {
   for (let i = (eerste.getDay() + 6) % 7; i > 0; i--) kal.append(document.createElement("i"));
   const dagen = new Date(kalJaar, kalMaand + 1, 0).getDate();
   for (let d = 1; d <= dagen; d++) {
-    const s = document.createElement("span"), dag = iso(kalJaar, kalMaand, d);
+    const dag = iso(kalJaar, kalMaand, d);
+    let s;
+    if (dag < vandaag) { s = document.createElement("span"); s.className = "voorbij"; }
+    else if (isBezet(dag)) { s = document.createElement("span"); s.className = "bezet"; s.title = "Bezet"; }
+    else {
+      s = document.createElement("button"); s.type = "button";
+      s.setAttribute("aria-label", "Kies " + kort(dag) + " als aankomstdag");
+      s.addEventListener("click", () => kiesAankomst(dag));
+      if (keuze && keuze.aankomst <= dag && dag < keuze.vertrek) s.className = "gekozen";
+      else if (keuze && keuze.aankomst === dag) s.className = "start";
+    }
     s.textContent = d;
-    if (dag < vandaag) s.className = "voorbij";
-    else if (isBezet(dag)) { s.className = "bezet"; s.title = "Bezet"; }
     kal.append(s);
   }
   $("kal-vorige").disabled = kalJaar === nu.getFullYear() && kalMaand === nu.getMonth();
@@ -424,7 +503,7 @@ async function laadBeschikbaarheid() {
     if (!r.ok) throw new Error();
     bezet = (await r.json()).bezet || [];
     online = true;
-    $("kal-status").textContent = "Doorgestreepte dagen zijn bezet";
+    $("kal-status").textContent = "Tik op een vrije dag en zie meteen je prijs";
   } catch (e) {
     online = false;
     $("kal-blok").hidden = true;
@@ -452,12 +531,13 @@ function reken() {
   melding.textContent = fout;
   melding.hidden = !fout;
   $("som").hidden = !!fout;
+  $("stroom").hidden = !!fout;
   if (fout) { $("mailtekst").textContent = "Kies eerst je data."; return null; }
   const n = nachten(a, v), huur = huurprijs(a, v);
   $("huurlabel").textContent = `Huur (${n} nachten)`;
   $("huur").textContent = euro(huur);
   $("totaal").textContent = euro(huur + SCHOONMAAK);
-  $("kwh").textContent = Math.round(n / 7 * KWH_PER_WEEK).toLocaleString("nl-NL") + " kWh";
+  stroomTekst($("stroom"), n);
   $("mailtekst").textContent =
     "Hallo,\n\nIk wil graag Casa Tinto de Verano reserveren.\n\n" +
     "Aankomst: " + lang(a) + "\nVertrek: " + lang(v) + " (" + n + " nachten)\n" +

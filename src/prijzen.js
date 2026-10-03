@@ -17,6 +17,7 @@ export const BORG = 300;
 export const MIN_NACHTEN = 10;
 export const MAX_PERSONEN = 4;
 export const KWH_PER_WEEK = 85;
+export const KWH_PRIJS = 0.35; // euro per kWh boven het inbegrepen verbruik
 
 const DAG = 864e5;
 export const naarTijd = (iso) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
@@ -37,3 +38,6 @@ export function huurprijs(aankomst, vertrek) {
   for (let t = naarTijd(aankomst), eind = naarTijd(vertrek); t < eind; t += DAG) som += weekprijs(naarIso(t)) / 7;
   return Math.round(som);
 }
+
+// Inbegrepen elektriciteit voor een verblijf, naar rato van het aantal nachten.
+export const kwhInbegrepen = (aantalNachten) => Math.round(aantalNachten / 7 * KWH_PER_WEEK);
