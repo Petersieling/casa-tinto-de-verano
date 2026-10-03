@@ -80,8 +80,8 @@ section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .rooms h3 { font-size: 1.75rem; color: var(--gold-text); padding-bottom: .55rem; border-bottom: 2px solid var(--gold); }
 .rooms ul { list-style: none; margin: 0; padding: 0; }
 .rooms li:first-child { border-top: 0; }
-.rooms li { padding: .7rem 0; border-top: 1px solid var(--line); }
-.rooms li small { display: block; color: var(--muted); font-size: .9rem; }
+.rooms li { padding: .8rem 0; border-top: 1px solid var(--line); font-family: var(--display); font-weight: 500; font-size: 1.35rem; line-height: 1.2; }
+.rooms li small { display: block; font-family: var(--body); font-weight: 400; color: var(--muted); font-size: .9rem; line-height: 1.4; margin-top: .15rem; }
 
 /* prijslijst */
 .prices { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
@@ -320,7 +320,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         <div>
           <h3>Binnen</h3>
           <ul>
-            <li>Woonkamer</li>
+            <li>Woonkamer <small>met eethoek en open keuken</small></li>
             <li>Slaapkamer 1 <small>met tweepersoonsbed</small></li>
             <li>Slaapkamer 2 <small>met twee losse bedden</small></li>
             <li>Twee badkamers</li>
@@ -338,7 +338,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         <div>
           <h3>Op het complex</h3>
           <ul>
-            <li>Gemeenschappelijke ruimte met een mooi zwembad</li>
+            <li>Zwembad <small>in de gemeenschappelijke ruimte</small></li>
             <li>Kinderbad</li>
             <li>Eigen parkeerplaats <small>in de garage</small></li>
           </ul>
