@@ -58,6 +58,9 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
 h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
 h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+.pagina-kop { text-align: center; margin-bottom: clamp(2rem, 5vw, 3.25rem); }
+.pagina-kop h2 { font-size: clamp(2.15rem, 5vw, 3.2rem); }
+.pagina-kop > p:not(.eyebrow) { color: var(--muted); max-width: 36rem; margin: 1rem auto 0; }
 h3 { font-size: 1.45rem; }
 .script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.25em; line-height: 1; }
 .lead { font-size: 1.2rem; max-width: 34rem; margin: 1.25rem 0 0; color: var(--ink); }
@@ -350,9 +353,10 @@ section[id] { scroll-margin-top: 5.5rem; }
 
   <section id="penthouse" class="band">
     <div class="wrap">
-      <div class="head">
-        <h2>Over het penthouse</h2>
-        <p>Een penthouse voor maximaal vier personen, met een eigen dakterras, een gedeeld zwembad en een eigen parkeerplaats in de garage.</p>
+      <div class="pagina-kop">
+        <p class="eyebrow">Voor maximaal vier personen</p>
+        <h2>Over het <span class="script">penthouse</span></h2>
+        <p>Met een eigen dakterras, een gedeeld zwembad en een eigen parkeerplaats in de garage.</p>
       </div>
       <div class="rooms">
         <div>
