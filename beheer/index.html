@@ -117,6 +117,7 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 #factuur tfoot td { font-weight: 600; font-size: 1.1rem; border-top: 2px solid #222; }
 #factuur .voet { margin-top: 2rem; display: grid; gap: .75rem; font-size: .95rem; }
 @media print {
+  html, body { background: #fff !important; }
   body > :not(#factuurlaag) { display: none !important; }
   #factuurlaag { position: static; overflow: visible; }
   #factuurlaag .balk { display: none; }
