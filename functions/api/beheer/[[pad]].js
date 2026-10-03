@@ -15,7 +15,7 @@ function leesGezelschap(b) {
 }
 
 function leesPeriode(b) {
-  if (!isDatum(b.aankomst) || !isDatum(b.vertrek)) throw new Melding("Vul een aankomst- en vertrekdatum in.");
+  if (!isDatum(b.aankomst) || !isDatum(b.vertrek)) throw new Melding("Vul een aankomst- en vertrekdatum in als dag-maand-jaar, bijvoorbeeld 04-07-2027.");
   if (nachten(b.aankomst, b.vertrek) < 1) throw new Melding("De vertrekdatum moet na de aankomstdatum liggen.");
 }
 

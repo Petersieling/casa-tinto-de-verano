@@ -303,7 +303,7 @@ section[id] { scroll-margin-top: 5.5rem; }
               <button type="button" class="ghost" id="kal-volgende" aria-label="Volgende maand">&rsaquo;</button>
             </div>
             <div class="kal" id="kal"></div>
-            <p class="legenda"><span><i class="vrij"></i>Vrij</span><span><i class="bezet"></i>Bezet</span><span><i class="gekozen"></i>Jouw keuze</span></p>
+            <p class="legenda"><span><i class="vrij"></i>Vrij</span><span><i class="bezet"></i>Bezet</span><span><i class="gekozen"></i>Gekozen periode</span></p>
             <div class="kies">
               <p class="note" id="kies-uitleg" role="status">Tik eerst op je aankomstdag en daarna op je vertrekdag.</p>
               <dl class="sum" id="kies-som" hidden>
@@ -350,10 +350,10 @@ section[id] { scroll-margin-top: 5.5rem; }
             <p class="note verplicht">Velden met <span class="ster">*</span> zijn verplicht.</p>
             <div class="fields">
               <label for="aankomst"><span>Aankomst <span class="ster" aria-hidden="true">*</span></span>
-                <input type="date" id="aankomst" required>
+                <input type="text" id="aankomst" inputmode="numeric" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
               </label>
               <label for="vertrek"><span>Vertrek <span class="ster" aria-hidden="true">*</span></span>
-                <input type="date" id="vertrek" required>
+                <input type="text" id="vertrek" inputmode="numeric" autocomplete="off" placeholder="dd-mm-jjjj" maxlength="10" required>
               </label>
               <label for="volwassenen"><span>Volwassenen <span class="ster" aria-hidden="true">*</span></span>
                 <select id="volwassenen" required>
@@ -371,7 +371,7 @@ section[id] { scroll-margin-top: 5.5rem; }
               </div>
             </div>
             <p class="note" id="gasten-melding" role="status" hidden></p>
-            <p class="note" id="periode-melding" role="status">Kies een aankomst- en vertrekdatum. Het minimale verblijf is 10 nachten.</p>
+            <p class="note" id="periode-melding" role="status">Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 10 nachten.</p>
             <dl class="sum" id="som" hidden>
               <div><dt id="huurlabel">Huur</dt><dd id="huur"></dd></div>
               <div><dt>Eindschoonmaak</dt><dd id="schoonmaak"></dd></div>
@@ -535,7 +535,7 @@ function rekenKeuze() {
     $("kies-totaal").textContent = euro(huur + SCHOONMAAK);
     $("kies-borg").textContent = euro(BORG);
     stroomTekst($("kies-stroom"), n);
-    $("aankomst").value = keuze.aankomst; $("vertrek").value = keuze.vertrek;
+    $("aankomst").value = alsDatum(keuze.aankomst); $("vertrek").value = alsDatum(keuze.vertrek);
     reken();
   }
   tekenKalender();
@@ -625,15 +625,21 @@ $("kinderen").addEventListener("input", tekenLeeftijden);
 $("kinderen").addEventListener("change", tekenLeeftijden);
 
 // ---- Aanvraag ----
-$("aankomst").min = vandaag;
+// Datums typ je als dag-maand-jaar, bijvoorbeeld 04-07-2027. Intern rekenen we met jaar-maand-dag.
+function leesDatum(id) {
+  const m = /^\s*(\d{1,2})[-\/. ](\d{1,2})[-\/. ](\d{4})\s*$/.exec($(id).value);
+  if (!m) return "";
+  const s = `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+  return isDatum(s) ? s : "";
+}
+const alsDatum = (s) => `${s.slice(8, 10)}-${s.slice(5, 7)}-${s.slice(0, 4)}`;
 $("schoonmaak").textContent = euro(SCHOONMAAK);
 $("borg").textContent = euro(BORG);
 
 function reken() {
-  const a = $("aankomst").value, v = $("vertrek").value, melding = $("periode-melding");
-  if (a) $("vertrek").min = a;
+  const a = leesDatum("aankomst"), v = leesDatum("vertrek"), melding = $("periode-melding");
   let fout = "";
-  if (!isDatum(a) || !isDatum(v)) fout = `Kies een aankomst- en vertrekdatum. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
+  if (!a || !v) fout = `Vul je aankomst- en vertrekdatum in als dag-maand-jaar, bijvoorbeeld 04-07-2027. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
   else if (a < vandaag) fout = "De aankomstdatum ligt in het verleden.";
   else if (nachten(a, v) < MIN_NACHTEN) fout = `Dit kan niet: je koos ${Math.max(nachten(a, v), 0)} nachten. Een verblijf is alleen mogelijk vanaf ${MIN_NACHTEN} nachten.`;
   else if (bezet.some((b) => b.van < v && b.tot > a)) fout = "Deze periode is (deels) al bezet. Kies andere data.";

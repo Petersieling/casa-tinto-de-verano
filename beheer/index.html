@@ -182,6 +182,14 @@ function gezelschap(b) {
   else t += ", geen kinderen";
   return t;
 }
+// Datums typ je als dag-maand-jaar (04-07-2027); opgeslagen wordt jaar-maand-dag.
+function leesDatum(tekst) {
+  const m = /^\s*(\d{1,2})[-\/. ](\d{1,2})[-\/. ](\d{4})\s*$/.exec(tekst || "");
+  if (!m) return "";
+  const s = `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+  return isDatum(s) ? s : "";
+}
+const alsDatum = (s) => `${s.slice(8, 10)}-${s.slice(5, 7)}-${s.slice(0, 4)}`;
 const totaal = (b) => (b.huur || 0) + (b.schoonmaak || 0);
 const STATUS = { aangevraagd: "Aangevraagd", bevestigd: "Bevestigd", geblokkeerd: "Geblokkeerd", afgewezen: "Afgewezen", geannuleerd: "Geannuleerd" };
 
@@ -221,14 +229,17 @@ function formulier(titel, velden, waarden, opslaan, extra) {
     let el;
     if (v.type === "select") el = h("select", { id: "f-" + v.naam }, v.opties.map(([w, t]) => h("option", { value: w }, t)));
     else if (v.type === "textarea") el = h("textarea", { id: "f-" + v.naam, rows: v.rijen || 3 });
+    else if (v.type === "date") el = h("input", { id: "f-" + v.naam, type: "text", inputMode: "numeric", placeholder: "dd-mm-jjjj", maxLength: 10, autocomplete: "off" });
     else el = h("input", { id: "f-" + v.naam, type: v.type || "text", step: v.type === "number" ? (v.heel ? "1" : "0.01") : null, min: v.type === "number" ? "0" : null });
-    if (v.type === "checkbox") el.checked = !!waarden[v.naam]; else el.value = waarden[v.naam] ?? "";
+    if (v.type === "checkbox") el.checked = !!waarden[v.naam];
+    else if (v.type === "date") el.value = waarden[v.naam] ? alsDatum(waarden[v.naam]) : "";
+    else el.value = waarden[v.naam] ?? "";
     invoer[v.naam] = el;
     const lab = v.type === "checkbox" ? h("label", { class: "vink breed", for: el.id }, el, v.label) : h("label", { class: v.breed ? "breed" : "", for: el.id }, v.label, el);
     if (v.groep) lab.dataset.groep = v.groep;
     return lab;
   });
-  const lees = () => Object.fromEntries(velden.map((v) => [v.naam, v.type === "checkbox" ? invoer[v.naam].checked : invoer[v.naam].value]));
+  const lees = () => Object.fromEntries(velden.map((v) => [v.naam, v.type === "checkbox" ? invoer[v.naam].checked : v.type === "date" ? leesDatum(invoer[v.naam].value) : invoer[v.naam].value]));
   const form = h("form", { onsubmit: async (e) => {
     e.preventDefault(); foutEl.textContent = "";
     try { await opslaan(lees()); dlg.close(); await laad(); } catch (err) { foutEl.textContent = err.message; }
@@ -272,8 +283,9 @@ function boekingFormulier(b, nieuw) {
         form.querySelectorAll("[data-groep]").forEach((el) => {
           el.hidden = (isBlok && el.dataset.groep.includes("gast")) || (bestaandeKlant && el.dataset.groep.includes("nieuw"));
         });
-        if (!huurAangeraakt && isDatum(inv.aankomst.value) && isDatum(inv.vertrek.value) && nachten(inv.aankomst.value, inv.vertrek.value) > 0) {
-          inv.huur.value = huurprijs(inv.aankomst.value, inv.vertrek.value);
+        const a = leesDatum(inv.aankomst.value), v = leesDatum(inv.vertrek.value);
+        if (!huurAangeraakt && a && v && nachten(a, v) > 0) {
+          inv.huur.value = huurprijs(a, v);
         }
       };
       inv.huur.addEventListener("input", () => { huurAangeraakt = true; });
