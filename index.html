@@ -162,7 +162,8 @@ textarea { resize: vertical; }
 .kies { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
 .kies .note, .kies .sum { margin: 0; }
 .kies .cta { margin: 0; justify-self: center; text-align: center; }
-.kies input { font-size: 1.15rem; font-weight: 600; text-align: center; }
+.kies .note.fout { color: #A8431A; font-weight: 600; }
+.kal button.bezet { background: var(--gold-soft); }
 .stroom { background: var(--gold-soft); border-radius: .4rem; padding: .7rem .85rem; font-size: .92rem; margin: 0; }
 .stroom strong { white-space: nowrap; }
 .vink { display: flex; flex-direction: row; align-items: flex-start; gap: .6rem; font-size: 1rem; color: var(--ink); }
@@ -302,12 +303,7 @@ section[id] { scroll-margin-top: 5.5rem; }
             <div class="kal" id="kal"></div>
             <p class="legenda"><span><i class="vrij"></i>Vrij</span><span><i class="bezet"></i>Bezet</span><span><i class="gekozen"></i>Jouw keuze</span></p>
             <div class="kies">
-              <p class="note" id="kies-uitleg" role="status">Tik op een vrije dag om je aankomstdag te kiezen.</p>
-              <div class="fields" id="kies-velden" hidden>
-                <label class="wide" for="kies-nachten">Aantal nachten (minimaal 10)
-                  <input type="number" id="kies-nachten" min="10" max="120" step="1" value="14" inputmode="numeric">
-                </label>
-              </div>
+              <p class="note" id="kies-uitleg" role="status">Tik eerst op je aankomstdag en daarna op je vertrekdag.</p>
               <dl class="sum" id="kies-som" hidden>
                 <div><dt>Aankomst</dt><dd id="kies-aankomst"></dd></div>
                 <div><dt>Vertrek</dt><dd id="kies-vertrek"></dd></div>
@@ -504,40 +500,42 @@ const isBezet = (d) => bezet.some((b) => b.van <= d && d < b.tot);
 let kalJaar = nu.getFullYear(), kalMaand = nu.getMonth();
 let keuze = null; // { aankomst, vertrek } van de dag die in de kalender is aangetikt
 
-// Aankomstdag aantikken, aantal nachten intypen, bedrag meteen zien.
-function kiesAankomst(dag) {
-  keuze = { aankomst: dag, vertrek: dag };
-  $("kies-velden").hidden = false;
+// Eerste tik is de aankomstdag, tweede tik de vertrekdag. Het bedrag verschijnt meteen.
+function kiesDag(dag) {
+  if (!keuze || keuze.vertrek || dag <= keuze.aankomst) keuze = { aankomst: dag, vertrek: null };
+  else keuze.vertrek = dag;
   rekenKeuze();
-  $("kies-nachten").focus({ preventScroll: true });
 }
 function rekenKeuze() {
-  if (!keuze) return;
-  const n = Math.trunc(+$("kies-nachten").value), uitleg = $("kies-uitleg");
-  let fout = "";
-  if (!(n >= MIN_NACHTEN)) fout = `Aankomst op ${kort(keuze.aankomst)}. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
-  else if (n > 120) fout = "Neem voor een verblijf langer dan 120 nachten contact op per e-mail.";
-  const vertrek = naarIso(naarTijd(keuze.aankomst) + (fout ? 0 : n) * 864e5);
-  if (!fout && bezet.some((b) => b.van < vertrek && b.tot > keuze.aankomst)) fout = `Vanaf ${kort(keuze.aankomst)} zijn geen ${n} nachten vrij. Kies minder nachten of een andere aankomstdag.`;
-  keuze.vertrek = fout ? keuze.aankomst : vertrek;
-  uitleg.textContent = fout || "Tik op een andere dag om je aankomst te wijzigen.";
-  for (const id of ["kies-som", "kies-stroom", "kies-knop"]) $(id).hidden = !!fout;
-  if (!fout) {
-    const huur = huurprijs(keuze.aankomst, vertrek);
+  const uitleg = $("kies-uitleg");
+  let fout = "", klaar = false;
+  if (!keuze.vertrek) {
+    uitleg.textContent = `Aankomst op ${kort(keuze.aankomst)}. Tik nu op je vertrekdag, minimaal ${MIN_NACHTEN} nachten later.`;
+  } else {
+    const n = nachten(keuze.aankomst, keuze.vertrek);
+    if (n < MIN_NACHTEN) fout = `Dit kan niet: je koos ${n} ${n === 1 ? "nacht" : "nachten"}. Een verblijf is alleen mogelijk vanaf ${MIN_NACHTEN} nachten. Tik op een latere vertrekdag.`;
+    else if (n > 120) fout = "Dit kan niet via de website: neem voor een verblijf langer dan 120 nachten contact op per e-mail.";
+    else if (bezet.some((b) => b.van < keuze.vertrek && b.tot > keuze.aankomst)) fout = "Dit kan niet: in deze periode is het penthouse al (deels) bezet. Tik op een eerdere vertrekdag of kies een andere aankomstdag.";
+    if (fout) keuze.vertrek = null; else klaar = true;
+    uitleg.textContent = fout || "Tik op een dag om opnieuw te kiezen.";
+  }
+  uitleg.classList.toggle("fout", !!fout);
+  for (const id of ["kies-som", "kies-stroom", "kies-knop"]) $(id).hidden = !klaar;
+  if (klaar) {
+    const n = nachten(keuze.aankomst, keuze.vertrek), huur = huurprijs(keuze.aankomst, keuze.vertrek);
     $("kies-aankomst").textContent = kort(keuze.aankomst);
-    $("kies-vertrek").textContent = kort(vertrek);
+    $("kies-vertrek").textContent = kort(keuze.vertrek);
     $("kies-huurlabel").textContent = `Huur (${n} nachten)`;
     $("kies-huur").textContent = euro(huur);
     $("kies-schoonmaak").textContent = euro(SCHOONMAAK);
     $("kies-totaal").textContent = euro(huur + SCHOONMAAK);
     $("kies-borg").textContent = euro(BORG);
     stroomTekst($("kies-stroom"), n);
-    $("aankomst").value = keuze.aankomst; $("vertrek").value = vertrek;
+    $("aankomst").value = keuze.aankomst; $("vertrek").value = keuze.vertrek;
     reken();
   }
   tekenKalender();
 }
-$("kies-nachten").addEventListener("input", rekenKeuze);
 function tekenKalender() {
   const eerste = new Date(kalJaar, kalMaand, 1);
   $("kal-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
@@ -548,15 +546,18 @@ function tekenKalender() {
   const dagen = new Date(kalJaar, kalMaand + 1, 0).getDate();
   for (let d = 1; d <= dagen; d++) {
     const dag = iso(kalJaar, kalMaand, d);
+    // De eerste dag van een bezette periode mag wel als vertrekdag: de volgende gast komt die dag pas aan.
+    const alsVertrek = keuze && !keuze.vertrek && dag > keuze.aankomst && bezet.some((b) => b.van === dag);
     let s;
     if (dag < vandaag) { s = document.createElement("span"); s.className = "voorbij"; }
-    else if (isBezet(dag)) { s = document.createElement("span"); s.className = "bezet"; s.title = "Bezet"; }
+    else if (isBezet(dag) && !alsVertrek) { s = document.createElement("span"); s.className = "bezet"; s.title = "Bezet"; }
     else {
       s = document.createElement("button"); s.type = "button";
-      s.setAttribute("aria-label", "Kies " + kort(dag) + " als aankomstdag");
-      s.addEventListener("click", () => kiesAankomst(dag));
-      if (keuze && keuze.aankomst <= dag && dag < keuze.vertrek) s.className = "gekozen";
-      else if (keuze && keuze.aankomst === dag) s.className = "start";
+      s.setAttribute("aria-label", "Kies " + kort(dag));
+      s.addEventListener("click", () => kiesDag(dag));
+      if (keuze && keuze.vertrek && keuze.aankomst <= dag && dag < keuze.vertrek) s.className = "gekozen";
+      else if (keuze && (keuze.aankomst === dag || keuze.vertrek === dag)) s.className = "start";
+      else if (alsVertrek) s.className = "bezet";
     }
     s.textContent = d;
     kal.append(s);
@@ -578,7 +579,7 @@ async function laadBeschikbaarheid() {
     if (!r.ok) throw new Error();
     bezet = (await r.json()).bezet || [];
     online = true;
-    $("kal-status").textContent = "Tik op een vrije dag en zie meteen je prijs";
+    $("kal-status").textContent = "Tik op je aankomstdag en daarna op je vertrekdag";
   } catch (e) {
     online = false;
     $("kal-blok").hidden = true;
@@ -630,7 +631,7 @@ function reken() {
   let fout = "";
   if (!isDatum(a) || !isDatum(v)) fout = `Kies een aankomst- en vertrekdatum. Het minimale verblijf is ${MIN_NACHTEN} nachten.`;
   else if (a < vandaag) fout = "De aankomstdatum ligt in het verleden.";
-  else if (nachten(a, v) < MIN_NACHTEN) fout = `Het minimale verblijf is ${MIN_NACHTEN} nachten. Je hebt er nu ${Math.max(nachten(a, v), 0)} gekozen.`;
+  else if (nachten(a, v) < MIN_NACHTEN) fout = `Dit kan niet: je koos ${Math.max(nachten(a, v), 0)} nachten. Een verblijf is alleen mogelijk vanaf ${MIN_NACHTEN} nachten.`;
   else if (bezet.some((b) => b.van < v && b.tot > a)) fout = "Deze periode is (deels) al bezet. Kies andere data.";
   melding.textContent = fout;
   melding.hidden = !fout;
