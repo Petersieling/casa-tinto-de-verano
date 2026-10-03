@@ -92,6 +92,10 @@ td.bedrag, th.bedrag { text-align: right; white-space: nowrap; }
 .koppel { background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; display: grid; gap: .5rem; }
 .koppel code { overflow-wrap: anywhere; font-size: .85rem; user-select: all; }
 
+.dk { border: 1px solid var(--gold); border-radius: .5rem; padding: .9rem; background: #fff; max-width: 22rem; }
+.dk-kop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .6rem; }
+.dagen button.kies { outline: 2px solid var(--orange); outline-offset: -2px; font-weight: 600; }
+
 /* dialoog */
 dialog { border: 1px solid var(--line); border-radius: .75rem; padding: 0; width: min(100% - 2rem, 34rem); color: var(--ink); background: var(--paper); }
 dialog::backdrop { background: rgba(58, 35, 21, .45); }
@@ -229,7 +233,7 @@ function formulier(titel, velden, waarden, opslaan, extra) {
     let el;
     if (v.type === "select") el = h("select", { id: "f-" + v.naam }, v.opties.map(([w, t]) => h("option", { value: w }, t)));
     else if (v.type === "textarea") el = h("textarea", { id: "f-" + v.naam, rows: v.rijen || 3 });
-    else if (v.type === "date") el = h("input", { id: "f-" + v.naam, type: "text", inputMode: "numeric", placeholder: "dd-mm-jjjj", maxLength: 10, autocomplete: "off" });
+    else if (v.type === "date") el = h("input", { id: "f-" + v.naam, type: "text", inputMode: "none", placeholder: "dd-mm-jjjj", maxLength: 10, autocomplete: "off" });
     else el = h("input", { id: "f-" + v.naam, type: v.type || "text", step: v.type === "number" ? (v.heel ? "1" : "0.01") : null, min: v.type === "number" ? "0" : null });
     if (v.type === "checkbox") el.checked = !!waarden[v.naam];
     else if (v.type === "date") el.value = waarden[v.naam] ? alsDatum(waarden[v.naam]) : "";
@@ -249,8 +253,53 @@ function formulier(titel, velden, waarden, opslaan, extra) {
     foutEl,
     h("div", { class: "onder" }, h("button", { type: "button", class: "licht", onclick: () => dlg.close() }, "Annuleren"), h("button", { type: "submit" }, "Opslaan")));
   dlg.replaceChildren(form);
+  datumKiezer(form, invoer, velden);
   if (extra) extra(invoer, form);
   dlg.showModal();
+}
+
+// Uitklapkalender bij datumvelden: tik op het veld en kies een dag. Typen kan ook.
+function datumKiezer(form, invoer, velden) {
+  const datumVelden = velden.filter((v) => v.type === "date");
+  if (!datumVelden.length) return;
+  const paneel = h("div", { class: "dk", hidden: true });
+  form.querySelector(".velden").after(paneel);
+  const actief = D.boekingen.filter((b) => ["bevestigd", "geblokkeerd", "aangevraagd"].includes(b.status));
+  let veld = null, jaar = 0, maand = 0;
+  const blader = (stap) => { const d = new Date(Date.UTC(jaar, maand + stap, 1)); jaar = d.getUTCFullYear(); maand = d.getUTCMonth(); teken(); };
+  function teken() {
+    const eerste = new Date(Date.UTC(jaar, maand, 1)), dagen = new Date(Date.UTC(jaar, maand + 1, 0)).getUTCDate(), leeg = (eerste.getUTCDay() + 6) % 7;
+    const gekozen = leesDatum(invoer[veld.naam].value);
+    paneel.replaceChildren(
+      h("div", { class: "dk-kop" }, h("strong", null, "Kies een dag: " + veld.label.toLowerCase()), h("button", { type: "button", class: "klein licht", onclick: () => { paneel.hidden = true; } }, "Sluiten")),
+      h("div", { class: "dk-kop" },
+        h("button", { type: "button", class: "klein licht", "aria-label": "Vorige maand", onclick: () => blader(-1) }, "‹"),
+        h("strong", { style: "text-transform:capitalize" }, new Intl.DateTimeFormat("nl-NL", { month: "long", year: "numeric", timeZone: "UTC" }).format(eerste)),
+        h("button", { type: "button", class: "klein licht", "aria-label": "Volgende maand", onclick: () => blader(1) }, "›")),
+      h("div", { class: "dagen" }, ["ma", "di", "wo", "do", "vr", "za", "zo"].map((d) => h("span", null, d)), Array.from({ length: leeg }, () => h("i")),
+        Array.from({ length: dagen }, (_, d) => {
+          const iso = `${jaar}-${String(maand + 1).padStart(2, "0")}-${String(d + 1).padStart(2, "0")}`;
+          const b = actief.find((x) => x.aankomst <= iso && iso < x.vertrek);
+          return h("button", { type: "button", class: [b ? b.status : "", iso === gekozen ? "kies" : ""].join(" "), title: b ? `${STATUS[b.status]}: ${b.naam || b.notitie || ""}` : "Vrij",
+            onclick: () => {
+              invoer[veld.naam].value = alsDatum(iso);
+              invoer[veld.naam].dispatchEvent(new Event("input", { bubbles: true }));
+              const volgende = veld.naam === "aankomst" && datumVelden.find((v) => v.naam === "vertrek");
+              if (volgende) open(volgende); else paneel.hidden = true;
+            } }, String(d + 1));
+        })));
+  }
+  function open(v) {
+    veld = v;
+    const basis = leesDatum(invoer[v.naam].value) || (v.naam === "vertrek" && invoer.aankomst && leesDatum(invoer.aankomst.value)) || D.vandaag;
+    jaar = +basis.slice(0, 4); maand = +basis.slice(5, 7) - 1;
+    paneel.hidden = false;
+    teken();
+  }
+  for (const v of datumVelden) {
+    invoer[v.naam].addEventListener("focus", () => open(v));
+    invoer[v.naam].addEventListener("click", () => open(v));
+  }
 }
 
 function boekingFormulier(b, nieuw) {
