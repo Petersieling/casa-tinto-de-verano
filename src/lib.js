@@ -112,7 +112,8 @@ export async function agendaSleutel(env) {
 
 // ---- Melding bij een nieuwe aanvraag ---------------------------------------
 // Push via ntfy (NTFY_TOPIC) en/of e-mail via Resend (RESEND_API_KEY + MELDING_EMAIL).
-export async function stuurMelding(env, onderwerp, inhoud) {
+// De push blijft kort en zonder persoonsgegevens. De e-mail gaat naar je eigen mailbox en bevat het volledige bericht.
+export async function stuurMelding(env, onderwerp, inhoud, volledig, antwoordAan) {
   const taken = [];
   if (env.NTFY_TOPIC) {
     taken.push(fetch("https://ntfy.sh/" + encodeURIComponent(env.NTFY_TOPIC), {
@@ -123,7 +124,7 @@ export async function stuurMelding(env, onderwerp, inhoud) {
     taken.push(fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: "Bearer " + env.RESEND_API_KEY, "content-type": "application/json" },
-      body: JSON.stringify({ from: env.MELDING_VAN || "Casa Tinto de Verano <onboarding@resend.dev>", to: [env.MELDING_EMAIL], subject: onderwerp, text: inhoud })
+      body: JSON.stringify({ from: env.MELDING_VAN || "Casa Tinto de Verano <onboarding@resend.dev>", to: [env.MELDING_EMAIL], subject: onderwerp, text: volledig || inhoud, ...(antwoordAan ? { reply_to: antwoordAan } : {}) })
     }));
   }
   await Promise.allSettled(taken);

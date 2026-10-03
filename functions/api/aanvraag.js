@@ -34,7 +34,38 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, huur, schoonmaak, borg, bron, bericht, aangemaakt) VALUES ('aangevraagd', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'site', ?, ?)")
     .bind(b.aankomst, b.vertrek, personen, volwassenen, kinderen, leeftijden.join(", "), naam, email, telefoon, huur, SCHOONMAAK, BORG, bericht, new Date().toISOString()).run();
 
-  waitUntil(stuurMelding(env, "Nieuwe aanvraag Casa Tinto de Verano",
-    `Nieuwe reserveringsaanvraag: ${b.aankomst} t/m ${b.vertrek} (${n} nachten), ${volwassenen} volwassenen en ${kinderen} kinderen. Open het beheer om te bevestigen of af te wijzen.`));
+  const nl = (iso) => `${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)}`;
+  const euro = (x) => "€ " + x.toLocaleString("nl-NL");
+  const beheer = new URL("/beheer/", request.url).href;
+  const volledig = [
+    "Er is een nieuwe reserveringsaanvraag binnengekomen via de website.",
+    "",
+    `Naam: ${naam}`,
+    `E-mail: ${email}`,
+    `Telefoon: ${telefoon || "niet opgegeven"}`,
+    "",
+    `Aankomst: ${nl(b.aankomst)}`,
+    `Vertrek: ${nl(b.vertrek)}`,
+    `Aantal nachten: ${n}`,
+    `Volwassenen: ${volwassenen}`,
+    `Kinderen: ${kinderen}` + (kinderen ? ` (leeftijd: ${leeftijden.join(", ")} jaar)` : ""),
+    "",
+    `Huur: ${euro(huur)}`,
+    `Eindschoonmaak: ${euro(SCHOONMAAK)}`,
+    `Totaal verblijf: ${euro(huur + SCHOONMAAK)}`,
+    `Borg: ${euro(BORG)}`,
+    "",
+    "Bericht van de gast:",
+    bericht || "(geen bericht)",
+    "",
+    "De gast is akkoord gegaan met de huurvoorwaarden.",
+    "De aanvraag is nog niet bevestigd. Bevestigen of afwijzen doe je in het beheer:",
+    beheer,
+    "",
+    "Je kunt deze mail beantwoorden om de gast rechtstreeks te schrijven."
+  ].join("\n");
+  waitUntil(stuurMelding(env, `Nieuwe aanvraag: ${naam}, ${nl(b.aankomst)} t/m ${nl(b.vertrek)}`,
+    `Nieuwe reserveringsaanvraag: ${nl(b.aankomst)} t/m ${nl(b.vertrek)} (${n} nachten), ${volwassenen} volwassenen en ${kinderen} kinderen. Open het beheer om te bevestigen of af te wijzen.`,
+    volledig, email));
   return json({ ok: true });
 });

@@ -22,6 +22,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   if (await teVaak(d, "gastenboek", ip, 3, 60)) throw new Melding("Er zijn net al berichten verstuurd. Probeer het later opnieuw.", 429);
   await noteerPoging(d, "gastenboek", ip);
   await d.prepare("INSERT INTO gastenboek (naam, verblijf, bericht, sterren, zichtbaar, aangemaakt) VALUES (?, ?, ?, ?, 0, ?)").bind(naam, verblijf, bericht, sterren, new Date().toISOString()).run();
-  waitUntil(stuurMelding(env, "Nieuw bericht in het gastenboek", "Er staat een nieuw bericht in het gastenboek. Open het beheer om het goed te keuren."));
+  waitUntil(stuurMelding(env, "Nieuw bericht in het gastenboek", "Er staat een nieuw bericht in het gastenboek. Open het beheer om het goed te keuren.",
+    [`Nieuw bericht in het gastenboek van ${naam}` + (verblijf ? ` (verblijf: ${verblijf})` : "") + ".", "", `Sterren: ${sterren} van 5`, "", bericht, "", "Het bericht staat nog niet op de website. Goedkeuren doe je in het beheer:", new URL("/beheer/", request.url).href].join("\n")));
   return json({ ok: true });
 });
