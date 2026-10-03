@@ -156,7 +156,8 @@ section[id] { scroll-margin-top: 5.5rem; }
 .fotos .breed { grid-column: 1 / -1; max-width: 30rem; margin-inline: auto; width: 100%; }
 .lijst { padding: .55rem; background: var(--paper); border: 1px solid var(--gold); border-radius: .5rem; box-shadow: 0 22px 44px -26px rgba(58, 35, 21, .55); }
 .fotos img { display: block; width: 100%; height: auto; border-radius: .25rem; background: var(--panel); }
-.fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; }
+.fotos .breed .lijst { border-radius: 50% 50% .5rem .5rem / 44% 44% .5rem .5rem; }
+.fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; border-radius: 50% 50% .25rem .25rem / 44% 44% .25rem .25rem; }
 .fotos .staand .lijst { border-radius: 12rem 12rem .5rem .5rem; }
 .fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12rem 12rem .25rem .25rem; }
 .fotos .staand + .staand { margin-top: 2.5rem; }
@@ -217,7 +218,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       <!-- FOTO TOEVOEGEN: kopieer een <figure>-blok en pas de bestandsnaam en de tekst aan. Gebruik class="breed" voor een liggende foto en class="staand" voor een staande. -->
       <div class="fotos">
         <figure class="breed">
-          <div class="lijst"><img src="fotos/woonkamer.jpg" width="1282" height="962" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div>
+          <div class="lijst"><img src="fotos/woonkamer.jpg?v=2" width="1400" height="1087" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div>
           <figcaption>Woonkamer<small>met eethoek en open keuken</small></figcaption>
         </figure>
         <figure class="staand">
