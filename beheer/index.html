@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Beheer | Casa Tinto de Verano</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Albert+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
 <style>
 :root {
   --paper: #FDFAF5; --panel: #F7EFE0; --ink: #3A2315; --muted: #7B6552; --gold: #B98A2E; --gold-text: #8A6016;
@@ -107,15 +107,28 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 /* factuur */
 #factuurlaag { position: fixed; inset: 0; background: #fff; z-index: 10; overflow: auto; }
 #factuurlaag .balk { display: flex; gap: .5rem; justify-content: flex-end; padding: .75rem 1rem; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #fff; }
-#factuur { max-width: 48rem; margin: 0 auto; padding: 2.5rem clamp(1rem, 5vw, 3rem); color: #222; }
-#factuur h1 { font-size: 2.2rem; }
-#factuur .twee { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-block: 2rem; }
+#factuur { max-width: 50rem; margin: 0 auto; padding: 2.5rem clamp(1rem, 5vw, 3rem) 3rem; color: var(--ink); font-size: .95rem; }
 #factuur p { margin: 0; white-space: pre-line; }
-#factuur .label { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: #777; margin-bottom: .25rem; }
-#factuur table { margin-top: 1rem; }
-#factuur th, #factuur td { border-top: 1px solid #ddd; padding-inline: 0; }
-#factuur tfoot td { font-weight: 600; font-size: 1.1rem; border-top: 2px solid #222; }
-#factuur .voet { margin-top: 2rem; display: grid; gap: .75rem; font-size: .95rem; }
+.f-kop { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--gold); }
+.f-kop img { width: 7.5rem; height: auto; display: block; }
+.f-titel { text-align: right; }
+.f-titel h1 { font-family: var(--display); font-weight: 500; font-size: 2.6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); line-height: 1; margin-right: -.22em; }
+.f-titel dl { margin: 1rem 0 0; display: grid; grid-template-columns: auto auto; justify-content: end; gap: .15rem 1rem; text-align: right; }
+.f-titel dt, #factuur .label { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); align-self: center; }
+.f-titel dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.f-partijen { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-block: 1.4rem; }
+#factuur .label { margin-bottom: .3rem; }
+.f-naam { font-family: var(--display); font-weight: 600; font-size: 1.3rem; line-height: 1.2; }
+.f-verblijf { text-align: center; font-family: var(--display); font-weight: 500; font-size: 1.25rem; padding: .7rem 0; border-block: 1px solid var(--line); }
+.f-verblijf span { color: var(--gold-text); margin-inline: .6rem; }
+#factuur table { margin-top: 1.5rem; }
+#factuur th, #factuur td { border-top: 1px solid var(--line); padding: .7rem 0; }
+#factuur thead th { border-top: 0; border-bottom: 1px solid var(--gold); color: var(--gold-text); }
+#factuur tfoot td { border-top: 1px solid var(--gold); border-bottom: 3px double var(--gold); font-family: var(--display); font-weight: 600; font-size: 1.45rem; padding: .6rem 0; }
+.f-betaling { margin-top: 1.75rem; border: 1px solid var(--gold); border-radius: .5rem; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem 2rem; break-inside: avoid; }
+.f-voet { margin-top: 1.4rem; text-align: center; color: var(--muted); font-size: .85rem; display: grid; gap: .3rem; break-inside: avoid; }
+.f-voet .f-slogan { font-family: "Pinyon Script", cursive; font-size: 1.9rem; color: var(--gold-text); line-height: 1.2; }
+@media (max-width: 34rem) { .f-partijen, .f-betaling { grid-template-columns: 1fr; } .f-kop { flex-direction: column; align-items: flex-start; } .f-titel, .f-titel dl { text-align: left; justify-content: start; } }
 @media print {
   html, body { background: #fff !important; }
   body > :not(#factuurlaag) { display: none !important; }
@@ -525,7 +538,7 @@ const VIEWS = {
       ["afzender_nummer", "Fiscaal nummer (bijvoorbeeld NIE of NIF), als dat op de factuur moet"], ["iban", "IBAN"], ["iban_naam", "Rekening op naam van"],
       ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true]
     ];
-    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Graag overmaken onder vermelding van het factuurnummer." };
+    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Bedankt voor je reservering. We wensen je een fijn verblijf." };
     const inv = {};
     const form = h("form", { style: "display:grid;gap:1rem;max-width:44rem", onsubmit: async (e) => {
       e.preventDefault();
@@ -548,24 +561,33 @@ const VIEWS = {
 // ---- Factuur tonen en afdrukken ----
 function toonFactuur(f) {
   const g = f.gegevens, a = g.afzender || {};
+  const regelTekst = (...delen) => delen.filter(Boolean).join("\n");
   $("#factuur").replaceChildren(
-    h("h1", null, "Factuur"),
-    h("div", { class: "twee" },
-      h("div", null, h("p", { class: "label" }, "Van"), h("p", null, [a.afzender_naam, a.afzender_adres, a.afzender_email, a.afzender_telefoon, a.afzender_nummer].filter(Boolean).join("\n"))),
-      h("div", null, h("p", { class: "label" }, "Aan"), h("p", null, [g.klant?.naam, g.klant?.adres, g.klant?.email].filter(Boolean).join("\n")))),
-    h("div", { class: "twee" },
-      h("div", null, h("p", { class: "label" }, "Factuurnummer"), h("p", null, f.nummer)),
-      h("div", null, h("p", { class: "label" }, "Factuurdatum"), h("p", null, datum(f.datum, true)))),
+    h("div", { class: "f-kop" },
+      h("img", { src: "logo.webp", alt: "Casa Tinto de Verano", width: 420, height: 520 }),
+      h("div", { class: "f-titel" },
+        h("h1", null, "Factuur"),
+        h("dl", null, h("dt", null, "Nummer"), h("dd", null, f.nummer), h("dt", null, "Datum"), h("dd", null, datum(f.datum, true))))),
+    h("div", { class: "f-partijen" },
+      h("div", null, h("p", { class: "label" }, "Van"), h("p", { class: "f-naam" }, a.afzender_naam || ""),
+        h("p", null, regelTekst(a.afzender_adres, a.afzender_email, a.afzender_telefoon, a.afzender_nummer))),
+      h("div", null, h("p", { class: "label" }, "Aan"), h("p", { class: "f-naam" }, g.klant?.naam || ""),
+        h("p", null, regelTekst(g.klant?.adres, g.klant?.email)))),
+    g.aankomst && g.vertrek ? h("p", { class: "f-verblijf" }, "Verblijf in Casa Tinto de Verano", h("span", null, "♥"),
+      `${datum(g.aankomst, true)} t/m ${datum(g.vertrek, true)}`) : null,
     h("table", null,
       h("thead", null, h("tr", null, h("th", null, "Omschrijving"), h("th", { class: "bedrag" }, "Bedrag"))),
       h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
       h("tfoot", null, h("tr", null, h("td", null, "Totaal"), h("td", { class: "bedrag" }, euro(f.totaal))))),
-    h("div", { class: "voet" },
+    h("div", { class: "f-betaling" },
+      h("div", null, h("p", { class: "label" }, "Betaling"),
+        h("p", null, regelTekst(g.betaling, g.borg ? `Daarnaast te voldoen: borg ${euro(g.borg)}.` : "", a.betaal_tekst))),
+      h("div", null, h("p", { class: "label" }, "Overmaken naar"),
+        h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `Ten name van: ${a.iban_naam}` : "", `Onder vermelding van: ${f.nummer}`)))),
+    h("div", { class: "f-voet" },
       a.btw_regel ? h("p", null, a.btw_regel) : null,
-      g.borg ? h("p", null, `Daarnaast te voldoen: borg ${euro(g.borg)}.`) : null,
-      g.betaling ? h("p", null, g.betaling) : null,
-      a.betaal_tekst ? h("p", null, a.betaal_tekst) : null,
-      a.iban ? h("p", null, `IBAN: ${a.iban}` + (a.iban_naam ? `\nTen name van: ${a.iban_naam}` : "")) : null));
+      h("p", { class: "f-slogan" }, "Your place under the sun"),
+      h("p", null, "Casa Tinto de Verano · Punta Prima · Torrevieja · Costa Blanca")));
   $("#factuurlaag").hidden = false;
 }
 $("#factuursluit").addEventListener("click", () => { $("#factuurlaag").hidden = true; });
