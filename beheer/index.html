@@ -173,6 +173,15 @@ function h(tag, attrs, ...kids) {
 const euro = (n) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" }).format(n || 0);
 const datum = (iso, lang) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: lang ? "long" : "short", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 const periode = (b) => `${datum(b.aankomst)} t/m ${datum(b.vertrek)}`;
+// "2 volwassenen, 1 kind (6 jaar)"; bij oudere boekingen alleen het aantal personen.
+function gezelschap(b) {
+  if (b.volwassenen == null && b.kinderen == null) return b.personen ? `${b.personen} personen` : "";
+  const v = b.volwassenen || 0, k = b.kinderen || 0;
+  let t = `${v} ${v === 1 ? "volwassene" : "volwassenen"}`;
+  if (k) t += `, ${k} ${k === 1 ? "kind" : "kinderen"}` + (b.leeftijden ? ` (${b.leeftijden} jaar)` : "");
+  else t += ", geen kinderen";
+  return t;
+}
 const totaal = (b) => (b.huur || 0) + (b.schoonmaak || 0);
 const STATUS = { aangevraagd: "Aangevraagd", bevestigd: "Bevestigd", geblokkeerd: "Geblokkeerd", afgewezen: "Afgewezen", geannuleerd: "Geannuleerd" };
 
@@ -212,7 +221,7 @@ function formulier(titel, velden, waarden, opslaan, extra) {
     let el;
     if (v.type === "select") el = h("select", { id: "f-" + v.naam }, v.opties.map(([w, t]) => h("option", { value: w }, t)));
     else if (v.type === "textarea") el = h("textarea", { id: "f-" + v.naam, rows: v.rijen || 3 });
-    else el = h("input", { id: "f-" + v.naam, type: v.type || "text", step: v.type === "number" ? "0.01" : null, min: v.type === "number" ? "0" : null });
+    else el = h("input", { id: "f-" + v.naam, type: v.type || "text", step: v.type === "number" ? (v.heel ? "1" : "0.01") : null, min: v.type === "number" ? "0" : null });
     if (v.type === "checkbox") el.checked = !!waarden[v.naam]; else el.value = waarden[v.naam] ?? "";
     invoer[v.naam] = el;
     const lab = v.type === "checkbox" ? h("label", { class: "vink breed", for: el.id }, el, v.label) : h("label", { class: v.breed ? "breed" : "", for: el.id }, v.label, el);
@@ -243,7 +252,9 @@ function boekingFormulier(b, nieuw) {
     { naam: "naam", label: "Naam gast", groep: "gast nieuw" },
     { naam: "email", label: "E-mail", type: "email", groep: "gast nieuw" },
     { naam: "telefoon", label: "Telefoon", groep: "gast nieuw" },
-    { naam: "personen", label: "Personen", type: "number", groep: "gast" },
+    { naam: "volwassenen", label: "Volwassenen", type: "number", heel: true, groep: "gast" },
+    { naam: "kinderen", label: "Kinderen", type: "number", heel: true, groep: "gast" },
+    { naam: "leeftijden", label: "Leeftijd kinderen (bijv. 6, 9)", groep: "gast" },
     { naam: "huur", label: "Huur (€)", type: "number", groep: "gast" },
     { naam: "schoonmaak", label: "Eindschoonmaak (€)", type: "number", groep: "gast" },
     { naam: "borg", label: "Borg (€)", type: "number", groep: "gast" },
@@ -270,7 +281,7 @@ function boekingFormulier(b, nieuw) {
       werk();
     });
 }
-const nieuweBoeking = (aankomst) => boekingFormulier({ soort: "boeking", aankomst: aankomst || "", vertrek: "", personen: 2, schoonmaak: SCHOONMAAK, borg: BORG }, true);
+const nieuweBoeking = (aankomst) => boekingFormulier({ soort: "boeking", aankomst: aankomst || "", vertrek: "", volwassenen: 2, kinderen: 0, schoonmaak: SCHOONMAAK, borg: BORG }, true);
 
 function klantFormulier(k) {
   formulier(k.id ? "Klant bewerken" : "Nieuwe klant", [
@@ -286,7 +297,7 @@ function klantFormulier(k) {
 function mailLink(b, soort) {
   const groet = `Beste ${b.naam || "gast"},\n\n`;
   const tekst = soort === "bevestig"
-    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nAantal personen: ${b.personen || ""}\n\nHuur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nMet vriendelijke groet,\n${D.instellingen.afzender_naam || "Casa Tinto de Verano"}`
+    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nGezelschap: ${gezelschap(b)}\n\nHuur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nMet vriendelijke groet,\n${D.instellingen.afzender_naam || "Casa Tinto de Verano"}`
     : `${groet}Bedankt voor je aanvraag voor Casa Tinto de Verano van ${datum(b.aankomst, true)} t/m ${datum(b.vertrek, true)}. Helaas kunnen we deze periode niet voor je reserveren.\n\nMet vriendelijke groet,\n${D.instellingen.afzender_naam || "Casa Tinto de Verano"}`;
   const onderwerp = soort === "bevestig" ? "Bevestiging reservering Casa Tinto de Verano" : "Je aanvraag voor Casa Tinto de Verano";
   return `mailto:${encodeURIComponent(b.email || "")}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(tekst)}`;
@@ -309,7 +320,8 @@ const VIEWS = {
       h("p", { class: "uitleg" }, "Aanvragen via de website staan hier. Een periode is pas bezet op de website nadat je de aanvraag hebt bevestigd."),
       lijst.length ? h("div", { class: "kaarten" }, lijst.map((b) => h("div", { class: "kaart" },
         h("h3", null, b.naam || "Onbekende gast"),
-        h("p", null, `${periode(b)} · ${nachten(b.aankomst, b.vertrek)} nachten · ${b.personen || "?"} personen`),
+        h("p", null, `${periode(b)} · ${nachten(b.aankomst, b.vertrek)} nachten`),
+        h("p", null, gezelschap(b) || "Gezelschap onbekend"),
         h("p", null, `Indicatie: ${euro(totaal(b))} (huur ${euro(b.huur)}, schoonmaak ${euro(b.schoonmaak)}), borg ${euro(b.borg)}`),
         h("p", { class: "klein-tekst" }, [b.email, b.telefoon].filter(Boolean).join(" · ")),
         b.bericht ? h("p", { class: "bericht" }, b.bericht) : null,
@@ -362,7 +374,7 @@ const VIEWS = {
       const f = factuurVan[b.id], gast = b.status === "geblokkeerd" ? (b.notitie || "Geblokkeerd") : (b.naam || "");
       return h("tr", null,
         h("td", null, periode(b), h("div", { class: "klein-tekst" }, `${nachten(b.aankomst, b.vertrek)} nachten`)),
-        h("td", null, gast, b.status !== "geblokkeerd" && b.personen ? h("div", { class: "klein-tekst" }, `${b.personen} personen`) : null),
+        h("td", null, gast, b.status !== "geblokkeerd" && gezelschap(b) ? h("div", { class: "klein-tekst" }, gezelschap(b)) : null),
         h("td", null, h("span", { class: "pil " + b.status }, STATUS[b.status])),
         h("td", { class: "bedrag" }, b.status === "geblokkeerd" ? "" : euro(totaal(b))),
         h("td", null, b.status === "bevestigd" ? h("button", { type: "button", class: "pil " + (b.betaald ? "betaald" : "open"), style: "border:0;cursor:pointer", title: "Klik om te wisselen",

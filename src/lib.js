@@ -9,7 +9,7 @@ export class Melding extends Error {
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS klanten (id INTEGER PRIMARY KEY AUTOINCREMENT, naam TEXT NOT NULL, email TEXT, telefoon TEXT, adres TEXT, notitie TEXT, aangemaakt TEXT)`,
-  `CREATE TABLE IF NOT EXISTS boekingen (id INTEGER PRIMARY KEY AUTOINCREMENT, status TEXT NOT NULL, aankomst TEXT NOT NULL, vertrek TEXT NOT NULL, personen INTEGER, naam TEXT, email TEXT, telefoon TEXT, klant_id INTEGER, huur REAL DEFAULT 0, schoonmaak REAL DEFAULT 0, borg REAL DEFAULT 0, betaald INTEGER DEFAULT 0, bron TEXT, bericht TEXT, notitie TEXT, aangemaakt TEXT)`,
+  `CREATE TABLE IF NOT EXISTS boekingen (id INTEGER PRIMARY KEY AUTOINCREMENT, status TEXT NOT NULL, aankomst TEXT NOT NULL, vertrek TEXT NOT NULL, personen INTEGER, naam TEXT, email TEXT, telefoon TEXT, klant_id INTEGER, volwassenen INTEGER, kinderen INTEGER, leeftijden TEXT, huur REAL DEFAULT 0, schoonmaak REAL DEFAULT 0, borg REAL DEFAULT 0, betaald INTEGER DEFAULT 0, bron TEXT, bericht TEXT, notitie TEXT, aangemaakt TEXT)`,
   `CREATE TABLE IF NOT EXISTS facturen (id INTEGER PRIMARY KEY AUTOINCREMENT, nummer TEXT UNIQUE NOT NULL, boeking_id INTEGER UNIQUE, datum TEXT, gegevens TEXT, totaal REAL)`,
   `CREATE TABLE IF NOT EXISTS instellingen (sleutel TEXT PRIMARY KEY, waarde TEXT)`,
   `CREATE TABLE IF NOT EXISTS pogingen (soort TEXT, ip TEXT, tijd INTEGER)`
@@ -19,6 +19,12 @@ export async function db(env) {
   if (!env.DB) throw new Melding("De database is nog niet gekoppeld.", 503);
   if (!schemaKlaar) {
     await env.DB.batch(SCHEMA.map((s) => env.DB.prepare(s)));
+    // Kolommen die later zijn toegevoegd, bijwerken in een bestaande database.
+    const { results } = await env.DB.prepare("SELECT name FROM pragma_table_info('boekingen')").all();
+    const aanwezig = new Set(results.map((r) => r.name));
+    for (const [kolom, soort] of [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"]]) {
+      if (!aanwezig.has(kolom)) await env.DB.prepare(`ALTER TABLE boekingen ADD COLUMN ${kolom} ${soort}`).run();
+    }
     schemaKlaar = true;
   }
   return env.DB;

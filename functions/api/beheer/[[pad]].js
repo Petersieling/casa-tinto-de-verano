@@ -5,6 +5,15 @@ import { isDatum, nachten } from "../../../src/prijzen.js";
 const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst"];
 const datumNl = (iso) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 
+// Volwassenen en kinderen uit het formulier; het totaal wordt het aantal personen.
+function leesGezelschap(b) {
+  const heeft = (v) => v !== "" && v != null;
+  const volwassenen = heeft(b.volwassenen) ? Math.max(0, Math.trunc(+b.volwassenen) || 0) : null;
+  const kinderen = heeft(b.kinderen) ? Math.max(0, Math.trunc(+b.kinderen) || 0) : null;
+  const personen = volwassenen == null && kinderen == null ? Math.trunc(+b.personen) || null : (volwassenen || 0) + (kinderen || 0);
+  return { volwassenen, kinderen, personen, leeftijden: tekst(b.leeftijden, 60) };
+}
+
 function leesPeriode(b) {
   if (!isDatum(b.aankomst) || !isDatum(b.vertrek)) throw new Melding("Vul een aankomst- en vertrekdatum in.");
   if (nachten(b.aankomst, b.vertrek) < 1) throw new Melding("De vertrekdatum moet na de aankomstdatum liggen.");
@@ -62,8 +71,9 @@ export const onRequest = veilig(async ({ request, env, params }) => {
         klantId = k.id; gast = { naam: k.naam, email: k.email || "", telefoon: k.telefoon || "" };
       } else klantId = await klantVoor(d, gast);
     }
-    const r = await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, naam, email, telefoon, klant_id, huur, schoonmaak, borg, betaald, bron, notitie, aangemaakt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'handmatig', ?, ?)")
-      .bind(blokkade ? "geblokkeerd" : "bevestigd", b.aankomst, b.vertrek, blokkade ? null : Math.trunc(+b.personen) || null,
+    const g = leesGezelschap(b);
+    const r = await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, klant_id, huur, schoonmaak, borg, betaald, bron, notitie, aangemaakt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'handmatig', ?, ?)")
+      .bind(blokkade ? "geblokkeerd" : "bevestigd", b.aankomst, b.vertrek, blokkade ? null : g.personen, blokkade ? null : g.volwassenen, blokkade ? null : g.kinderen, blokkade ? "" : g.leeftijden,
         blokkade ? "" : gast.naam, blokkade ? "" : gast.email, blokkade ? "" : gast.telefoon, klantId,
         blokkade ? 0 : getal(b.huur), blokkade ? 0 : getal(b.schoonmaak), blokkade ? 0 : getal(b.borg), tekst(b.notitie, 1000), new Date().toISOString()).run();
     return json({ ok: true, id: r.meta.last_row_id });
@@ -90,8 +100,9 @@ export const onRequest = veilig(async ({ request, env, params }) => {
       leesPeriode(b);
       const actief = huidig.status === "bevestigd" || huidig.status === "geblokkeerd";
       if (actief && (await overlapt(d, b.aankomst, b.vertrek, id))) throw new Melding("Deze periode overlapt met een andere boeking of blokkade.", 409);
-      await d.prepare("UPDATE boekingen SET aankomst = ?, vertrek = ?, personen = ?, naam = ?, email = ?, telefoon = ?, huur = ?, schoonmaak = ?, borg = ?, betaald = ?, notitie = ? WHERE id = ?")
-        .bind(b.aankomst, b.vertrek, Math.trunc(+b.personen) || null, tekst(b.naam, 100), tekst(b.email, 150), tekst(b.telefoon, 40),
+      const g = leesGezelschap(b);
+      await d.prepare("UPDATE boekingen SET aankomst = ?, vertrek = ?, personen = ?, volwassenen = ?, kinderen = ?, leeftijden = ?, naam = ?, email = ?, telefoon = ?, huur = ?, schoonmaak = ?, borg = ?, betaald = ?, notitie = ? WHERE id = ?")
+        .bind(b.aankomst, b.vertrek, g.personen, g.volwassenen, g.kinderen, g.leeftijden, tekst(b.naam, 100), tekst(b.email, 150), tekst(b.telefoon, 40),
           getal(b.huur), getal(b.schoonmaak), getal(b.borg), b.betaald ? 1 : 0, tekst(b.notitie, 1000), id).run();
       return json({ ok: true });
     }
