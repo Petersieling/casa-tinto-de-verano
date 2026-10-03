@@ -147,17 +147,27 @@ section[id] { scroll-margin-top: 5.5rem; }
 </style>
 <style>
 .top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
-.impressie .head { margin-bottom: 2.5rem; }
-.fotos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 3vw, 2rem); }
-.fotos figure { margin: 0; min-width: 0; }
-.fotos .breed { grid-column: 1 / -1; }
-.fotos img { display: block; width: 100%; height: auto; border-radius: .5rem; background: var(--panel); }
+.impressie .head { margin: 0 auto 2.5rem; text-align: center; }
+.impressie .head p:last-child { color: var(--muted); }
+.hartje { color: var(--gold); text-align: center; font-size: 1.1rem; margin: 0 0 2rem; letter-spacing: 1.2em; padding-left: 1.2em; }
+.fotos { max-width: 40rem; margin-inline: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 2.75rem); align-items: start; }
+.fotos figure { margin: 0; min-width: 0; text-align: center; }
+.fotos .breed { grid-column: 1 / -1; max-width: 30rem; margin-inline: auto; width: 100%; }
+.lijst { padding: .55rem; background: var(--paper); border: 1px solid var(--gold); border-radius: .5rem; box-shadow: 0 22px 44px -26px rgba(58, 35, 21, .55); }
+.fotos img { display: block; width: 100%; height: auto; border-radius: .25rem; background: var(--panel); }
 .fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; }
-.fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; }
-.fotos figcaption { margin-top: .7rem; font-family: var(--display); font-weight: 600; font-size: 1.3rem; line-height: 1.2; }
-.fotos figcaption small { display: block; font-family: var(--body); font-weight: 400; font-size: .92rem; color: var(--muted); margin-top: .15rem; }
-.impressie .cta { margin-top: 2.5rem; }
-@media (max-width: 34rem) { .fotos { grid-template-columns: minmax(0, 1fr); } }
+.fotos .staand .lijst { border-radius: 12rem 12rem .5rem .5rem; }
+.fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12rem 12rem .25rem .25rem; }
+.fotos .staand + .staand { margin-top: 2.5rem; }
+.fotos figcaption { margin-top: 1rem; font-family: var(--script); color: var(--gold-text); font-size: 2rem; line-height: 1.1; }
+.fotos figcaption small { display: block; font-family: var(--body); font-size: .88rem; color: var(--muted); margin-top: .3rem; letter-spacing: .04em; }
+.impressie .slot { text-align: center; }
+.impressie .cta { margin-top: 3rem; }
+@media (max-width: 34rem) {
+  .fotos { grid-template-columns: minmax(0, 1fr); }
+  .fotos .staand { max-width: 17rem; margin-inline: auto; width: 100%; }
+  .fotos .staand + .staand { margin-top: 0; }
+}
 </style>
 </head>
 <body>
@@ -183,24 +193,25 @@ section[id] { scroll-margin-top: 5.5rem; }
         <h1>Een <span class="script">impressie</span></h1>
         <p>Zo ziet het penthouse er van binnen uit.</p>
       </div>
+      <p class="hartje" aria-hidden="true">&#9829;</p>
 
       <!-- FOTO TOEVOEGEN: kopieer een <figure>-blok en pas de bestandsnaam en de tekst aan. Gebruik class="breed" voor een liggende foto en class="staand" voor een staande. -->
       <div class="fotos">
         <figure class="breed">
-          <img src="fotos/woonkamer.jpg" width="1282" height="962" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar">
+          <div class="lijst"><img src="fotos/woonkamer.jpg" width="1282" height="962" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div>
           <figcaption>Woonkamer<small>met eethoek en open keuken</small></figcaption>
         </figure>
         <figure class="staand">
-          <img src="fotos/slaapkamer.jpg" width="962" height="1282" loading="lazy" alt="Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur">
+          <div class="lijst"><img src="fotos/slaapkamer.jpg" width="962" height="1282" loading="lazy" alt="Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur"></div>
           <figcaption>Slaapkamer 2<small>met twee losse bedden</small></figcaption>
         </figure>
         <figure class="staand">
-          <img src="fotos/badkamer.jpg" width="962" height="1282" loading="lazy" alt="Badkamer met inloopdouche, wastafel en ronde spiegel">
+          <div class="lijst"><img src="fotos/badkamer.jpg" width="962" height="1282" loading="lazy" alt="Badkamer met inloopdouche, wastafel en ronde spiegel"></div>
           <figcaption>Badkamer<small>met inloopdouche</small></figcaption>
         </figure>
       </div>
 
-      <a class="cta" href="index.html#prijzen">Bekijk prijzen en beschikbaarheid</a>
+      <p class="slot"><a class="cta" href="index.html#prijzen">Bekijk prijzen en beschikbaarheid</a></p>
     </div>
   </section>
 </main>
