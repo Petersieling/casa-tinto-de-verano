@@ -79,6 +79,21 @@ section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .head { max-width: 40rem; margin-bottom: 2rem; }
 .head p { color: var(--muted); margin: .75rem 0 0; }
 
+.sierlijn { display: flex; align-items: center; gap: 1.25rem; margin: 0; color: var(--gold); font-size: 1rem; line-height: 1; }
+.sierlijn::before, .sierlijn::after { content: ""; flex: 1; height: 1px; background: var(--gold); opacity: .55; }
+.boogfoto { margin: 0 auto clamp(2.5rem, 6vw, 4rem); max-width: 30rem; text-align: center; }
+.boogfoto .lijst { padding: .55rem; background: var(--paper); border: 1px solid var(--gold); border-radius: 50% 50% .5rem .5rem / 44% 44% .5rem .5rem; box-shadow: 0 22px 44px -26px rgba(58, 35, 21, .55); }
+.boogfoto img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 50% 50% .25rem .25rem / 44% 44% .25rem .25rem; background: var(--panel); }
+.boogfoto figcaption { margin-top: 1rem; font-family: var(--script); color: var(--gold-text); font-size: 2rem; line-height: 1.1; }
+.boogfoto figcaption small { display: block; font-family: var(--body); font-size: .9rem; margin-top: .4rem; letter-spacing: .04em; }
+.boogfoto figcaption small a { color: var(--gold-text); }
+@media (max-width: 40rem) {
+  .hero .wrap { padding-bottom: 1.5rem; }
+  #penthouse { padding-top: 1.75rem; }
+  #penthouse .pagina-kop { margin-bottom: 1.5rem; }
+  .boogfoto { max-width: 80%; margin-bottom: 2rem; }
+  .boogfoto figcaption { font-size: 1.75rem; margin-top: .75rem; }
+}
 .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
 .rooms h3 { font-size: 1.75rem; color: var(--gold-text); padding-bottom: .55rem; border-bottom: 2px solid var(--gold); }
 .rooms ul { list-style: none; margin: 0; padding: 0; }
@@ -351,6 +366,8 @@ section[id] { scroll-margin-top: 5.5rem; }
     </div>
   </div>
 
+  <div class="wrap"><p class="sierlijn" aria-hidden="true"><span>&#9829;</span></p></div>
+
   <section id="penthouse">
     <div class="wrap">
       <div class="pagina-kop">
@@ -358,6 +375,10 @@ section[id] { scroll-margin-top: 5.5rem; }
         <h2>Over het <span class="script">penthouse</span></h2>
         <p>Met een eigen dakterras, een gedeeld zwembad en een eigen parkeerplaats in de garage.</p>
       </div>
+      <figure class="boogfoto">
+        <a href="impressie.html"><div class="lijst"><img src="fotos/woonkamer.jpg?v=2" width="1400" height="1087" loading="lazy" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div></a>
+        <figcaption>Woonkamer<small><a href="impressie.html">Bekijk de impressie</a></small></figcaption>
+      </figure>
       <div class="rooms">
         <div>
           <h3>Binnen</h3>
