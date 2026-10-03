@@ -13,6 +13,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   const leeftijden = Array.isArray(b.leeftijden) ? b.leeftijden.map((l) => Math.trunc(+l)) : [];
   const personen = volwassenen + kinderen;
   if (naam.length < 2) throw new Melding("Vul je naam in.");
+  if (b.volwassenen_24 !== true) throw new Melding("Bevestig dat alle volwassenen in je gezelschap 24 jaar of ouder zijn.");
   if (b.akkoord !== true) throw new Melding("Ga akkoord met de huurvoorwaarden om je aanvraag te versturen.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Melding("Vul een geldig e-mailadres in.");
   if (!(volwassenen >= 1)) throw new Melding("Geef aan met hoeveel volwassenen je komt.");
@@ -58,6 +59,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
     "Bericht van de gast:",
     bericht || "(geen bericht)",
     "",
+    "De gast heeft bevestigd dat alle volwassenen 24 jaar of ouder zijn.",
     "De gast is akkoord gegaan met de huurvoorwaarden.",
     "De aanvraag is nog niet bevestigd. Bevestigen of afwijzen doe je in het beheer:",
     beheer,
