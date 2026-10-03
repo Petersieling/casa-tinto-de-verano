@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Over de eigenaren van Casa Tinto de Verano, het penthouse in Punta Prima aan de Costa Blanca.">
+<meta name="description" content="Foto's van Casa Tinto de Verano: de woonkamer met open keuken, de slaapkamer en de badkamer van het penthouse in Punta Prima.">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Over ons | Casa Tinto de Verano</title>
+<title>Impressie | Casa Tinto de Verano</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
@@ -146,10 +146,18 @@ footer { border-top: 1px solid var(--line); padding-block: 2rem; text-align: cen
 section[id] { scroll-margin-top: 5.5rem; }
 </style>
 <style>
-.about { max-width: 42rem; }
-.about p { margin: 1.25rem 0 0; }
-.about .cta { margin-top: 2rem; }
 .top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
+.impressie .head { margin-bottom: 2.5rem; }
+.fotos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 3vw, 2rem); }
+.fotos figure { margin: 0; min-width: 0; }
+.fotos .breed { grid-column: 1 / -1; }
+.fotos img { display: block; width: 100%; height: auto; border-radius: .5rem; background: var(--panel); }
+.fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; }
+.fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; }
+.fotos figcaption { margin-top: .7rem; font-family: var(--display); font-weight: 600; font-size: 1.3rem; line-height: 1.2; }
+.fotos figcaption small { display: block; font-family: var(--body); font-weight: 400; font-size: .92rem; color: var(--muted); margin-top: .15rem; }
+.impressie .cta { margin-top: 2.5rem; }
+@media (max-width: 34rem) { .fotos { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
@@ -158,28 +166,41 @@ section[id] { scroll-margin-top: 5.5rem; }
     <a class="brand" href="index.html">Casa Tinto de Verano</a>
     <nav aria-label="Onderdelen">
       <a href="index.html#penthouse">Het penthouse</a>
-      <a href="impressie.html">Impressie</a>
+      <a href="impressie.html" aria-current="page">Impressie</a>
       <a href="index.html#prijzen">Prijzen</a>
       <a href="index.html#praktisch">Praktisch</a>
       <a href="index.html#contact">Reserveren</a>
-      <a href="over-ons.html" aria-current="page">Over ons</a>
+      <a href="over-ons.html">Over ons</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <section>
+  <section class="impressie">
     <div class="wrap">
-      <div class="about">
+      <div class="head">
         <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
-        <h1>Over <span class="script">ons</span></h1>
-
-        <!-- VUL HIER JE EIGEN TEKST IN: vervang de alinea hieronder. Elke alinea staat tussen <p> en </p>. -->
-        <p class="lead">Binnenkort lees je hier meer over ons en over Casa Tinto de Verano.</p>
-        <!-- EINDE EIGEN TEKST -->
-
-        <a class="cta" href="index.html#contact">Contact en reserveringen</a>
+        <h1>Een <span class="script">impressie</span></h1>
+        <p>Zo ziet het penthouse er van binnen uit.</p>
       </div>
+
+      <!-- FOTO TOEVOEGEN: kopieer een <figure>-blok en pas de bestandsnaam en de tekst aan. Gebruik class="breed" voor een liggende foto en class="staand" voor een staande. -->
+      <div class="fotos">
+        <figure class="breed">
+          <img src="fotos/woonkamer.jpg" width="1282" height="962" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar">
+          <figcaption>Woonkamer<small>met eethoek en open keuken</small></figcaption>
+        </figure>
+        <figure class="staand">
+          <img src="fotos/slaapkamer.jpg" width="962" height="1282" loading="lazy" alt="Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur">
+          <figcaption>Slaapkamer 2<small>met twee losse bedden</small></figcaption>
+        </figure>
+        <figure class="staand">
+          <img src="fotos/badkamer.jpg" width="962" height="1282" loading="lazy" alt="Badkamer met inloopdouche, wastafel en ronde spiegel">
+          <figcaption>Badkamer<small>met inloopdouche</small></figcaption>
+        </figure>
+      </div>
+
+      <a class="cta" href="index.html#prijzen">Bekijk prijzen en beschikbaarheid</a>
     </div>
   </section>
 </main>
