@@ -156,6 +156,18 @@ section[id] { scroll-margin-top: 5.5rem; }
 .berichten blockquote { margin: 0; font-family: var(--display); font-weight: 500; font-size: 1.45rem; line-height: 1.35; white-space: pre-line; overflow-wrap: anywhere; }
 .berichten .van { margin: .9rem 0 0; color: var(--muted); font-size: .92rem; }
 .berichten .van b { font-family: var(--script); font-weight: 400; font-size: 1.7rem; color: var(--gold-text); margin-right: .5rem; }
+.sterren-toon { color: var(--gold); letter-spacing: .12em; font-size: 1.15rem; margin: 0 0 .5rem; }
+.sterren-toon i { font-style: normal; color: var(--line); }
+.gemiddeld { text-align: center; margin: 0 0 2.5rem; color: var(--muted); }
+.gemiddeld b { font-family: var(--display); font-size: 2.2rem; color: var(--ink); margin-right: .4rem; }
+.gemiddeld .sterren-toon { display: inline; font-size: 1.4rem; margin-right: .5rem; }
+.kies-sterren { border: 0; margin: 0; padding: 0; min-width: 0; }
+.kies-sterren legend { font-size: .85rem; color: var(--muted); padding: 0; margin-bottom: .2rem; }
+.kies-sterren .rij { position: relative; display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; }
+.schrijf .kies-sterren input { position: absolute; opacity: 0; width: 1px; height: 1px; padding: 0; border: 0; }
+.schrijf .kies-sterren label { display: block; font-size: 2.2rem; line-height: 1; padding: 0 .12rem; color: var(--line); cursor: pointer; -webkit-text-stroke: 1px var(--gold); }
+.schrijf .kies-sterren input:checked ~ label, .schrijf .kies-sterren label:hover, .schrijf .kies-sterren label:hover ~ label { color: var(--gold); }
+.kies-sterren input:focus-visible + label { outline: 2px solid var(--orange); outline-offset: 2px; border-radius: .2rem; }
 .leeg { text-align: center; color: var(--muted); border: 1px dashed var(--gold); border-radius: .5rem; padding: 1.5rem; margin: 0; }
 .schrijf { margin-top: 3.5rem; background: var(--panel); border: 1px solid var(--line); border-radius: .75rem; padding: clamp(1.25rem, 4vw, 2rem); display: grid; gap: 1rem; }
 .schrijf .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .9rem; }
@@ -214,6 +226,7 @@ section[id] { scroll-margin-top: 5.5rem; }
           <p>Ben je bij ons te gast geweest? We lezen graag hoe je het hebt gehad.</p>
         </div>
 
+        <p class="gemiddeld" id="gemiddeld" hidden></p>
         <ul class="berichten" id="berichten" aria-live="polite"></ul>
         <p class="leeg" id="leeg">Berichten laden…</p>
 
@@ -226,6 +239,16 @@ section[id] { scroll-margin-top: 5.5rem; }
             <label for="gb-verblijf">Wanneer was je er? (optioneel)
               <input type="text" id="gb-verblijf" maxlength="60" placeholder="bijvoorbeeld juli 2027">
             </label>
+            <fieldset class="kies-sterren wide">
+              <legend>Aantal sterren <span class="ster" aria-hidden="true">*</span></legend>
+              <div class="rij">
+                <input type="radio" name="sterren" id="st5" value="5"><label for="st5" title="5 sterren" aria-label="5 sterren">★</label>
+                <input type="radio" name="sterren" id="st4" value="4"><label for="st4" title="4 sterren" aria-label="4 sterren">★</label>
+                <input type="radio" name="sterren" id="st3" value="3"><label for="st3" title="3 sterren" aria-label="3 sterren">★</label>
+                <input type="radio" name="sterren" id="st2" value="2"><label for="st2" title="2 sterren" aria-label="2 sterren">★</label>
+                <input type="radio" name="sterren" id="st1" value="1"><label for="st1" title="1 ster" aria-label="1 ster">★</label>
+              </div>
+            </fieldset>
             <label class="wide" for="gb-bericht"><span>Je bericht <span class="ster" aria-hidden="true">*</span></span>
               <textarea id="gb-bericht" rows="5" maxlength="1200" required></textarea>
             </label>
@@ -281,6 +304,12 @@ section[id] { scroll-margin-top: 5.5rem; }
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
+  function sterren(n) {
+    var p = document.createElement("span"), leeg = document.createElement("i");
+    p.className = "sterren-toon"; p.setAttribute("role", "img"); p.setAttribute("aria-label", n + " van 5 sterren");
+    p.textContent = "★★★★★".slice(0, n); leeg.textContent = "★★★★★".slice(n); p.append(leeg);
+    return p;
+  }
   function toon(lijst) {
     var ul = $("berichten");
     ul.replaceChildren();
@@ -289,8 +318,16 @@ section[id] { scroll-margin-top: 5.5rem; }
       q.textContent = b.bericht;
       van.className = "van"; naam.textContent = b.naam; van.append(naam);
       if (b.verblijf) van.append(document.createTextNode(b.verblijf));
+      if (b.sterren) { var s = sterren(b.sterren); s.style.display = "block"; li.append(s); }
       li.append(q, van); ul.append(li);
     });
+    var met = lijst.filter(function (b) { return b.sterren; }), gem = $("gemiddeld");
+    gem.hidden = met.length === 0;
+    if (met.length) {
+      var g = met.reduce(function (t, b) { return t + b.sterren; }, 0) / met.length, cijfer = document.createElement("b");
+      cijfer.textContent = g.toFixed(1).replace(".", ",");
+      gem.replaceChildren(cijfer, sterren(Math.round(g)), document.createTextNode("gemiddeld uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen")));
+    }
     $("leeg").hidden = lijst.length > 0;
     $("leeg").textContent = "Er staan nog geen berichten. Schrijf jij het eerste?";
   }
@@ -304,10 +341,12 @@ section[id] { scroll-margin-top: 5.5rem; }
     var naam = $("gb-naam").value.trim(), bericht = $("gb-bericht").value.trim();
     status.textContent = "";
     if (naam.length < 2) { status.textContent = "Vul je naam in."; $("gb-naam").focus(); return; }
+    var gekozen = document.querySelector('input[name="sterren"]:checked');
+    if (!gekozen) { status.textContent = "Kies het aantal sterren."; $("st5").focus(); return; }
     if (bericht.length < 10) { status.textContent = "Schrijf een bericht van minimaal 10 tekens."; $("gb-bericht").focus(); return; }
     knop.disabled = true; knop.textContent = "Bezig met versturen…";
     fetch("/api/gastenboek", { method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ naam: naam, verblijf: $("gb-verblijf").value, bericht: bericht, website: $("gb-website").value }) })
+      body: JSON.stringify({ naam: naam, sterren: +gekozen.value, verblijf: $("gb-verblijf").value, bericht: bericht, website: $("gb-website").value }) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw new Error(d.fout || "Versturen lukte niet. Probeer het later opnieuw."); }); })
       .then(function () {
         var klaar = document.createElement("p");

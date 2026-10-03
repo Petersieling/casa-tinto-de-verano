@@ -13,7 +13,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS facturen (id INTEGER PRIMARY KEY AUTOINCREMENT, nummer TEXT UNIQUE NOT NULL, boeking_id INTEGER UNIQUE, datum TEXT, gegevens TEXT, totaal REAL)`,
   `CREATE TABLE IF NOT EXISTS instellingen (sleutel TEXT PRIMARY KEY, waarde TEXT)`,
   `CREATE TABLE IF NOT EXISTS pogingen (soort TEXT, ip TEXT, tijd INTEGER)`,
-  `CREATE TABLE IF NOT EXISTS gastenboek (id INTEGER PRIMARY KEY AUTOINCREMENT, naam TEXT NOT NULL, verblijf TEXT, bericht TEXT NOT NULL, zichtbaar INTEGER DEFAULT 0, aangemaakt TEXT)`
+  `CREATE TABLE IF NOT EXISTS gastenboek (id INTEGER PRIMARY KEY AUTOINCREMENT, naam TEXT NOT NULL, verblijf TEXT, bericht TEXT NOT NULL, sterren INTEGER, zichtbaar INTEGER DEFAULT 0, aangemaakt TEXT)`
 ];
 let schemaKlaar = false;
 export async function db(env) {
@@ -21,10 +21,13 @@ export async function db(env) {
   if (!schemaKlaar) {
     await env.DB.batch(SCHEMA.map((s) => env.DB.prepare(s)));
     // Kolommen die later zijn toegevoegd, bijwerken in een bestaande database.
-    const { results } = await env.DB.prepare("SELECT name FROM pragma_table_info('boekingen')").all();
-    const aanwezig = new Set(results.map((r) => r.name));
-    for (const [kolom, soort] of [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"]]) {
-      if (!aanwezig.has(kolom)) await env.DB.prepare(`ALTER TABLE boekingen ADD COLUMN ${kolom} ${soort}`).run();
+    const NIEUW = { boekingen: [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"]], gastenboek: [["sterren", "INTEGER"]] };
+    for (const [tabel, kolommen] of Object.entries(NIEUW)) {
+      const { results } = await env.DB.prepare(`SELECT name FROM pragma_table_info('${tabel}')`).all();
+      const aanwezig = new Set(results.map((r) => r.name));
+      for (const [kolom, soort] of kolommen) {
+        if (!aanwezig.has(kolom)) await env.DB.prepare(`ALTER TABLE ${tabel} ADD COLUMN ${kolom} ${soort}`).run();
+      }
     }
     schemaKlaar = true;
   }

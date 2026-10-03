@@ -443,6 +443,7 @@ const VIEWS = {
       h("p", { class: "uitleg" }, "Nieuwe berichten staan pas op de website nadat je ze hebt goedgekeurd."),
       lijst.length ? h("div", { class: "kaarten" }, lijst.map((g) => h("div", { class: "kaart", style: g.zichtbaar ? "border-left-color:var(--ok)" : "" },
         h("h3", null, g.naam),
+        g.sterren ? h("p", { style: "color:var(--gold);letter-spacing:.1em", title: g.sterren + " van 5 sterren" }, "★".repeat(g.sterren) + "☆".repeat(5 - g.sterren)) : null,
         g.verblijf ? h("p", { class: "klein-tekst" }, "Verblijf: " + g.verblijf) : null,
         h("p", { class: "bericht" }, g.bericht),
         h("p", { class: "klein-tekst" }, new Date(g.aangemaakt).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" }) + " · " + (g.zichtbaar ? "Staat op de website" : "Wacht op goedkeuring")),
