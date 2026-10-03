@@ -130,9 +130,13 @@ export const onRequest = veilig(async ({ request, env, params }) => {
     return json({ ok: true, id: r.meta.last_row_id });
   }
   if (deel === "klant" && m === "DELETE" && id) {
-    const r = await d.prepare("SELECT COUNT(*) AS n FROM boekingen WHERE klant_id = ?").bind(id).first();
-    if (r.n) throw new Melding("Deze klant heeft boekingen en kan daarom niet worden verwijderd.", 409);
-    await d.prepare("DELETE FROM klanten WHERE id = ?").bind(id).run();
+    // Alleen een bevestigde boeking houdt een klant vast. Afgewezen en geannuleerde boekingen worden losgekoppeld.
+    const vast = await d.prepare("SELECT aankomst, vertrek FROM boekingen WHERE klant_id = ? AND status = 'bevestigd' ORDER BY aankomst LIMIT 1").bind(id).first();
+    if (vast) throw new Melding(`Deze klant heeft nog een bevestigde boeking (${datumNl(vast.aankomst)} t/m ${datumNl(vast.vertrek)}). Annuleer of verwijder die boeking eerst.`, 409);
+    await d.batch([
+      d.prepare("UPDATE boekingen SET klant_id = NULL WHERE klant_id = ?").bind(id),
+      d.prepare("DELETE FROM klanten WHERE id = ?").bind(id)
+    ]);
     return json({ ok: true });
   }
 
