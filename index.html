@@ -170,6 +170,7 @@ textarea { resize: vertical; }
 .vink input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex: none; }
 .terms dd a, footer a { color: var(--gold-text); }
 footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; }
+.ster { color: #A8431A; font-weight: 600; }
 .veldkop { font-size: .85rem; color: var(--muted); margin: 0 0 .3rem; }
 #gasten-melding { color: var(--orange); }
 @media (max-width: 52rem) {
@@ -345,25 +346,26 @@ section[id] { scroll-margin-top: 5.5rem; }
           <h2>Reservering aanvragen</h2>
           <p>Kies je periode en stuur je aanvraag in. Je reservering is pas definitief nadat je een bevestiging per e-mail hebt gekregen.</p>
           <form id="aanvraag" novalidate>
+            <p class="note verplicht">Velden met <span class="ster">*</span> zijn verplicht.</p>
             <div class="fields">
-              <label for="aankomst">Aankomst
+              <label for="aankomst"><span>Aankomst <span class="ster" aria-hidden="true">*</span></span>
                 <input type="date" id="aankomst" required>
               </label>
-              <label for="vertrek">Vertrek
+              <label for="vertrek"><span>Vertrek <span class="ster" aria-hidden="true">*</span></span>
                 <input type="date" id="vertrek" required>
               </label>
-              <label for="volwassenen">Volwassenen
+              <label for="volwassenen"><span>Volwassenen <span class="ster" aria-hidden="true">*</span></span>
                 <select id="volwassenen" required>
                   <option value="">Kies…</option><option>1</option><option>2</option><option>3</option><option>4</option>
                 </select>
               </label>
-              <label for="kinderen">Kinderen (t/m 17 jaar)
+              <label for="kinderen"><span>Kinderen (t/m 17 jaar) <span class="ster" aria-hidden="true">*</span></span>
                 <select id="kinderen" required>
                   <option value="">Kies…</option><option value="0">Geen</option><option>1</option><option>2</option><option>3</option>
                 </select>
               </label>
               <div class="wide" id="leeftijden" hidden>
-                <p class="veldkop">Leeftijd van elk kind</p>
+                <p class="veldkop">Leeftijd van elk kind <span class="ster" aria-hidden="true">*</span></p>
                 <div class="fields" id="leeftijd-velden"></div>
               </div>
             </div>
@@ -378,10 +380,10 @@ section[id] { scroll-margin-top: 5.5rem; }
             <p class="stroom" id="stroom" hidden></p>
             <div id="gastvelden">
               <div class="fields">
-                <label for="naam">Naam
+                <label for="naam"><span>Naam <span class="ster" aria-hidden="true">*</span></span>
                   <input type="text" id="naam" autocomplete="name" required>
                 </label>
-                <label for="email">E-mailadres
+                <label for="email"><span>E-mailadres <span class="ster" aria-hidden="true">*</span></span>
                   <input type="email" id="email" autocomplete="email" required>
                 </label>
                 <label for="telefoon">Telefoon (optioneel)
