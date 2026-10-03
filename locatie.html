@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Foto's van Casa Tinto de Verano: de woonkamer met open keuken, de slaapkamer en de badkamer van het penthouse in Punta Prima.">
+<meta name="description" content="Locatie van Casa Tinto de Verano in Punta Prima, bij Torrevieja aan de Costa Blanca, met leuke plekken in de omgeving in Google Maps.">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Impressie | Casa Tinto de Verano</title>
+<title>Locatie | Casa Tinto de Verano</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
@@ -148,29 +148,16 @@ section[id] { scroll-margin-top: 5.5rem; }
 </style>
 <style>
 .top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
-.impressie .head { margin: 0 auto 2.5rem; text-align: center; }
-.impressie .head p:last-child { color: var(--muted); }
-.hartje { color: var(--gold); text-align: center; font-size: 1.1rem; margin: 0 0 2rem; letter-spacing: 1.2em; padding-left: 1.2em; }
-.fotos { max-width: 40rem; margin-inline: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 2.75rem); align-items: start; }
-.fotos figure { margin: 0; min-width: 0; text-align: center; }
-.fotos .breed { grid-column: 1 / -1; max-width: 30rem; margin-inline: auto; width: 100%; }
-.lijst { padding: .55rem; background: var(--paper); border: 1px solid var(--gold); border-radius: .5rem; box-shadow: 0 22px 44px -26px rgba(58, 35, 21, .55); }
-.fotos img { display: block; width: 100%; height: auto; border-radius: .25rem; background: var(--panel); }
-.fotos .breed .lijst { border-radius: 50% 50% .5rem .5rem / 44% 44% .5rem .5rem; }
-.fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; border-radius: 50% 50% .25rem .25rem / 44% 44% .25rem .25rem; }
-.fotos .staand .lijst { border-radius: 12rem 12rem .5rem .5rem; }
-.fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12rem 12rem .25rem .25rem; }
-.fotos .staand + .staand { margin-top: 2.5rem; }
-.fotos figcaption { margin-top: 1rem; font-family: var(--script); color: var(--gold-text); font-size: 2rem; line-height: 1.1; }
-.fotos figcaption small { display: block; font-family: var(--body); font-size: .88rem; color: var(--muted); margin-top: .3rem; letter-spacing: .04em; }
-.impressie .slot { text-align: center; }
-.impressie .cta { margin-top: 3rem; }
-@media (max-width: 34rem) {
-  .fotos { grid-template-columns: minmax(0, 1fr); }
-  .fotos .staand { max-width: 17rem; margin-inline: auto; width: 100%; }
-  .fotos .staand + .staand { margin-top: 0; }
-}
-
+.loc { max-width: 44rem; margin-inline: auto; text-align: center; }
+.loc .lead { margin: 1.25rem auto 0; }
+.loc p { max-width: 36rem; margin-inline: auto; }
+.loc .tekst { margin-top: 1rem; color: var(--muted); }
+.tips { margin: 2.5rem auto 0; max-width: 26rem; border: 1px solid var(--gold); border-radius: 13rem 13rem .75rem .75rem; padding: 3.5rem 1.5rem 1.75rem; display: grid; justify-items: center; gap: .4rem; }
+.tips svg { color: var(--gold); margin-bottom: .25rem; }
+.tips h2 { font-size: 1.6rem; }
+.tips .sub { color: var(--muted); font-size: .9rem; margin: 0 0 .6rem; }
+.tips .cta { margin: .4rem 0 0; }
+.tips .note { font-size: .85rem; color: var(--muted); margin: .7rem 0 0; }
 /* voettekst */
 .voet { background: var(--ink); color: #EFE3D0; border-top: 0; padding-block: 0; text-align: left; text-transform: none; letter-spacing: 0; font-size: .95rem; line-height: 1.6; }
 .voet > .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3rem); padding-block: 3rem 2.5rem; }
@@ -196,10 +183,10 @@ section[id] { scroll-margin-top: 5.5rem; }
     <a class="brand" href="index.html">Casa Tinto de Verano</a>
     <nav aria-label="Onderdelen">
       <a href="index.html#penthouse">Het penthouse</a>
-      <a href="impressie.html" aria-current="page">Impressie</a>
+      <a href="impressie.html">Impressie</a>
       <a href="index.html#prijzen">Prijzen</a>
       <a href="index.html#praktisch">Praktisch</a>
-      <a href="locatie.html">Locatie</a>
+      <a href="locatie.html" aria-current="page">Locatie</a>
       <a href="index.html#contact">Reserveren</a>
       <a href="gastenboek.html">Gastenboek</a>
       <a href="over-ons.html">Over ons</a>
@@ -208,32 +195,21 @@ section[id] { scroll-margin-top: 5.5rem; }
 </header>
 
 <main>
-  <section class="impressie">
+  <section>
     <div class="wrap">
-      <div class="head">
+      <div class="loc">
         <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
-        <h1>Een <span class="script">impressie</span></h1>
-        <p>Zo ziet het penthouse er van binnen uit.</p>
+        <h1>Locatie en <span class="script">omgeving</span></h1>
+        <p class="lead">Casa Tinto de Verano ligt in Punta Prima, bij Torrevieja aan de Costa Blanca.</p>
+        <p class="tekst">We hebben leuke plekken in de omgeving voor je verzameld in Google Maps. Zo zie je in één oogopslag wat de omgeving biedt. De lijst houden we bij: via de knop zie je altijd de nieuwste versie.</p>
+        <div class="tips">
+          <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.500s7-6.200 7-11.500a7 7 0 1 0-14 0c0 5.300 7 11.500 7 11.500z"/><circle cx="12" cy="10" r="2.600"/></svg>
+          <h2>Leuke plekken in de omgeving</h2>
+          <p class="sub">Punta Prima · Torrevieja · Costa Blanca</p>
+          <a class="cta" href="https://maps.app.goo.gl/fwBuVdStwd1frb47A" target="_blank" rel="noopener">Bekijk de plekken in Google Maps</a>
+          <p class="note">De lijst opent in Google Maps.</p>
+        </div>
       </div>
-      <p class="hartje" aria-hidden="true">&#9829;</p>
-
-      <!-- FOTO TOEVOEGEN: kopieer een <figure>-blok en pas de bestandsnaam en de tekst aan. Gebruik class="breed" voor een liggende foto en class="staand" voor een staande. -->
-      <div class="fotos">
-        <figure class="breed">
-          <div class="lijst"><img src="fotos/woonkamer.jpg?v=2" width="1400" height="1087" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div>
-          <figcaption>Woonkamer<small>met eethoek en open keuken</small></figcaption>
-        </figure>
-        <figure class="staand">
-          <div class="lijst"><img src="fotos/slaapkamer.jpg" width="962" height="1282" loading="lazy" alt="Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur"></div>
-          <figcaption>Slaapkamer 2<small>met twee losse bedden</small></figcaption>
-        </figure>
-        <figure class="staand">
-          <div class="lijst"><img src="fotos/badkamer.jpg" width="962" height="1282" loading="lazy" alt="Badkamer met inloopdouche, wastafel en ronde spiegel"></div>
-          <figcaption>Badkamer<small>met inloopdouche</small></figcaption>
-        </figure>
-      </div>
-
-      <p class="slot"><a class="cta" href="index.html#prijzen">Bekijk prijzen en beschikbaarheid</a></p>
     </div>
   </section>
 </main>
