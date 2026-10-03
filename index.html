@@ -119,6 +119,16 @@ select, input, textarea { font: inherit; color: var(--ink); background: var(--pa
 .terms dd { margin: .3rem 0 0; }
 .terms dd b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.2; display: block; }
 
+.pk { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 2.5rem clamp(2rem, 5vw, 4.5rem); }
+.pk h3 { font-size: 1.5rem; color: var(--gold-text); padding-bottom: .6rem; border-bottom: 1px solid var(--gold); margin-bottom: .4rem; }
+.pk dl { margin: 0; }
+.pk dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.pk dt { color: var(--muted); font-size: .95rem; }
+.pk dd { margin: 0; text-align: right; font-family: var(--display); font-weight: 600; font-size: 1.25rem; line-height: 1.2; }
+.pk p { margin: .9rem 0 0; font-size: .9rem; color: var(--muted); line-height: 1.55; }
+.pk-voet { margin: 2.5rem 0 0; text-align: center; }
+.pk-voet a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: .25rem; }
+
 /* contact */
 .contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
 .contact > * { min-width: 0; }
@@ -365,21 +375,35 @@ section[id] { scroll-margin-top: 5.5rem; }
   <section id="praktisch" class="band">
     <div class="wrap">
       <div class="head"><h2>Praktisch</h2></div>
-      <dl class="terms">
-        <div><dt>Minimaal verblijf</dt><dd><b>10 nachten</b></dd></div>
-        <div><dt>Inchecken</dt><dd><b>vanaf 15:00</b></dd></div>
-        <div><dt>Uitchecken</dt><dd><b>voor 10:00</b></dd></div>
-        <div><dt>Eindschoonmaak</dt><dd><b>€ 150</b></dd></div>
-        <div><dt>Borg</dt><dd><b>€ 300</b>Betaal je met de factuur en krijg je binnen 2 weken na vertrek terug.</dd></div>
-        <div><dt>Parkeren</dt><dd><b>Eigen parkeerplaats</b>In de garage van het complex, inbegrepen bij je verblijf.</dd></div>
-        <div><dt>Linnengoed</dt><dd><b>Inbegrepen</b>Bedlinnen, twee handdoeken en een washandje per persoon.</dd></div>
-        <div><dt>Rust</dt><dd><b>na 22:00</b>Rust op het complex. Het zwembad is dan gesloten.</dd></div>
-        <div><dt>Zwembad</dt><dd><b>Eigen verantwoordelijkheid</b>Zwemmen is op eigen risico. Kinderen zwemmen alleen onder toezicht van hun ouders.</dd></div>
-        <div><dt>Leeftijd</dt><dd><b>Vanaf 24 jaar</b>Niet voor jongerengroepen. Kinderen zijn welkom met hun ouders.</dd></div>
-        <div><dt>Huisdieren</dt><dd><b>Niet toegestaan</b>Huisdieren zijn niet welkom in het penthouse.</dd></div>
-        <div><dt>Elektriciteit</dt><dd><b>85 kWh per week</b>inbegrepen. Meerverbruik wordt bij uitchecken verrekend tegen € 0,35 per kWh.</dd></div>
-        <div><dt>Voorwaarden</dt><dd><b>Huurvoorwaarden</b><a href="huurvoorwaarden.html">Lees alle afspraken en huisregels</a></dd></div>
-      </dl>
+      <div class="pk">
+        <div>
+          <h3>Aankomst en vertrek</h3>
+          <dl>
+            <div><dt>Minimaal verblijf</dt><dd>10 nachten</dd></div>
+            <div><dt>Inchecken</dt><dd>vanaf 15:00</dd></div>
+            <div><dt>Uitchecken</dt><dd>voor 10:00</dd></div>
+          </dl>
+        </div>
+        <div>
+          <h3>Kosten</h3>
+          <dl>
+            <div><dt>Eindschoonmaak</dt><dd>€ 150</dd></div>
+            <div><dt>Borg</dt><dd>€ 300</dd></div>
+            <div><dt>Elektriciteit</dt><dd>85 kWh per week</dd></div>
+          </dl>
+          <p>De borg betaal je met de factuur en krijg je binnen 2 weken na vertrek terug. Meerverbruik van elektriciteit kost € 0,35 per kWh en wordt bij het uitchecken verrekend.</p>
+        </div>
+        <div>
+          <h3>Inbegrepen en huisregels</h3>
+          <dl>
+            <div><dt>Parkeren</dt><dd>eigen plek in de garage</dd></div>
+            <div><dt>Linnengoed</dt><dd>inbegrepen</dd></div>
+            <div><dt>Huisdieren</dt><dd>niet toegestaan</dd></div>
+          </dl>
+          <p>Bedlinnen, twee handdoeken en een washandje per persoon. Zwemmen is op eigen risico; kinderen zwemmen onder toezicht van hun ouders.</p>
+        </div>
+      </div>
+      <p class="pk-voet"><a href="huurvoorwaarden.html">Lees alle afspraken in de huurvoorwaarden</a></p>
     </div>
   </section>
 
