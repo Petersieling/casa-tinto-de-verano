@@ -68,6 +68,11 @@ h3 { font-size: 1.45rem; }
 .facts li { display: flex; flex-direction: column; }
 .facts b { font-family: var(--display); font-weight: 600; font-size: 1.9rem; line-height: 1.1; }
 .facts span { font-size: .85rem; color: var(--muted); }
+@media (max-width: 40rem) {
+  .facts { flex-wrap: nowrap; justify-content: space-between; gap: .75rem; }
+  .facts b { font-size: 1.6rem; }
+  .facts span { font-size: .8rem; }
+}
 .cta { display: inline-block; margin-top: 2rem; background: var(--ink); color: var(--paper); text-decoration: none; padding: .8rem 1.5rem; border-radius: 999px; font-weight: 500; }
 .cta:hover { background: var(--gold-text); }
 .crest { justify-self: center; width: min(100%, 26rem); }
@@ -355,7 +360,6 @@ section[id] { scroll-margin-top: 5.5rem; }
         <ul class="facts">
           <li><b>4</b><span>personen maximaal</span></li>
           <li><b>2</b><span>slaapkamers</span></li>
-          <li><b>2</b><span>badkamers</span></li>
           <li><b>€ 845</b><span>per week, vanaf</span></li>
         </ul>
         <a class="cta" href="prijzen.html">Bekijk prijzen en beschikbaarheid</a>
