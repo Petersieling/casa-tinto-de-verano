@@ -77,7 +77,9 @@ section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .head p { color: var(--muted); margin: .75rem 0 0; }
 
 .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
-.rooms ul { list-style: none; margin: 1rem 0 0; padding: 0; }
+.rooms h3 { font-size: 1.75rem; color: var(--gold-text); padding-bottom: .55rem; border-bottom: 2px solid var(--gold); }
+.rooms ul { list-style: none; margin: 0; padding: 0; }
+.rooms li:first-child { border-top: 0; }
 .rooms li { padding: .7rem 0; border-top: 1px solid var(--line); }
 .rooms li small { display: block; color: var(--muted); font-size: .9rem; }
 
