@@ -176,6 +176,16 @@ textarea { resize: vertical; }
 .terms dd a, footer a { color: var(--gold-text); }
 footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; }
 .ster { color: #A8431A; font-weight: 600; }
+.locatie { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.locatie p { max-width: 36rem; }
+.locatie .lead { margin: 1rem 0; }
+.tips { text-align: center; display: grid; justify-items: center; gap: .35rem; }
+.tips svg { color: var(--gold); margin-bottom: .25rem; }
+.tips .sub { margin: 0 0 .5rem; }
+.tips .cta { margin: .5rem 0 0; }
+.tips .note { margin: .6rem 0 0; }
+#contact { border-top: 1px solid var(--line); }
+@media (max-width: 52rem) { .locatie { grid-template-columns: minmax(0, 1fr); } }
 .veldkop { font-size: .85rem; color: var(--muted); margin: 0 0 .3rem; }
 #gasten-melding { color: var(--orange); }
 @media (max-width: 52rem) {
@@ -219,6 +229,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       <a href="impressie.html">Impressie</a>
       <a href="#prijzen">Prijzen</a>
       <a href="#praktisch">Praktisch</a>
+      <a href="#locatie">Locatie</a>
       <a href="#contact">Reserveren</a>
       <a href="gastenboek.html">Gastenboek</a>
       <a href="over-ons.html">Over ons</a>
@@ -345,6 +356,25 @@ section[id] { scroll-margin-top: 5.5rem; }
     </div>
   </section>
 
+  <section id="locatie">
+    <div class="wrap">
+      <div class="locatie">
+        <div>
+          <h2>Locatie en omgeving</h2>
+          <p class="lead">Casa Tinto de Verano ligt in Punta Prima, bij Torrevieja aan de Costa Blanca.</p>
+          <p>We hebben onze favoriete plekken in de omgeving voor je verzameld in Google Maps. Zo zie je in één oogopslag wat de omgeving biedt en waar wij zelf graag komen. De lijst houden we bij: via de knop zie je altijd de nieuwste versie.</p>
+        </div>
+        <div class="calc tips">
+          <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.500s7-6.200 7-11.500a7 7 0 1 0-14 0c0 5.300 7 11.500 7 11.500z"/><circle cx="12" cy="10" r="2.600"/></svg>
+          <h3>Onze tips in de omgeving</h3>
+          <p class="sub">Punta Prima · Torrevieja · Costa Blanca</p>
+          <a class="cta" href="https://maps.app.goo.gl/fwBuVdStwd1frb47A" target="_blank" rel="noopener">Bekijk onze tips in Google Maps</a>
+          <p class="note">De lijst opent in Google Maps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="contact">
     <div class="wrap">
       <div class="contact">
@@ -461,6 +491,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         <li><a href="/#penthouse">Het penthouse</a></li>
         <li><a href="/impressie">Impressie</a></li>
         <li><a href="/#prijzen">Prijzen en beschikbaarheid</a></li>
+        <li><a href="/#locatie">Locatie en tips</a></li>
         <li><a href="/gastenboek">Gastenboek</a></li>
         <li><a href="/over-ons">Over ons</a></li>
       </ul>
