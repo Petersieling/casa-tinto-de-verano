@@ -197,6 +197,9 @@ section[id] { scroll-margin-top: 5.5rem; }
 .voet-naam { font-family: var(--display); font-weight: 600; font-size: 1.45rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; margin-bottom: .6rem !important; }
 .voet-slogan { font-family: var(--script); color: #E0B45C; font-size: 1.7rem; line-height: 1.2; margin-top: .9rem !important; }
 .voet-onder { border-top: 1px solid rgba(239, 227, 208, .18); color: #C9B79C; font-size: .82rem; }
+.voet-ster { color: #E0B45C; letter-spacing: .12em; font-size: 1rem; margin-right: .5rem; }
+.voet-ster i { font-style: normal; color: rgba(239, 227, 208, .3); }
+.voet-onder a { color: #EFE3D0; }
 .voet-onder .wrap { padding-block: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; }
 
 .cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
@@ -214,6 +217,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       <a href="index.html#prijzen">Prijzen</a>
       <a href="locatie.html">Locatie</a>
       <a href="index.html#contact">Reserveren</a>
+      <a href="gastenboek.html">Gastenboek</a>
     </nav>
   </div>
 </header>
@@ -224,6 +228,18 @@ section[id] { scroll-margin-top: 5.5rem; }
   function zet(open) { menu.classList.toggle("open", open); knop.setAttribute("aria-expanded", open ? "true" : "false"); knop.textContent = open ? "Sluiten" : "Menu"; }
   knop.addEventListener("click", function () { zet(!menu.classList.contains("open")); });
   menu.addEventListener("click", function (e) { if (e.target.tagName === "A") zet(false); });
+  // Gemiddelde beoordeling uit het gastenboek, rechts onderin de voettekst.
+  fetch("/api/gastenboek").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
+    var met = (d.berichten || []).filter(function (b) { return b.sterren; }), el = document.getElementById("voet-sterren");
+    if (!met.length || !el) return;
+    var gem = met.reduce(function (t, b) { return t + b.sterren; }, 0) / met.length, vol = Math.round(gem);
+    var link = document.createElement("a"), ster = document.createElement("span"), leeg = document.createElement("i");
+    link.href = "/gastenboek"; ster.className = "voet-ster";
+    ster.textContent = "★★★★★".slice(0, vol); leeg.textContent = "★★★★★".slice(vol); ster.append(leeg);
+    link.setAttribute("aria-label", "Beoordeling: " + gem.toFixed(1).replace(".", ",") + " van 5 sterren uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen") + ". Naar het gastenboek.");
+    link.append(ster, document.createTextNode(gem.toFixed(1).replace(".", ",") + " uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen")));
+    el.replaceChildren(link);
+  }).catch(function () {});
 })();
 </script>
 
@@ -292,7 +308,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       </ul>
     </div>
   </div>
-  <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span>Punta Prima · Costa Blanca</span></div></div>
+  <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
 </footer>
 </body>
 </html>
