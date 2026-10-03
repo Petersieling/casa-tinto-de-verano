@@ -502,13 +502,16 @@ const VIEWS = {
   facturen() {
     return [
       h("div", { class: "kopregel" }, h("h1", null, "Facturen")),
-      h("p", { class: "uitleg" }, "Een factuur maak je bij Boekingen, vanuit een bevestigde boeking. De nummering loopt per jaar door. Alleen de laatst gemaakte factuur kun je verwijderen."),
+      h("p", { class: "uitleg" }, "Een factuur maak je bij Boekingen, vanuit een bevestigde boeking. Een gemaakte factuur verandert niet meer. Klopt er iets niet, verwijder hem dan als het de laatst gemaakte is, of maak een creditfactuur en daarna een nieuwe factuur vanuit de boeking."),
       D.facturen.length ? h("div", { class: "tabel" }, h("table", null,
         h("thead", null, h("tr", null, ["Nummer", "Datum", "Klant", "Totaal", ""].map((t, i) => h("th", { class: i === 3 ? "bedrag" : "" }, t)))),
         h("tbody", null, D.facturen.map((f, i) => h("tr", null,
-          h("td", null, f.nummer), h("td", null, datum(f.datum)), h("td", null, f.gegevens.klant?.naam || ""), h("td", { class: "bedrag" }, euro(f.totaal)),
+          h("td", null, f.nummer, f.gegevens.soort === "credit" ? h("div", { class: "klein-tekst" }, "Creditfactuur bij " + f.gegevens.credit_van) : null,
+            f.gegevens.gecrediteerd ? h("div", { class: "klein-tekst" }, "Gecrediteerd met " + f.gegevens.gecrediteerd) : null),
+          h("td", null, datum(f.datum)), h("td", null, f.gegevens.klant?.naam || ""), h("td", { class: "bedrag" }, euro(f.totaal)),
           h("td", null, h("div", { class: "acties" },
             h("button", { type: "button", class: "klein", onclick: () => toonFactuur(f) }, "Bekijken of afdrukken"),
+            f.gegevens.soort !== "credit" && !f.gegevens.gecrediteerd ? h("button", { type: "button", class: "klein licht", onclick: () => { if (confirm(`Creditfactuur maken bij ${f.nummer}? De factuur wordt daarmee teruggedraaid.`)) doe(() => api(`beheer/factuur/${f.id}/credit`, "POST", {})); } }, "Maak creditfactuur") : null,
             i === 0 ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm(`Factuur ${f.nummer} verwijderen?`)) doe(() => api("beheer/factuur/" + f.id, "DELETE")); } }, "Verwijderen") : null)))))))
         : h("p", { class: "leeg" }, "Nog geen facturen.")
     ];
@@ -568,7 +571,7 @@ function toonFactuur(f) {
     h("div", { class: "f-kop" },
       h("img", { src: "logo.webp", alt: "Casa Tinto de Verano", width: 420, height: 520 }),
       h("div", { class: "f-titel" },
-        h("h1", null, "Factuur"),
+        h("h1", { style: g.soort === "credit" ? "font-size:1.9rem;letter-spacing:.14em;margin-right:-.14em" : "" }, g.soort === "credit" ? "Creditfactuur" : "Factuur"),
         h("dl", null, h("dt", null, "Nummer"), h("dd", null, f.nummer), h("dt", null, "Datum"), h("dd", null, datum(f.datum, true))))),
     h("div", { class: "f-partijen" },
       h("div", null, h("p", { class: "label" }, "Van"), h("p", { class: "f-naam" }, a.afzender_naam || ""),
@@ -582,10 +585,12 @@ function toonFactuur(f) {
       h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
       h("tfoot", null, h("tr", null, h("td", null, "Totaal"), h("td", { class: "bedrag" }, euro(f.totaal))))),
     h("div", { class: "f-betaling" },
-      h("div", null, h("p", { class: "label" }, "Betaling"),
-        h("p", null, regelTekst(g.betaling, g.borg ? `Daarnaast te voldoen: borg ${euro(g.borg)}.` : "", a.betaal_tekst))),
-      h("div", null, h("p", { class: "label" }, "Overmaken naar"),
-        h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `Ten name van: ${a.iban_naam}` : "", `Onder vermelding van: ${f.nummer}`)))),
+      h("div", null, h("p", { class: "label" }, g.soort === "credit" ? "Toelichting" : "Betaling"),
+        h("p", null, regelTekst(g.betaling, g.borg ? `Daarnaast te voldoen: borg ${euro(g.borg)}.` : "", g.soort === "credit" ? "" : a.betaal_tekst))),
+      g.soort === "credit"
+        ? h("div", null, h("p", { class: "label" }, "Hoort bij"), h("p", null, `Factuur ${g.credit_van}`))
+        : h("div", null, h("p", { class: "label" }, "Overmaken naar"),
+          h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `Ten name van: ${a.iban_naam}` : "", `Onder vermelding van: ${f.nummer}`)))),
     h("div", { class: "f-voet" },
       a.btw_regel ? h("p", null, a.btw_regel) : null,
       h("p", { class: "f-slogan" }, "Your place under the sun"),

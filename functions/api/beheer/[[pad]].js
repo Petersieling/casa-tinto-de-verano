@@ -19,6 +19,13 @@ function leesPeriode(b) {
   if (nachten(b.aankomst, b.vertrek) < 1) throw new Melding("De vertrekdatum moet na de aankomstdatum liggen.");
 }
 
+// Volgend factuurnummer in de doorlopende reeks van dit jaar, bijvoorbeeld 2026-004.
+async function volgendNummer(d, datum) {
+  const jaar = datum.slice(0, 4);
+  const laatste = await d.prepare("SELECT nummer FROM facturen WHERE nummer LIKE ? ORDER BY nummer DESC LIMIT 1").bind(jaar + "-%").first();
+  return `${jaar}-${String((laatste ? +laatste.nummer.slice(5) : 0) + 1).padStart(3, "0")}`;
+}
+
 async function klantVoor(d, boeking) {
   if (boeking.klant_id) return boeking.klant_id;
   if (boeking.email) {
@@ -141,6 +148,27 @@ export const onRequest = veilig(async ({ request, env, params }) => {
   }
 
   // ---- Facturen ----
+  // Creditfactuur: draait een eerdere factuur terug met dezelfde regels in min. De boeking komt vrij voor een nieuwe factuur.
+  if (deel === "factuur" && m === "POST" && id && actie === "credit") {
+    const origineel = await d.prepare("SELECT * FROM facturen WHERE id = ?").bind(id).first();
+    if (!origineel) throw new Melding("Deze factuur bestaat niet meer.", 404);
+    const og = JSON.parse(origineel.gegevens || "{}");
+    if (og.soort === "credit") throw new Melding("Een creditfactuur kun je niet opnieuw crediteren.");
+    if (og.gecrediteerd) throw new Melding(`Deze factuur is al gecrediteerd met ${og.gecrediteerd}.`, 409);
+    const datum = vandaag(), nummer = await volgendNummer(d, datum);
+    const gegevens = {
+      soort: "credit", credit_van: origineel.nummer, afzender: og.afzender, klant: og.klant, borg: 0,
+      aankomst: og.aankomst, vertrek: og.vertrek,
+      regels: (og.regels || []).map((r) => ({ omschrijving: r.omschrijving, bedrag: -r.bedrag })),
+      betaling: `Creditfactuur bij factuur ${origineel.nummer} van ${datumNl(origineel.datum)}.\nWat je al hebt betaald, wordt verrekend of teruggestort.`
+    };
+    await d.batch([
+      d.prepare("INSERT INTO facturen (nummer, boeking_id, datum, gegevens, totaal) VALUES (?, NULL, ?, ?, ?)").bind(nummer, datum, JSON.stringify(gegevens), -origineel.totaal),
+      d.prepare("UPDATE facturen SET boeking_id = NULL, gegevens = ? WHERE id = ?").bind(JSON.stringify({ ...og, gecrediteerd: nummer, boeking_id: origineel.boeking_id }), id)
+    ]);
+    return json({ ok: true, nummer });
+  }
+
   if (deel === "factuur" && m === "POST") {
     const bo = await d.prepare("SELECT * FROM boekingen WHERE id = ?").bind(Math.trunc(+b.boeking_id) || 0).first();
     if (!bo || bo.status !== "bevestigd") throw new Melding("Een factuur maak je van een bevestigde boeking.");
@@ -148,9 +176,8 @@ export const onRequest = veilig(async ({ request, env, params }) => {
     const klant = bo.klant_id ? await d.prepare("SELECT * FROM klanten WHERE id = ?").bind(bo.klant_id).first() : null;
     const ins = Object.fromEntries((await d.prepare("SELECT * FROM instellingen").all()).results.map((r) => [r.sleutel, r.waarde]));
     if (!ins.afzender_naam) throw new Melding("Vul eerst je afzendergegevens in bij Instellingen.");
-    const datum = vandaag(), jaar = datum.slice(0, 4);
-    const laatste = await d.prepare("SELECT nummer FROM facturen WHERE nummer LIKE ? ORDER BY nummer DESC LIMIT 1").bind(jaar + "-%").first();
-    const nummer = `${jaar}-${String((laatste ? +laatste.nummer.slice(5) : 0) + 1).padStart(3, "0")}`;
+    const datum = vandaag();
+    const nummer = await volgendNummer(d, datum);
     const n = nachten(bo.aankomst, bo.vertrek);
     const regels = [{ omschrijving: `Huur Casa Tinto de Verano, ${datumNl(bo.aankomst)} t/m ${datumNl(bo.vertrek)} (${n} nachten)`, bedrag: bo.huur || 0 }];
     if (bo.schoonmaak) regels.push({ omschrijving: "Eindschoonmaak", bedrag: bo.schoonmaak });
@@ -173,7 +200,18 @@ export const onRequest = veilig(async ({ request, env, params }) => {
   if (deel === "factuur" && m === "DELETE" && id) {
     const laatste = await d.prepare("SELECT id FROM facturen ORDER BY id DESC LIMIT 1").first();
     if (!laatste || laatste.id !== id) throw new Melding("Alleen de laatst gemaakte factuur kan worden verwijderd, zodat de nummering doorloopt.", 409);
+    // Was dit een creditfactuur, dan geldt de oorspronkelijke factuur weer en hoort hij weer bij de boeking.
+    const weg = await d.prepare("SELECT gegevens FROM facturen WHERE id = ?").bind(id).first();
+    const wg = JSON.parse(weg.gegevens || "{}");
     await d.prepare("DELETE FROM facturen WHERE id = ?").bind(id).run();
+    if (wg.soort === "credit" && wg.credit_van) {
+      const oud = await d.prepare("SELECT * FROM facturen WHERE nummer = ?").bind(wg.credit_van).first();
+      if (oud) {
+        const { gecrediteerd, boeking_id, ...rest } = JSON.parse(oud.gegevens || "{}");
+        const bezet = boeking_id ? await d.prepare("SELECT id FROM facturen WHERE boeking_id = ?").bind(boeking_id).first() : null;
+        await d.prepare("UPDATE facturen SET boeking_id = ?, gegevens = ? WHERE id = ?").bind(bezet ? null : boeking_id ?? null, JSON.stringify(rest), oud.id).run();
+      }
+    }
     return json({ ok: true });
   }
 
