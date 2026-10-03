@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Gastenboek van Casa Tinto de Verano: lees wat gasten over hun verblijf in het penthouse in Punta Prima schrijven en laat zelf een bericht achter.">
+<meta name="description" content="Praktische informatie voor je verblijf in Casa Tinto de Verano: in- en uitchecken, eindschoonmaak, borg, elektriciteit, parkeren en huisregels.">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>Gastenboek | Casa Tinto de Verano</title>
+<title>Praktische informatie · Casa Tinto de Verano</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
 <style>
 /* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
@@ -57,6 +57,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .eyebrow { font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1rem; }
 h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
 h1 { font-size: clamp(2.15rem, 5vw, 3.2rem); }
+.pagina-kop { text-align: center; margin-bottom: clamp(2rem, 5vw, 3.25rem); }
 h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
 h3 { font-size: 1.45rem; }
 .script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.25em; line-height: 1; }
@@ -77,12 +78,14 @@ section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .head p { color: var(--muted); margin: .75rem 0 0; }
 
 .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
-.rooms ul { list-style: none; margin: 1rem 0 0; padding: 0; }
-.rooms li { padding: .7rem 0; border-top: 1px solid var(--line); }
-.rooms li small { display: block; color: var(--muted); font-size: .9rem; }
+.rooms h3 { font-size: 1.75rem; color: var(--gold-text); padding-bottom: .55rem; border-bottom: 2px solid var(--gold); }
+.rooms ul { list-style: none; margin: 0; padding: 0; }
+.rooms li:first-child { border-top: 0; }
+.rooms li { padding: .8rem 0; border-top: 1px solid var(--line); font-family: var(--display); font-weight: 500; font-size: 1.35rem; line-height: 1.2; }
+.rooms li small { display: block; font-family: var(--body); font-weight: 400; color: var(--muted); font-size: .9rem; line-height: 1.4; margin-top: .15rem; }
 
 /* prijslijst */
-.prices { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.prices { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
 .tablebox { min-width: 0; overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 caption { text-align: left; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-bottom: .6rem; }
@@ -95,6 +98,34 @@ tr.peak th, tr.peak td { background: var(--gold-soft); }
 tr.peak td.bar i { background: var(--orange); }
 tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--line); }
 
+.prijsrijen { list-style: none; margin: 0; padding: 0; }
+.prijsrijen li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .62rem 0; border-top: 1px solid var(--line); }
+.prijsrijen li:first-child { border-top: 0; }
+.prijsrijen span { font-family: var(--display); font-weight: 500; font-size: 1.3rem; line-height: 1.2; }
+.prijsrijen b { font-family: var(--display); font-weight: 600; font-size: 1.35rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prijsrijen .piek b { color: var(--gold-text); }
+.hart { font-style: normal; color: var(--gold); font-size: .7rem; vertical-align: .15em; }
+.prijskaart .legenda .hart { margin-right: .4rem; width: auto; height: auto; border: 0; }
+
+/* prijzen en beschikbaarheid als één geheel */
+.duo { border: 1px solid var(--gold); outline: 1px solid var(--gold); outline-offset: 7px; border-radius: clamp(8rem, 22vw, 18rem) clamp(8rem, 22vw, 18rem) .75rem .75rem; padding: clamp(3.5rem, 9vw, 6rem) clamp(1.25rem, 5vw, 4rem) clamp(1.75rem, 4vw, 2.75rem); margin: 7px; }
+.duo-kop { text-align: center; margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+.duo-kop .eyebrow { margin-bottom: .6rem; }
+.duo-kop .hartje { color: var(--gold); font-size: 1rem; margin: 1rem 0 0; }
+.duo .prices { gap: 0; align-items: stretch; }
+.duo .calc { border: 0; border-radius: 0; padding: 0; background: transparent; }
+.duo .prices > :first-child { padding-right: clamp(1.5rem, 4vw, 3.25rem); border-right: 1px solid var(--line); }
+.duo .prices > :last-child { padding-left: clamp(1.5rem, 4vw, 3.25rem); }
+.duo .calc h3 { font-family: var(--body); font-weight: 500; font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 1.1rem; }
+.duo .prijsrijen li { border-top: 0; padding: .55rem 0; gap: .6rem; }
+.duo .stip { flex: 1; border-bottom: 1px dotted var(--muted); opacity: .5; transform: translateY(-.3rem); }
+.duo .calc .sub { margin-top: 0; }
+.duo-noot { text-align: center; color: var(--muted); font-size: .88rem; margin: clamp(1.5rem, 3vw, 2.25rem) auto 0; max-width: 34rem; }
+@media (max-width: 52rem) {
+  .duo .prices > :first-child { padding-right: 0; border-right: 0; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .duo .prices > :last-child { padding-left: 0; padding-top: 2rem; }
+}
+
 /* rekenhulp */
 .calc { background: var(--paper); border: 1px solid var(--gold); border-radius: 10rem 10rem .75rem .75rem; padding: 3.25rem clamp(1.1rem, 3vw, 1.75rem) 1.5rem; min-width: 0; }
 .calc h3 { text-align: center; }
@@ -102,7 +133,7 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--
 .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .9rem; }
 .fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
 .fields .wide { grid-column: 1 / -1; }
-select, input[type="date"] { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
+select, input, textarea { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
 .sum { margin: 1.25rem 0 0; font-variant-numeric: tabular-nums; }
 .sum div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid var(--line); }
 .sum dt { color: var(--muted); }
@@ -116,6 +147,22 @@ select, input[type="date"] { font: inherit; color: var(--ink); background: var(-
 .terms dt { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
 .terms dd { margin: .3rem 0 0; }
 .terms dd b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.2; display: block; }
+
+.punten { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 0 clamp(1.5rem, 4vw, 3rem); }
+.punten li { display: flex; gap: 1rem; align-items: flex-start; padding: 1.15rem 0; border-top: 1px solid var(--line); }
+.punten svg { flex: none; color: var(--gold); margin-top: .15rem; }
+.punten p { margin: 0; font-size: .92rem; color: var(--muted); line-height: 1.5; }
+/* onderste groep: naam als rustige kop, uitleg eronder */
+.punten b { display: block; font-family: var(--display); font-weight: 500; font-size: 1.3rem; color: var(--ink); line-height: 1.2; margin-bottom: .2rem; }
+/* bovenste groep: klein label, daaronder de waarde groot */
+.punten.kern .lab { display: block; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.punten.kern b { font-weight: 600; font-size: 1.75rem; line-height: 1.15; margin: .15rem 0 0; }
+.punten.kern .uitleg { display: block; margin-top: .35rem; }
+.punten.kern svg { margin-top: .9rem; }
+.punten-kop { margin: 2.5rem 0 .9rem; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.punten-voet { margin: 2rem 0 0; }
+.punten-voet a { color: var(--gold-text); }
+.naar-reserveren { margin: 0; text-align: center; }
 
 /* contact */
 .contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
@@ -132,8 +179,61 @@ button.ghost:hover { background: var(--ink); color: var(--paper); }
 [role="status"] { font-size: .85rem; color: var(--gold-text); min-height: 1.3em; margin: .5rem 0 0; }
 
 footer { border-top: 1px solid var(--line); padding-block: 2rem; text-align: center; color: var(--muted); font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; }
-footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; color: var(--gold-text); }
 
+.fields + .note { margin-top: .9rem; }
+#aanvraag { margin-top: 1.5rem; display: grid; gap: 1rem; }
+#aanvraag .sum, #aanvraag .note { margin: 0; }
+#gastvelden { display: grid; gap: 1rem; justify-items: start; }
+#gastvelden .fields { width: 100%; }
+textarea { resize: vertical; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.klaar { margin-top: 1.5rem; background: var(--panel); border: 1px solid var(--gold); border-radius: .5rem; padding: 1.25rem; }
+.klaar p { margin: .5rem 0 0; }
+.kalnav { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .75rem; }
+.kalnav strong { font-family: var(--display); font-size: 1.3rem; text-transform: capitalize; }
+.kalnav button { padding: .2rem .85rem; font-size: 1.2rem; line-height: 1.2; }
+.kalnav button:disabled { opacity: .3; cursor: default; }
+.kal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; font-variant-numeric: tabular-nums; }
+.kal b { font-weight: 500; font-size: .75rem; color: var(--muted); padding-bottom: .25rem; }
+.kal span { padding: .45rem 0; border-radius: .3rem; font-size: .95rem; }
+.kal span.bezet { background: var(--gold-soft); color: var(--muted); text-decoration: line-through; }
+.kal span.voorbij { color: var(--line); }
+.legenda { display: flex; justify-content: center; gap: 1.25rem; font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
+.legenda i { display: inline-block; width: .85rem; height: .85rem; border-radius: .2rem; margin-right: .35rem; vertical-align: -1px; border: 1px solid var(--line); }
+.legenda i.bezet { background: var(--gold-soft); }
+.legenda i.gekozen { background: var(--ink); border-color: var(--ink); }
+.kal button { font: inherit; font-size: .95rem; padding: .45rem 0; border: 0; border-radius: .3rem; background: transparent; color: var(--ink); cursor: pointer; }
+.kal button:hover { background: var(--gold-soft); color: var(--ink); }
+.kal button.gekozen, .kal button.gekozen:hover { background: var(--ink); color: var(--paper); }
+.kal button.start { outline: 2px solid var(--gold); outline-offset: -2px; }
+.kies { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
+.kies .note, .kies .sum { margin: 0; }
+.kies .cta { margin: 0; justify-self: center; text-align: center; }
+.dk { border: 1px solid var(--gold); border-radius: .5rem; padding: 1rem; background: var(--paper); max-width: 23rem; box-shadow: 0 18px 36px -24px rgba(58, 35, 21, .5); }
+.dk-kop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .75rem; }
+.dk-kop button { padding: .25rem .8rem; font-size: .85rem; }
+.kal button:disabled { color: var(--line); cursor: default; background: transparent; }
+#aankomst, #vertrek { cursor: pointer; }
+.kies .note.fout { color: #A8431A; font-weight: 600; }
+.kal button.bezet { background: var(--gold-soft); }
+.stroom { background: var(--gold-soft); border-radius: .4rem; padding: .7rem .85rem; font-size: .92rem; margin: 0; }
+.stroom strong { white-space: nowrap; }
+.vink { display: flex; flex-direction: row; align-items: flex-start; gap: .6rem; font-size: 1rem; color: var(--ink); }
+.vink input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex: none; }
+.terms dd a, footer a { color: var(--gold-text); }
+footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; }
+.ster { color: #A8431A; font-weight: 600; }
+.locatie { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.locatie p { max-width: 36rem; }
+.locatie .lead { margin: 1rem 0; }
+.tips { text-align: center; display: grid; justify-items: center; gap: .35rem; }
+.tips svg { color: var(--gold); margin-bottom: .25rem; }
+.tips .sub { margin: 0 0 .5rem; }
+.tips .cta { margin: .5rem 0 0; }
+.tips .note { margin: .6rem 0 0; }
+@media (max-width: 52rem) { .locatie { grid-template-columns: minmax(0, 1fr); } }
+.veldkop { font-size: .85rem; color: var(--muted); margin: 0 0 .3rem; }
+#gasten-melding { color: var(--orange); }
 @media (max-width: 52rem) {
   .hero .wrap, .prices, .contact { grid-template-columns: minmax(0, 1fr); }
   .crest { order: -1; width: min(100%, 17rem); }
@@ -145,42 +245,7 @@ footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-trans
   td.bar i { transition: width .3s; }
 }
 section[id] { scroll-margin-top: 5.5rem; }
-</style>
-<style>
-.top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
-.gb { max-width: 46rem; margin-inline: auto; }
-.gb .head { margin: 0 auto 2.5rem; text-align: center; }
-.gb .head p:last-child { color: var(--muted); }
-.berichten { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
-.berichten li { border-top: 1px solid var(--line); padding-top: 1.5rem; }
-.berichten blockquote { margin: 0; font-family: var(--display); font-weight: 500; font-size: 1.45rem; line-height: 1.35; white-space: pre-line; overflow-wrap: anywhere; }
-.berichten .van { margin: .9rem 0 0; color: var(--muted); font-size: .92rem; }
-.berichten .van b { font-family: var(--script); font-weight: 400; font-size: 1.7rem; color: var(--gold-text); margin-right: .5rem; }
-.sterren-toon { color: var(--gold); letter-spacing: .12em; font-size: 1.15rem; margin: 0 0 .5rem; }
-.sterren-toon i { font-style: normal; color: var(--line); }
-.gemiddeld { text-align: center; margin: 0 0 2.5rem; color: var(--muted); }
-.gemiddeld b { font-family: var(--display); font-size: 2.2rem; color: var(--ink); margin-right: .4rem; }
-.gemiddeld .sterren-toon { display: inline; font-size: 1.4rem; margin-right: .5rem; }
-.kies-sterren { border: 0; margin: 0; padding: 0; min-width: 0; }
-.kies-sterren legend { font-size: .85rem; color: var(--muted); padding: 0; margin-bottom: .2rem; }
-.kies-sterren .rij { position: relative; display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; }
-.schrijf .kies-sterren input { position: absolute; opacity: 0; width: 1px; height: 1px; padding: 0; border: 0; }
-.schrijf .kies-sterren label { display: block; font-size: 2.2rem; line-height: 1; padding: 0 .12rem; color: var(--line); cursor: pointer; -webkit-text-stroke: 1px var(--gold); }
-.schrijf .kies-sterren input:checked ~ label, .schrijf .kies-sterren label:hover, .schrijf .kies-sterren label:hover ~ label { color: var(--gold); }
-.kies-sterren input:focus-visible + label { outline: 2px solid var(--orange); outline-offset: 2px; border-radius: .2rem; }
-.leeg { text-align: center; color: var(--muted); border: 1px dashed var(--gold); border-radius: .5rem; padding: 1.5rem; margin: 0; }
-.schrijf { margin-top: 3.5rem; background: var(--panel); border: 1px solid var(--line); border-radius: .75rem; padding: clamp(1.25rem, 4vw, 2rem); display: grid; gap: 1rem; }
-.schrijf .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .9rem; }
-.schrijf label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
-.schrijf .wide { grid-column: 1 / -1; }
-.schrijf input, .schrijf textarea { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
-.schrijf textarea { resize: vertical; }
-.schrijf button { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .7rem 1.4rem; justify-self: start; }
-.schrijf button:hover { background: var(--gold-text); }
-.schrijf .note { font-size: .85rem; color: var(--muted); margin: 0; }
-.schrijf [role="status"] { margin: 0; color: #A8431A; min-height: 1.3em; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.ster { color: #A8431A; font-weight: 600; }
+
 /* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
 .menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
 .menu-knop:hover { background: var(--panel); color: var(--ink); }
@@ -226,6 +291,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 </style>
 </head>
 <body>
+
 <header class="top">
   <div class="wrap">
     <a class="brand" href="index.html">Casa Tinto de Verano</a>
@@ -234,7 +300,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       <a href="index.html#penthouse">Het penthouse</a>
       <a href="impressie.html">Impressie</a>
       <a href="prijzen.html">Prijzen</a>
-      <a href="praktisch.html">Praktisch</a>
+      <a href="praktisch.html" aria-current="page">Praktisch</a>
       <a href="locatie.html">Locatie</a>
       <a href="reserveren.html">Reserveren</a>
     </nav>
@@ -262,51 +328,32 @@ section[id] { scroll-margin-top: 5.5rem; }
 })();
 </script>
 
-<main>
-  <section>
+<main id="top">
+  <section id="praktisch">
     <div class="wrap">
-      <div class="gb">
-        <div class="head">
-          <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
-          <h1>Ons <span class="script">gastenboek</span></h1>
-          <p>Ben je bij ons te gast geweest? We lezen graag hoe je het hebt gehad.</p>
-        </div>
-
-        <p class="gemiddeld" id="gemiddeld" hidden></p>
-        <ul class="berichten" id="berichten" aria-live="polite"></ul>
-        <p class="leeg" id="leeg">Berichten laden…</p>
-
-        <form class="schrijf" id="schrijf" novalidate>
-          <h2>Schrijf een bericht</h2>
-          <div class="fields">
-            <label for="gb-naam"><span>Naam <span class="ster" aria-hidden="true">*</span></span>
-              <input type="text" id="gb-naam" autocomplete="name" maxlength="60" required>
-            </label>
-            <label for="gb-verblijf">Wanneer was je er? (optioneel)
-              <input type="text" id="gb-verblijf" maxlength="60" placeholder="bijvoorbeeld juli 2027">
-            </label>
-            <fieldset class="kies-sterren wide">
-              <legend>Aantal sterren <span class="ster" aria-hidden="true">*</span></legend>
-              <div class="rij">
-                <input type="radio" name="sterren" id="st5" value="5"><label for="st5" title="5 sterren" aria-label="5 sterren">★</label>
-                <input type="radio" name="sterren" id="st4" value="4"><label for="st4" title="4 sterren" aria-label="4 sterren">★</label>
-                <input type="radio" name="sterren" id="st3" value="3"><label for="st3" title="3 sterren" aria-label="3 sterren">★</label>
-                <input type="radio" name="sterren" id="st2" value="2"><label for="st2" title="2 sterren" aria-label="2 sterren">★</label>
-                <input type="radio" name="sterren" id="st1" value="1"><label for="st1" title="1 ster" aria-label="1 ster">★</label>
-              </div>
-            </fieldset>
-            <label class="wide" for="gb-bericht"><span>Je bericht <span class="ster" aria-hidden="true">*</span></span>
-              <textarea id="gb-bericht" rows="5" maxlength="1200" required></textarea>
-            </label>
-            <label class="hp" for="gb-website" aria-hidden="true">Website
-              <input type="text" id="gb-website" tabindex="-1" autocomplete="off">
-            </label>
-          </div>
-          <button type="submit" id="gb-knop">Plaats bericht</button>
-          <p role="status" id="gb-status"></p>
-          <p class="note">Je bericht verschijnt nadat wij het hebben gelezen. Je naam en je bericht komen op deze pagina te staan.</p>
-        </form>
+      <div class="pagina-kop">
+        <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
+        <h1>Praktische <span class="script">informatie</span></h1>
       </div>
+      <ul class="punten kern">
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><p><span class="lab">Minimaal verblijf</span><b>10 nachten</b></p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p><span class="lab">Inchecken</span><b>Vanaf 15:00</b></p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p><span class="lab">Uitchecken</span><b>Voor 10:00</b></p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7M11 6l7 7-4 4-7-7zM7 10l-4 9 9-4"/></svg><p><span class="lab">Eindschoonmaak</span><b>€ 150</b></p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><p><span class="lab">Borg</span><b>€ 300</b><span class="uitleg">Betaal je met de factuur en krijg je binnen 2 weken na vertrek terug.</span></p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></svg><p><span class="lab">Elektriciteit</span><b>85 kWh per week</b><span class="uitleg">Inbegrepen bij je verblijf. Meerverbruik wordt bij uitchecken verrekend tegen € 0,35 per kWh.</span></p></li>
+      </ul>
+      <p class="punten-kop">Goed om te weten</p>
+      <ul class="punten">
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-4l2-5h12l2 5v4M3 16h18M7 16v2M17 16v2"/><circle cx="7.500" cy="13" r="1"/><circle cx="16.500" cy="13" r="1"/></svg><p><b>Eigen parkeerplaats</b>In de garage van het complex, inbegrepen bij je verblijf.</p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-8M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.500"/></svg><p><b>Linnengoed inbegrepen</b>Bedlinnen, twee handdoeken en een washandje per persoon.</p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><rect x="4.500" y="3" width="15" height="18" rx="2"/><path d="M4.500 7.500h15M7.500 5.250h.010M10 5.250h.010"/><circle cx="12" cy="14" r="3.800"/></svg><p><b>Wasmachine</b>Aanwezig in het penthouse, handig bij een langer verblijf.</p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0"/></svg><p><b>Zwembad</b>Zwemmen is op eigen risico. Kinderen zwemmen alleen onder toezicht van hun ouders.</p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/></svg><p><b>Rust na 22:00</b>Rust op het complex. Het zwembad is dan gesloten.</p></li>
+        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9" r="1.800"/><circle cx="12" cy="6.500" r="1.800"/><circle cx="17" cy="9" r="1.800"/><path d="M12 12c-3 0-5 3-4 5.500 1 2 3 1 4 1s3 1 4-1c1-2.500-1-5.500-4-5.500z"/></svg><p><b>Geen huisdieren</b>Huisdieren zijn niet welkom in het penthouse.</p></li>
+      </ul>
+      <p class="punten-voet"><a href="huurvoorwaarden.html">Lees alle afspraken en huisregels in de huurvoorwaarden</a></p>
+      <p class="naar-reserveren"><a class="cta" href="prijzen.html">Bekijk prijzen en beschikbaarheid</a></p>
     </div>
   </section>
 </main>
@@ -347,62 +394,8 @@ section[id] { scroll-margin-top: 5.5rem; }
   </div>
   <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
 </footer>
-<script>
-(function () {
-  var $ = function (id) { return document.getElementById(id); };
-  function sterren(n) {
-    var p = document.createElement("span"), leeg = document.createElement("i");
-    p.className = "sterren-toon"; p.setAttribute("role", "img"); p.setAttribute("aria-label", n + " van 5 sterren");
-    p.textContent = "★★★★★".slice(0, n); leeg.textContent = "★★★★★".slice(n); p.append(leeg);
-    return p;
-  }
-  function toon(lijst) {
-    var ul = $("berichten");
-    ul.replaceChildren();
-    lijst.forEach(function (b) {
-      var li = document.createElement("li"), q = document.createElement("blockquote"), van = document.createElement("p"), naam = document.createElement("b");
-      q.textContent = b.bericht;
-      van.className = "van"; naam.textContent = b.naam; van.append(naam);
-      if (b.verblijf) van.append(document.createTextNode(b.verblijf));
-      if (b.sterren) { var s = sterren(b.sterren); s.style.display = "block"; li.append(s); }
-      li.append(q, van); ul.append(li);
-    });
-    var met = lijst.filter(function (b) { return b.sterren; }), gem = $("gemiddeld");
-    gem.hidden = met.length === 0;
-    if (met.length) {
-      var g = met.reduce(function (t, b) { return t + b.sterren; }, 0) / met.length, cijfer = document.createElement("b");
-      cijfer.textContent = g.toFixed(1).replace(".", ",");
-      gem.replaceChildren(cijfer, sterren(Math.round(g)), document.createTextNode("gemiddeld uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen")));
-    }
-    $("leeg").hidden = lijst.length > 0;
-    $("leeg").textContent = "Er staan nog geen berichten. Schrijf jij het eerste?";
-  }
-  fetch("/api/gastenboek").then(function (r) { if (!r.ok) throw 0; return r.json(); })
-    .then(function (d) { toon(d.berichten || []); })
-    .catch(function () { $("leeg").textContent = "De berichten kunnen nu niet worden geladen. Probeer het later opnieuw."; });
 
-  $("schrijf").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var status = $("gb-status"), knop = $("gb-knop");
-    var naam = $("gb-naam").value.trim(), bericht = $("gb-bericht").value.trim();
-    status.textContent = "";
-    if (naam.length < 2) { status.textContent = "Vul je naam in."; $("gb-naam").focus(); return; }
-    var gekozen = document.querySelector('input[name="sterren"]:checked');
-    if (!gekozen) { status.textContent = "Kies het aantal sterren."; $("st5").focus(); return; }
-    if (bericht.length < 10) { status.textContent = "Schrijf een bericht van minimaal 10 tekens."; $("gb-bericht").focus(); return; }
-    knop.disabled = true; knop.textContent = "Bezig met versturen…";
-    fetch("/api/gastenboek", { method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ naam: naam, sterren: +gekozen.value, verblijf: $("gb-verblijf").value, bericht: bericht, website: $("gb-website").value }) })
-      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) throw new Error(d.fout || "Versturen lukte niet. Probeer het later opnieuw."); }); })
-      .then(function () {
-        var klaar = document.createElement("p");
-        klaar.className = "leeg"; klaar.tabIndex = -1; klaar.style.marginTop = "3.5rem";
-        klaar.textContent = "Bedankt voor je bericht. Het verschijnt hier nadat wij het hebben gelezen.";
-        $("schrijf").replaceWith(klaar); klaar.focus();
-      })
-      .catch(function (err) { status.textContent = err.message; knop.disabled = false; knop.textContent = "Plaats bericht"; });
-  });
-})();
-</script>
+
+
 </body>
 </html>

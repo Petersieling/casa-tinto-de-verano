@@ -248,6 +248,15 @@ section[id] { scroll-margin-top: 5.5rem; }
 /* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
 .menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
 .menu-knop:hover { background: var(--panel); color: var(--ink); }
+/* het menu klapt in zodra de onderdelen niet meer op één regel passen */
+@media (max-width: 60rem) {
+  .top .wrap { align-items: center; }
+  .menu-knop { display: inline-block; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
 @media (max-width: 40rem) {
   .top .wrap { align-items: center; }
   .brand { font-size: 1rem; letter-spacing: .07em; }
@@ -290,9 +299,9 @@ section[id] { scroll-margin-top: 5.5rem; }
       <a href="#penthouse">Het penthouse</a>
       <a href="impressie.html">Impressie</a>
       <a href="prijzen.html">Prijzen</a>
+      <a href="praktisch.html">Praktisch</a>
       <a href="locatie.html">Locatie</a>
       <a href="reserveren.html">Reserveren</a>
-      <a href="gastenboek.html">Gastenboek</a>
     </nav>
   </div>
 </header>
@@ -373,30 +382,6 @@ section[id] { scroll-margin-top: 5.5rem; }
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="praktisch" class="band">
-    <div class="wrap">
-      <div class="head"><h2>Praktisch</h2></div>
-      <ul class="punten kern">
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg><p><span class="lab">Minimaal verblijf</span><b>10 nachten</b></p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p><span class="lab">Inchecken</span><b>Vanaf 15:00</b></p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p><span class="lab">Uitchecken</span><b>Voor 10:00</b></p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7M11 6l7 7-4 4-7-7zM7 10l-4 9 9-4"/></svg><p><span class="lab">Eindschoonmaak</span><b>€ 150</b></p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><p><span class="lab">Borg</span><b>€ 300</b><span class="uitleg">Betaal je met de factuur en krijg je binnen 2 weken na vertrek terug.</span></p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></svg><p><span class="lab">Elektriciteit</span><b>85 kWh per week</b><span class="uitleg">Inbegrepen bij je verblijf. Meerverbruik wordt bij uitchecken verrekend tegen € 0,35 per kWh.</span></p></li>
-      </ul>
-      <p class="punten-kop">Goed om te weten</p>
-      <ul class="punten">
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-4l2-5h12l2 5v4M3 16h18M7 16v2M17 16v2"/><circle cx="7.500" cy="13" r="1"/><circle cx="16.500" cy="13" r="1"/></svg><p><b>Eigen parkeerplaats</b>In de garage van het complex, inbegrepen bij je verblijf.</p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-8M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.500"/></svg><p><b>Linnengoed inbegrepen</b>Bedlinnen, twee handdoeken en een washandje per persoon.</p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><rect x="4.500" y="3" width="15" height="18" rx="2"/><path d="M4.500 7.500h15M7.500 5.250h.010M10 5.250h.010"/><circle cx="12" cy="14" r="3.800"/></svg><p><b>Wasmachine</b>Aanwezig in het penthouse, handig bij een langer verblijf.</p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0"/></svg><p><b>Zwembad</b>Zwemmen is op eigen risico. Kinderen zwemmen alleen onder toezicht van hun ouders.</p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/></svg><p><b>Rust na 22:00</b>Rust op het complex. Het zwembad is dan gesloten.</p></li>
-        <li><svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.400" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9" r="1.800"/><circle cx="12" cy="6.500" r="1.800"/><circle cx="17" cy="9" r="1.800"/><path d="M12 12c-3 0-5 3-4 5.500 1 2 3 1 4 1s3 1 4-1c1-2.500-1-5.500-4-5.500z"/></svg><p><b>Geen huisdieren</b>Huisdieren zijn niet welkom in het penthouse.</p></li>
-      </ul>
-      <p class="punten-voet"><a href="huurvoorwaarden.html">Lees alle afspraken en huisregels in de huurvoorwaarden</a></p>
       <p class="naar-reserveren"><a class="cta" href="prijzen.html">Bekijk prijzen en beschikbaarheid</a></p>
     </div>
   </section>
@@ -424,7 +409,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       <h2>Je verblijf</h2>
       <ul>
         <li><a href="/reserveren">Reservering aanvragen</a></li>
-        <li><a href="/#praktisch">Praktische informatie</a></li>
+        <li><a href="/praktisch">Praktische informatie</a></li>
         <li><a href="/huurvoorwaarden">Huurvoorwaarden</a></li>
       </ul>
     </div>
@@ -441,6 +426,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 
 <script>
 // Oude links naar onderdelen die nu een eigen pagina hebben.
+if (location.hash === "#praktisch") location.replace("praktisch.html");
 if (location.hash === "#contact") location.replace("reserveren.html");
 if (location.hash === "#prijzen" || location.hash === "#beschikbaar") location.replace("prijzen.html");
 </script>

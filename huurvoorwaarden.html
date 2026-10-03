@@ -163,6 +163,15 @@ footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-trans
 /* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
 .menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
 .menu-knop:hover { background: var(--panel); color: var(--ink); }
+/* het menu klapt in zodra de onderdelen niet meer op één regel passen */
+@media (max-width: 60rem) {
+  .top .wrap { align-items: center; }
+  .menu-knop { display: inline-block; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
 @media (max-width: 40rem) {
   .top .wrap { align-items: center; }
   .brand { font-size: 1rem; letter-spacing: .07em; }
@@ -204,9 +213,9 @@ footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-trans
       <a href="index.html#penthouse">Het penthouse</a>
       <a href="impressie.html">Impressie</a>
       <a href="prijzen.html">Prijzen</a>
+      <a href="praktisch.html">Praktisch</a>
       <a href="locatie.html">Locatie</a>
       <a href="reserveren.html">Reserveren</a>
-      <a href="gastenboek.html">Gastenboek</a>
     </nav>
   </div>
 </header>
@@ -286,7 +295,7 @@ footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-trans
       <h2>Je verblijf</h2>
       <ul>
         <li><a href="/reserveren">Reservering aanvragen</a></li>
-        <li><a href="/#praktisch">Praktische informatie</a></li>
+        <li><a href="/praktisch">Praktische informatie</a></li>
         <li><a href="/huurvoorwaarden">Huurvoorwaarden</a></li>
       </ul>
     </div>
