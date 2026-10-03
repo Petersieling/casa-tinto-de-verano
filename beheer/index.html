@@ -569,7 +569,7 @@ function toonFactuur(f) {
   const regelTekst = (...delen) => delen.filter(Boolean).join("\n");
   $("#factuur").replaceChildren(
     h("div", { class: "f-kop" },
-      h("img", { src: "logo.webp?v=2", alt: "Casa Tinto de Verano", width: 420, height: 520 }),
+      h("img", { src: "logo.webp?v=3", alt: "Casa Tinto de Verano", width: 420, height: 520 }),
       h("div", { class: "f-titel" },
         h("h1", { style: g.soort === "credit" ? "font-size:1.9rem;letter-spacing:.14em;margin-right:-.14em" : "" }, g.soort === "credit" ? "Creditfactuur" : "Factuur"),
         h("dl", null, h("dt", null, "Nummer"), h("dd", null, f.nummer), h("dt", null, "Datum"), h("dd", null, datum(f.datum, true))))),
