@@ -84,7 +84,7 @@ section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .rooms li small { display: block; font-family: var(--body); font-weight: 400; color: var(--muted); font-size: .9rem; line-height: 1.4; margin-top: .15rem; }
 
 /* prijslijst */
-.prices { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.prices { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
 .tablebox { min-width: 0; overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 caption { text-align: left; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-bottom: .6rem; }
@@ -96,6 +96,34 @@ td.bar i { display: block; height: .5rem; border-radius: 999px; background: var(
 tr.peak th, tr.peak td { background: var(--gold-soft); }
 tr.peak td.bar i { background: var(--orange); }
 tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+.prijsrijen { list-style: none; margin: 0; padding: 0; }
+.prijsrijen li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .62rem 0; border-top: 1px solid var(--line); }
+.prijsrijen li:first-child { border-top: 0; }
+.prijsrijen span { font-family: var(--display); font-weight: 500; font-size: 1.3rem; line-height: 1.2; }
+.prijsrijen b { font-family: var(--display); font-weight: 600; font-size: 1.35rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prijsrijen .piek b { color: var(--gold-text); }
+.hart { font-style: normal; color: var(--gold); font-size: .7rem; vertical-align: .15em; }
+.prijskaart .legenda .hart { margin-right: .4rem; width: auto; height: auto; border: 0; }
+
+/* prijzen en beschikbaarheid als één geheel */
+.duo { border: 1px solid var(--gold); outline: 1px solid var(--gold); outline-offset: 7px; border-radius: clamp(8rem, 22vw, 18rem) clamp(8rem, 22vw, 18rem) .75rem .75rem; padding: clamp(3.5rem, 9vw, 6rem) clamp(1.25rem, 5vw, 4rem) clamp(1.75rem, 4vw, 2.75rem); margin: 7px; }
+.duo-kop { text-align: center; margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+.duo-kop .eyebrow { margin-bottom: .6rem; }
+.duo-kop .hartje { color: var(--gold); font-size: 1rem; margin: 1rem 0 0; }
+.duo .prices { gap: 0; align-items: stretch; }
+.duo .calc { border: 0; border-radius: 0; padding: 0; background: transparent; }
+.duo .prices > :first-child { padding-right: clamp(1.5rem, 4vw, 3.25rem); border-right: 1px solid var(--line); }
+.duo .prices > :last-child { padding-left: clamp(1.5rem, 4vw, 3.25rem); }
+.duo .calc h3 { font-family: var(--body); font-weight: 500; font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin-bottom: 1.1rem; }
+.duo .prijsrijen li { border-top: 0; padding: .55rem 0; gap: .6rem; }
+.duo .stip { flex: 1; border-bottom: 1px dotted var(--muted); opacity: .5; transform: translateY(-.3rem); }
+.duo .calc .sub { margin-top: 0; }
+.duo-noot { text-align: center; color: var(--muted); font-size: .88rem; margin: clamp(1.5rem, 3vw, 2.25rem) auto 0; max-width: 34rem; }
+@media (max-width: 52rem) {
+  .duo .prices > :first-child { padding-right: 0; border-right: 0; padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .duo .prices > :last-child { padding-left: 0; padding-top: 2rem; }
+}
 
 /* rekenhulp */
 .calc { background: var(--paper); border: 1px solid var(--gold); border-radius: 10rem 10rem .75rem .75rem; padding: 3.25rem clamp(1.1rem, 3vw, 1.75rem) 1.5rem; min-width: 0; }
@@ -349,17 +377,17 @@ section[id] { scroll-margin-top: 5.5rem; }
 
   <section id="prijzen">
     <div class="wrap">
-      <div class="head">
-        <h2>Prijslijst 2026/2027</h2>
-        <p>Alle prijzen zijn per week. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.</p>
-      </div>
+      <div class="duo">
+        <div class="duo-kop">
+          <p class="eyebrow">2026 · 2027</p>
+          <h2>Prijzen en <span class="script">beschikbaarheid</span></h2>
+          <p class="hartje" aria-hidden="true">&#9829;</p>
+        </div>
       <div class="prices">
-        <div class="tablebox">
-          <table>
-            <caption>Huurprijs per periode</caption>
-            <thead><tr><th scope="col">Periode</th><th scope="col" class="bar"><span hidden>Vergelijking</span></th><th scope="col" class="amt">Per week</th></tr></thead>
-            <tbody id="rows"></tbody>
-          </table>
+        <div class="calc prijskaart">
+          <h3>Prijs per week</h3>
+          <ul class="prijsrijen" id="rows"></ul>
+          <p class="legenda"><span><i class="hart">&#9829;</i>Hoogseizoen en feestdagen</span></p>
         </div>
 
         <div class="calc" id="beschikbaar">
@@ -388,6 +416,8 @@ section[id] { scroll-margin-top: 5.5rem; }
             </div>
           </div>
         </div>
+      </div>
+      <p class="duo-noot">Alle prijzen zijn per week. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.</p>
       </div>
     </div>
   </section>
@@ -574,14 +604,14 @@ function stroomTekst(el, n) {
 const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
 // ---- Prijslijst ----
-const hoogste = Math.max(...PERIODES.map((p) => p.prijs));
 for (const p of PERIODES) {
-  const tr = document.createElement("tr");
-  if (p.piek) tr.className = "peak";
-  tr.innerHTML = '<th scope="row"></th><td class="bar"><i style="width:' + (p.prijs / hoogste * 100).toFixed(1) + '%"></i></td><td class="amt"></td>';
-  tr.children[0].textContent = p.naam;
-  tr.children[2].textContent = euro(p.prijs);
-  $("rows").appendChild(tr);
+  const li = document.createElement("li"), naam = document.createElement("span"), prijs = document.createElement("b");
+  naam.textContent = p.naam;
+  if (p.piek) { li.className = "piek"; const hart = document.createElement("i"); hart.className = "hart"; hart.textContent = "♥"; hart.title = "Hoogseizoen"; naam.append(" ", hart); }
+  prijs.textContent = euro(p.prijs);
+  const stip = document.createElement("i"); stip.className = "stip";
+  li.append(naam, stip, prijs);
+  $("rows").appendChild(li);
 }
 
 // ---- Beschikbaarheid ----
