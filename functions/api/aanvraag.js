@@ -13,6 +13,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   const leeftijden = Array.isArray(b.leeftijden) ? b.leeftijden.map((l) => Math.trunc(+l)) : [];
   const personen = volwassenen + kinderen;
   if (naam.length < 2) throw new Melding("Vul je naam in.");
+  if (b.akkoord !== true) throw new Melding("Ga akkoord met de huurvoorwaarden om je aanvraag te versturen.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Melding("Vul een geldig e-mailadres in.");
   if (!(volwassenen >= 1)) throw new Melding("Geef aan met hoeveel volwassenen je komt.");
   if (!(kinderen >= 0) || b.kinderen === "" || b.kinderen == null) throw new Melding("Geef aan met hoeveel kinderen je komt. Kies 0 als er geen kinderen meekomen.");

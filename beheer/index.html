@@ -440,7 +440,7 @@ const VIEWS = {
       ["afzender_nummer", "Fiscaal nummer (bijvoorbeeld NIE of NIF), als dat op de factuur moet"], ["iban", "IBAN"], ["iban_naam", "Rekening op naam van"],
       ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true]
     ];
-    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Graag het totaalbedrag overmaken onder vermelding van het factuurnummer." };
+    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Graag overmaken onder vermelding van het factuurnummer." };
     const inv = {};
     const form = h("form", { style: "display:grid;gap:1rem;max-width:44rem", onsubmit: async (e) => {
       e.preventDefault();
@@ -478,6 +478,7 @@ function toonFactuur(f) {
     h("div", { class: "voet" },
       a.btw_regel ? h("p", null, a.btw_regel) : null,
       g.borg ? h("p", null, `Daarnaast te voldoen: borg ${euro(g.borg)}.`) : null,
+      g.betaling ? h("p", null, g.betaling) : null,
       a.betaal_tekst ? h("p", null, a.betaal_tekst) : null,
       a.iban ? h("p", null, `IBAN: ${a.iban}` + (a.iban_naam ? `\nTen name van: ${a.iban_naam}` : "")) : null));
   $("#factuurlaag").hidden = false;

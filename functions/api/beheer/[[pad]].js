@@ -1,5 +1,5 @@
 import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Melding } from "../../../src/lib.js";
-import { isDatum, nachten } from "../../../src/prijzen.js";
+import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN } from "../../../src/prijzen.js";
 
 // Beheer-API: boekingen, blokkades, klanten, facturen en instellingen. Alleen bereikbaar na inloggen.
 const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst"];
@@ -148,11 +148,18 @@ export const onRequest = veilig(async ({ request, env, params }) => {
     const n = nachten(bo.aankomst, bo.vertrek);
     const regels = [{ omschrijving: `Huur Casa Tinto de Verano, ${datumNl(bo.aankomst)} t/m ${datumNl(bo.vertrek)} (${n} nachten)`, bedrag: bo.huur || 0 }];
     if (bo.schoonmaak) regels.push({ omschrijving: "Eindschoonmaak", bedrag: bo.schoonmaak });
+    if (bo.borg) regels.push({ omschrijving: `Borg (terug binnen ${BORG_TERUG_DAGEN} dagen na vertrek, na controle van het penthouse)`, bedrag: bo.borg });
     const totaal = regels.reduce((s, r) => s + r.bedrag, 0);
+    const euro = (n) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" }).format(n);
+    const aanbetaling = Math.round(((bo.huur || 0) + (bo.schoonmaak || 0)) * AANBETALING);
+    const uiterlijk = naarIso(naarTijd(bo.aankomst) - RESTANT_DAGEN * 864e5);
+    const betaling = uiterlijk <= datum
+      ? `Je verblijf begint binnen ${RESTANT_DAGEN / 7} weken. Graag het volledige bedrag van ${euro(totaal)} direct overmaken.`
+      : `Aanbetaling: ${euro(aanbetaling)} binnen 7 dagen na deze factuur.\nRestant inclusief borg: ${euro(totaal - aanbetaling)} uiterlijk op ${datumNl(uiterlijk)}.`;
     const gegevens = {
       afzender: ins,
       klant: { naam: klant?.naam || bo.naam, adres: klant?.adres || "", email: klant?.email || bo.email || "" },
-      regels, borg: bo.borg || 0, aankomst: bo.aankomst, vertrek: bo.vertrek
+      regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek
     };
     await d.prepare("INSERT INTO facturen (nummer, boeking_id, datum, gegevens, totaal) VALUES (?, ?, ?, ?, ?)").bind(nummer, bo.id, datum, JSON.stringify(gegevens), totaal).run();
     return json({ ok: true, nummer });

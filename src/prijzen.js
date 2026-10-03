@@ -17,6 +17,10 @@ export const BORG = 300;
 export const MIN_NACHTEN = 10;
 export const MAX_PERSONEN = 4;
 export const KWH_PER_WEEK = 85;
+export const AANBETALING = 0.30;     // deel van huur en eindschoonmaak dat bij boeking wordt betaald
+export const RESTANT_DAGEN = 42;     // restant en borg uiterlijk 6 weken voor aankomst
+export const ANNULEER_DAGEN = 56;    // tot 8 weken voor aankomst is alleen de aanbetaling verschuldigd
+export const BORG_TERUG_DAGEN = 14;  // borg terug binnen 2 weken na vertrek
 export const KWH_PRIJS = 0.35; // euro per kWh boven het inbegrepen verbruik
 
 const DAG = 864e5;

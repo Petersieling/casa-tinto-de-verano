@@ -165,6 +165,10 @@ textarea { resize: vertical; }
 .kies input { font-size: 1.15rem; font-weight: 600; text-align: center; }
 .stroom { background: var(--gold-soft); border-radius: .4rem; padding: .7rem .85rem; font-size: .92rem; margin: 0; }
 .stroom strong { white-space: nowrap; }
+.vink { display: flex; flex-direction: row; align-items: flex-start; gap: .6rem; font-size: 1rem; color: var(--ink); }
+.vink input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex: none; }
+.terms dd a, footer a { color: var(--gold-text); }
+footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; }
 .veldkop { font-size: .85rem; color: var(--muted); margin: 0 0 .3rem; }
 #gasten-melding { color: var(--orange); }
 @media (max-width: 52rem) {
@@ -311,7 +315,10 @@ section[id] { scroll-margin-top: 5.5rem; }
         <div><dt>Inchecken</dt><dd><b>vanaf 15:00</b></dd></div>
         <div><dt>Uitchecken</dt><dd><b>voor 10:00</b></dd></div>
         <div><dt>Eindschoonmaak</dt><dd><b>€ 150</b></dd></div>
-        <div><dt>Borg</dt><dd><b>€ 300</b></dd></div>
+        <div><dt>Borg</dt><dd><b>€ 300</b>Betaal je met de factuur en krijg je binnen 2 weken na vertrek terug.</dd></div>
+        <div><dt>Linnengoed</dt><dd><b>Inbegrepen</b>Bedlinnen, twee handdoeken en een washandje per persoon.</dd></div>
+        <div><dt>Rust</dt><dd><b>na 22:00</b>Rust op het complex. Het zwembad is dan gesloten.</dd></div>
+        <div><dt>Voorwaarden</dt><dd><b>Huurvoorwaarden</b><a href="huurvoorwaarden.html">Lees alle afspraken en huisregels</a></dd></div>
         <div><dt>Elektriciteit</dt><dd><b>85 kWh per week</b>inbegrepen. Meerverbruik wordt bij uitchecken verrekend tegen € 0,35 per kWh.</dd></div>
       </dl>
     </div>
@@ -373,6 +380,10 @@ section[id] { scroll-margin-top: 5.5rem; }
                   <input type="text" id="website" tabindex="-1" autocomplete="off">
                 </label>
               </div>
+              <label class="vink" for="akkoord">
+                <input type="checkbox" id="akkoord" required>
+                <span>Ik heb de <a href="huurvoorwaarden.html" target="_blank" rel="noopener">huurvoorwaarden</a> gelezen en ga ermee akkoord.</span>
+              </label>
               <button type="submit" id="verstuur">Verstuur aanvraag</button>
               <p class="note">We gebruiken je gegevens alleen om je aanvraag af te handelen. De prijs is een indicatie op basis van de prijslijst.</p>
             </div>
@@ -406,7 +417,7 @@ section[id] { scroll-margin-top: 5.5rem; }
   </section>
 </main>
 
-<footer><div class="wrap">Your place under the sun</div></footer>
+<footer><div class="wrap">Your place under the sun<a href="huurvoorwaarden.html">Huurvoorwaarden</a></div></footer>
 
 <script type="module">
 import { PERIODES, SCHOONMAAK, BORG, MIN_NACHTEN, MAX_PERSONEN, KWH_PRIJS, huurprijs, nachten, isDatum, naarTijd, naarIso, kwhInbegrepen } from "./src/prijzen.js";
@@ -602,12 +613,13 @@ $("aanvraag").addEventListener("submit", async (e) => {
   const naam = $("naam").value.trim(), email = $("email").value.trim();
   if (naam.length < 2) { status.textContent = "Vul je naam in."; $("naam").focus(); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = "Vul een geldig e-mailadres in."; $("email").focus(); return; }
+  if (!$("akkoord").checked) { status.textContent = "Ga akkoord met de huurvoorwaarden om je aanvraag te versturen."; $("akkoord").focus(); return; }
   const knop = $("verstuur");
   knop.disabled = true; knop.textContent = "Bezig met versturen…";
   try {
     const r = await fetch("/api/aanvraag", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, naam, email, telefoon: $("telefoon").value, bericht: $("bericht").value, website: $("website").value })
+      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, naam, email, telefoon: $("telefoon").value, bericht: $("bericht").value, website: $("website").value })
     });
     const data = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar casatintodeverano@gmail.com.");
