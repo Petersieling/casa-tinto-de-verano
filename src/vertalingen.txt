@@ -1,0 +1,1245 @@
+# Vertalingen van de website. Elk blok is drie regels: Nederlands, Engels, Spaans. Blokken zijn gescheiden door een lege regel.
+# De Nederlandse regel moet precies gelijk zijn aan de tekst op de pagina. Na een wijziging: python3 src/maak-taal.py
+# Regels die met # beginnen zijn opmerkingen.
+
+# ---------- menu, voettekst, algemeen ----------
+Menu
+Menu
+Menú
+
+Sluiten
+Close
+Cerrar
+
+Onderdelen
+Sections
+Secciones
+
+Het penthouse
+The penthouse
+El ático
+
+Impressie
+Photos
+Fotos
+
+Prijzen
+Prices
+Precios
+
+Praktisch
+Practical
+Información
+
+Locatie
+Location
+Ubicación
+
+Reserveren
+Booking
+Reservar
+
+Gastenboek
+Guestbook
+Libro de visitas
+
+Punta Prima · Torrevieja · Costa Blanca
+Punta Prima · Torrevieja · Costa Blanca
+Punta Prima · Torrevieja · Costa Blanca
+
+Penthouse met groot dakterras in Punta Prima, aan de Costa Blanca.
+Penthouse with a large roof terrace in Punta Prima, on the Costa Blanca.
+Ático con gran terraza en la azotea en Punta Prima, en la Costa Blanca.
+
+Voettekst
+Footer
+Pie de página
+
+Ontdek
+Discover
+Descubre
+
+Prijzen en beschikbaarheid
+Prices and availability
+Precios y disponibilidad
+
+Locatie en omgeving
+Location and surroundings
+Ubicación y entorno
+
+Over ons
+About us
+Sobre nosotros
+
+Je verblijf
+Your stay
+Tu estancia
+
+Reservering aanvragen
+Request a booking
+Solicitar reserva
+
+Praktische informatie
+Practical information
+Información práctica
+
+Huurvoorwaarden
+Rental terms
+Condiciones de alquiler
+
+Contact
+Contact
+Contacto
+
+Borg
+Security deposit
+Fianza
+
+Bekijk prijzen en beschikbaarheid
+View prices and availability
+Ver precios y disponibilidad
+
+# ---------- voorpagina ----------
+Casa Tinto de Verano: penthouse met groot dakterras in Punta Prima, Costa Blanca. Voor maximaal 4 personen, met gedeeld zwembad. Prijslijst 2026/2027.
+Casa Tinto de Verano: penthouse with a large roof terrace in Punta Prima, Costa Blanca. For up to 4 guests, with a shared pool. Price list 2026/2027.
+Casa Tinto de Verano: ático con gran terraza en la azotea en Punta Prima, Costa Blanca. Para un máximo de 4 personas, con piscina comunitaria. Tarifas 2026/2027.
+
+Penthouse met groot dakterras, onder de Spaanse
+Penthouse with a large roof terrace, under the Spanish
+Ático con gran terraza en la azotea, bajo el
+
+zon
+sun
+sol español
+
+Geniet van zon, ruimte en comfort op een unieke plek aan de prachtige Costa Blanca.
+Enjoy sun, space and comfort in a unique spot on the beautiful Costa Blanca.
+Disfruta del sol, el espacio y el confort en un lugar único de la preciosa Costa Blanca.
+
+personen maximaal
+guests maximum
+personas máximo
+
+slaapkamers
+bedrooms
+dormitorios
+
+per week, vanaf
+per week, from
+por semana, desde
+
+Logo van Casa Tinto de Verano: een wit penthouse met trap, balkon en natuurstenen muur, met een glas tinto de verano ernaast
+Casa Tinto de Verano logo: a white penthouse with stairs, a balcony and a natural stone wall, with a glass of tinto de verano beside it
+Logotipo de Casa Tinto de Verano: un ático blanco con escalera, balcón y muro de piedra natural, junto a una copa de tinto de verano
+
+Voor maximaal vier personen
+For up to four guests
+Para un máximo de cuatro personas
+
+Over het
+About the
+Sobre el
+
+penthouse
+penthouse
+ático
+
+Met een eigen dakterras, een gedeeld zwembad en een eigen parkeerplaats in de garage.
+With a private roof terrace, a shared pool and your own parking space in the garage.
+Con terraza privada en la azotea, piscina comunitaria y plaza de aparcamiento propia en el garaje.
+
+Bekijk de impressie
+View the photos
+Ver las fotos
+
+Binnen
+Inside
+Interior
+
+Woonkamer
+Living room
+Salón
+
+met eethoek en open keuken
+with dining area and open kitchen
+con comedor y cocina abierta
+
+Slaapkamer 1
+Bedroom 1
+Dormitorio 1
+
+met tweepersoonsbed
+with a double bed
+con cama de matrimonio
+
+Slaapkamer 2
+Bedroom 2
+Dormitorio 2
+
+met twee losse bedden
+with two single beds
+con dos camas individuales
+
+Twee badkamers
+Two bathrooms
+Dos baños
+
+Buiten
+Outside
+Exterior
+
+Balkon
+Balcony
+Balcón
+
+Groot dakterras
+Large roof terrace
+Gran terraza en la azotea
+
+Pergola
+Pergola
+Pérgola
+
+op het dakterras
+on the roof terrace
+en la azotea
+
+Buitenkeuken
+Outdoor kitchen
+Cocina exterior
+
+Op het complex
+In the complex
+En la urbanización
+
+Zwembad
+Swimming pool
+Piscina
+
+in de gemeenschappelijke ruimte
+in the communal area
+en la zona comunitaria
+
+Kinderbad
+Children's pool
+Piscina infantil
+
+Eigen parkeerplaats
+Private parking space
+Plaza de aparcamiento propia
+
+in de garage
+in the garage
+en el garaje
+
+Woonkamer met hoekbank, ronde eettafel en open keuken met bar
+Living room with corner sofa, round dining table and open kitchen with bar
+Salón con sofá rinconero, mesa de comedor redonda y cocina abierta con barra
+
+# ---------- impressie ----------
+Foto's van Casa Tinto de Verano: de woonkamer met open keuken, de slaapkamer en de badkamer van het penthouse in Punta Prima.
+Photos of Casa Tinto de Verano: the living room with open kitchen, the bedroom and the bathroom of the penthouse in Punta Prima.
+Fotos de Casa Tinto de Verano: el salón con cocina abierta, el dormitorio y el baño del ático en Punta Prima.
+
+Impressie | Casa Tinto de Verano
+Photos | Casa Tinto de Verano
+Fotos | Casa Tinto de Verano
+
+Een
+An
+Una
+
+impressie
+impression
+impresión
+
+Zo ziet het penthouse er van binnen uit.
+This is what the penthouse looks like inside.
+Así es el ático por dentro.
+
+Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur
+Bedroom with two single beds and a gold-coloured fan on the wall
+Dormitorio con dos camas individuales y un abanico dorado en la pared
+
+Badkamer met inloopdouche, wastafel en ronde spiegel
+Bathroom with walk-in shower, washbasin and round mirror
+Baño con ducha a ras de suelo, lavabo y espejo redondo
+
+Badkamer
+Bathroom
+Baño
+
+met inloopdouche
+with walk-in shower
+con ducha a ras de suelo
+
+# ---------- locatie ----------
+Locatie van Casa Tinto de Verano in Punta Prima, bij Torrevieja aan de Costa Blanca en hoe je er komt.
+Location of Casa Tinto de Verano in Punta Prima, near Torrevieja on the Costa Blanca, and how to get there.
+Ubicación de Casa Tinto de Verano en Punta Prima, junto a Torrevieja en la Costa Blanca, y cómo llegar.
+
+Locatie | Casa Tinto de Verano
+Location | Casa Tinto de Verano
+Ubicación | Casa Tinto de Verano
+
+Locatie en
+Location and
+Ubicación y
+
+omgeving
+surroundings
+entorno
+
+Casa Tinto de Verano ligt in Punta Prima, bij Torrevieja aan de Costa Blanca.
+Casa Tinto de Verano is in Punta Prima, near Torrevieja on the Costa Blanca.
+Casa Tinto de Verano está en Punta Prima, junto a Torrevieja, en la Costa Blanca.
+
+Je reis naar Casa Tinto de Verano in
+Your journey to Casa Tinto de Verano in
+Tu viaje a Casa Tinto de Verano en
+
+Een korte rit vanaf de luchthaven Alicante, en je vakantie is begonnen.
+A short drive from Alicante airport, and your holiday has begun.
+Un trayecto corto desde el aeropuerto de Alicante y ya han empezado tus vacaciones.
+
+Per vliegtuig
+By plane
+En avión
+
+Luchthaven Alicante
+Alicante airport
+Aeropuerto de Alicante
+
+De luchthaven van Alicante is het meest comfortabele beginpunt van je verblijf.
+Alicante airport is the most comfortable starting point for your stay.
+El aeropuerto de Alicante es el punto de partida más cómodo para tu estancia.
+
+Onderweg
+On the road
+En camino
+
+Circa 45 minuten
+About 45 minutes
+Unos 45 minutos
+
+Vanaf de luchthaven Alicante rijd je in ongeveer drie kwartier naar het penthouse.
+From Alicante airport it is about a 45-minute drive to the penthouse.
+Desde el aeropuerto de Alicante se llega al ático en unos tres cuartos de hora en coche.
+
+Huurauto
+Rental car
+Coche de alquiler
+
+Vrijheid ter plaatse
+Freedom on the spot
+Libertad en destino
+
+We raden je aan bij aankomst een auto te huren bij een van de verhuurmaatschappijen op de luchthaven. Zo ontdek je de omgeving in je eigen tempo.
+We recommend renting a car on arrival from one of the rental companies at the airport. That way you can explore the area at your own pace.
+Te recomendamos alquilar un coche a tu llegada en una de las compañías del aeropuerto. Así descubrirás la zona a tu ritmo.
+
+Parkeren
+Parking
+Aparcamiento
+
+Je eigen plek in de garage
+Your own space in the garage
+Tu propia plaza en el garaje
+
+Je auto staat overdekt op je eigen parkeerplaats in de garage van het complex.
+Your car is parked under cover in your own space in the garage of the complex.
+Tu coche queda a cubierto en tu propia plaza del garaje de la urbanización.
+
+# ---------- over ons ----------
+Over de eigenaren van Casa Tinto de Verano, het penthouse in Punta Prima aan de Costa Blanca.
+About the owners of Casa Tinto de Verano, the penthouse in Punta Prima on the Costa Blanca.
+Sobre los propietarios de Casa Tinto de Verano, el ático en Punta Prima, en la Costa Blanca.
+
+Over ons | Casa Tinto de Verano
+About us | Casa Tinto de Verano
+Sobre nosotros | Casa Tinto de Verano
+
+Over
+About
+Sobre
+
+ons
+us
+nosotros
+
+Binnenkort lees je hier meer over ons en over Casa Tinto de Verano.
+Soon you will be able to read more here about us and about Casa Tinto de Verano.
+Pronto podrás leer aquí más sobre nosotros y sobre Casa Tinto de Verano.
+
+Contact en reserveringen
+Contact and bookings
+Contacto y reservas
+
+# ---------- praktisch ----------
+Praktische informatie voor je verblijf in Casa Tinto de Verano: in- en uitchecken, eindschoonmaak, borg, elektriciteit, parkeren en huisregels.
+Practical information for your stay at Casa Tinto de Verano: check-in and check-out, final cleaning, security deposit, electricity, parking and house rules.
+Información práctica para tu estancia en Casa Tinto de Verano: entrada y salida, limpieza final, fianza, electricidad, aparcamiento y normas de la casa.
+
+Praktische informatie · Casa Tinto de Verano
+Practical information · Casa Tinto de Verano
+Información práctica · Casa Tinto de Verano
+
+Praktische
+Practical
+Información
+
+informatie
+information
+práctica
+
+Minimaal verblijf
+Minimum stay
+Estancia mínima
+
+10 nachten
+10 nights
+10 noches
+
+Inchecken
+Check-in
+Entrada
+
+Vanaf 15:00
+From 15:00
+A partir de las 15:00
+
+Uitchecken
+Check-out
+Salida
+
+Voor 10:00
+Before 10:00
+Antes de las 10:00
+
+Eindschoonmaak
+Final cleaning
+Limpieza final
+
+Betaal je met de factuur en krijg je binnen 2 weken na vertrek terug.
+Paid with the invoice and refunded within 2 weeks after departure.
+Se paga con la factura y se devuelve en un plazo de 2 semanas tras la salida.
+
+85 kWh per week
+85 kWh per week
+85 kWh por semana
+
+Inbegrepen bij je verblijf. Meerverbruik wordt bij uitchecken verrekend tegen € 0,35 per kWh.
+Included in your stay. Extra use is settled at check-out at €0.35 per kWh.
+Incluido en tu estancia. El consumo adicional se liquida a la salida a 0,35 € por kWh.
+
+Goed om te weten
+Good to know
+Conviene saber
+
+In de garage van het complex, inbegrepen bij je verblijf.
+In the garage of the complex, included in your stay.
+En el garaje de la urbanización, incluida en tu estancia.
+
+Linnengoed inbegrepen
+Linen included
+Ropa de cama y toallas incluidas
+
+Bedlinnen, twee handdoeken en een washandje per persoon.
+Bed linen, two towels and a washcloth per person.
+Ropa de cama, dos toallas y una manopla por persona.
+
+Wasmachine
+Washing machine
+Lavadora
+
+Aanwezig in het penthouse, handig bij een langer verblijf.
+Available in the penthouse, handy for a longer stay.
+Disponible en el ático, práctica para estancias largas.
+
+Zwemmen is op eigen risico. Kinderen zwemmen alleen onder toezicht van hun ouders.
+Swimming is at your own risk. Children may only swim under the supervision of their parents.
+El baño es por cuenta y riesgo propios. Los niños solo pueden bañarse bajo la supervisión de sus padres.
+
+Rust na 22:00
+Quiet after 22:00
+Silencio a partir de las 22:00
+
+Rust op het complex. Het zwembad is dan gesloten.
+Quiet in the complex. The pool is closed from then on.
+Silencio en la urbanización. La piscina permanece cerrada desde esa hora.
+
+Geen huisdieren
+No pets
+No se admiten mascotas
+
+Huisdieren zijn niet welkom in het penthouse.
+Pets are not allowed in the penthouse.
+No se admiten mascotas en el ático.
+
+Lees alle afspraken en huisregels in de huurvoorwaarden
+Read all arrangements and house rules in the rental terms
+Consulta todos los acuerdos y normas de la casa en las condiciones de alquiler
+
+# ---------- prijzen ----------
+Prijslijst 2026/2027 en actuele beschikbaarheid van Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.
+Price list 2026/2027 and current availability of Casa Tinto de Verano, penthouse with a large roof terrace in Punta Prima on the Costa Blanca.
+Tarifas 2026/2027 y disponibilidad actual de Casa Tinto de Verano, ático con gran terraza en la azotea en Punta Prima, en la Costa Blanca.
+
+Prijzen en beschikbaarheid · Casa Tinto de Verano
+Prices and availability · Casa Tinto de Verano
+Precios y disponibilidad · Casa Tinto de Verano
+
+Prijzen en
+Prices and
+Precios y
+
+beschikbaarheid
+availability
+disponibilidad
+
+Prijs per week
+Price per week
+Precio por semana
+
+Hoogseizoen en feestdagen
+High season and holidays
+Temporada alta y festivos
+
+Hoogseizoen
+High season
+Temporada alta
+
+Beschikbaarheid
+Availability
+Disponibilidad
+
+Beschikbaarheid laden…
+Loading availability…
+Cargando disponibilidad…
+
+Vorige maand
+Previous month
+Mes anterior
+
+Volgende maand
+Next month
+Mes siguiente
+
+Vrij
+Available
+Libre
+
+Bezet
+Booked
+Ocupado
+
+Gekozen periode
+Selected period
+Periodo elegido
+
+Tik eerst op je aankomstdag en daarna op je vertrekdag.
+First tap your arrival day and then your departure day.
+Toca primero tu día de llegada y después tu día de salida.
+
+Tik op je aankomstdag en daarna op je vertrekdag
+Tap your arrival day and then your departure day
+Toca tu día de llegada y después tu día de salida
+
+De actuele beschikbaarheid hoor je bij je aanvraag.
+We will let you know the current availability when you send your request.
+Te informaremos de la disponibilidad actual al recibir tu solicitud.
+
+Tik op een dag om opnieuw te kiezen.
+Tap a day to choose again.
+Toca un día para volver a elegir.
+
+Dit kan niet via de website: neem voor een verblijf langer dan 120 nachten contact op per e-mail.
+This is not possible via the website: for a stay longer than 120 nights, please contact us by email.
+No es posible a través de la web: para una estancia de más de 120 noches, ponte en contacto por correo electrónico.
+
+Dit kan niet: in deze periode is het penthouse al (deels) bezet. Tik op een eerdere vertrekdag of kies een andere aankomstdag.
+This is not possible: the penthouse is already (partly) booked in this period. Tap an earlier departure day or choose a different arrival day.
+No es posible: en este periodo el ático ya está (parcialmente) ocupado. Toca un día de salida anterior o elige otro día de llegada.
+
+Aankomst
+Arrival
+Llegada
+
+Vertrek
+Departure
+Salida
+
+Huur
+Rent
+Alquiler
+
+Totaal verblijf
+Total stay
+Total de la estancia
+
+Vraag deze periode aan
+Request this period
+Solicitar este periodo
+
+Alle prijzen zijn per week. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
+All prices are per week. A stay that does not consist of full weeks is charged pro rata per night.
+Todos los precios son por semana. Una estancia que no sea de semanas completas se calcula de forma proporcional por noche.
+
+Januari – maart
+January – March
+Enero – marzo
+
+April
+April
+Abril
+
+Mei
+May
+Mayo
+
+Juni
+June
+Junio
+
+Juli
+July
+Julio
+
+Augustus
+August
+Agosto
+
+September
+September
+Septiembre
+
+Oktober
+October
+Octubre
+
+November – half december
+November – mid-December
+Noviembre – mediados de diciembre
+
+Kerst & Oud en Nieuw
+Christmas & New Year
+Navidad y Año Nuevo
+
+Elektriciteit:
+Electricity:
+Electricidad:
+
+bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken
+with this stay. If you use more, you pay an extra
+con esta estancia. Si consumes más, a la salida pagas
+
+extra.
+at check-out.
+adicionales.
+
+# ---------- reserveren ----------
+Vraag een reservering aan voor Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.
+Request a booking for Casa Tinto de Verano, penthouse with a large roof terrace in Punta Prima on the Costa Blanca.
+Solicita una reserva en Casa Tinto de Verano, ático con gran terraza en la azotea en Punta Prima, en la Costa Blanca.
+
+Reserveren · Casa Tinto de Verano
+Booking · Casa Tinto de Verano
+Reservar · Casa Tinto de Verano
+
+Reservering
+Request a
+Solicitar
+
+aanvragen
+booking
+reserva
+
+Kies je periode en stuur je aanvraag in. De vrije dagen zie je bij
+Choose your period and send your request. You can see the available days under
+Elige tu periodo y envía tu solicitud. Los días libres los encuentras en
+
+prijzen en beschikbaarheid
+prices and availability
+precios y disponibilidad
+
+. Je reservering is pas definitief nadat je een bevestiging per e-mail hebt gekregen.
+. Your booking is only final once you have received a confirmation by email.
+. Tu reserva solo es definitiva cuando hayas recibido una confirmación por correo electrónico.
+
+De hoofdhuurder is minimaal 24 jaar. We verhuren niet aan jongerengroepen. Kinderen zijn welkom met hun ouders.
+The lead tenant must be at least 24 years old. We do not rent to youth groups. Children are welcome with their parents.
+El arrendatario principal debe tener al menos 24 años. No alquilamos a grupos de jóvenes. Los niños son bienvenidos con sus padres.
+
+Velden met
+Fields marked
+Los campos con
+
+zijn verplicht.
+are required.
+son obligatorios.
+
+dd-mm-jjjj
+dd-mm-yyyy
+dd-mm-aaaa
+
+Volwassenen
+Adults
+Adultos
+
+Kies…
+Choose…
+Elige…
+
+Kinderen (t/m 17 jaar)
+Children (up to 17)
+Niños (hasta 17 años)
+
+Geen
+None
+Ninguno
+
+Leeftijd van elk kind
+Age of each child
+Edad de cada niño
+
+jaar
+age
+edad
+
+Kies je aankomstdag
+Choose your arrival day
+Elige tu día de llegada
+
+Kies je vertrekdag
+Choose your departure day
+Elige tu día de salida
+
+Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 10 nachten.
+Enter your arrival and departure dates as day-month-year, or tap them in the calendar. The minimum stay is 10 nights.
+Introduce tus fechas de llegada y salida como día-mes-año, o tócalas en el calendario. La estancia mínima es de 10 noches.
+
+Naam
+Name
+Nombre
+
+E-mailadres
+Email address
+Correo electrónico
+
+Telefoon (optioneel)
+Phone (optional)
+Teléfono (opcional)
+
+Bericht (optioneel)
+Message (optional)
+Mensaje (opcional)
+
+Website
+Website
+Sitio web
+
+Ik heb de
+I have read the
+He leído las
+
+huurvoorwaarden
+rental terms
+condiciones de alquiler
+
+gelezen en ga ermee akkoord.
+and agree to them.
+y las acepto.
+
+Verstuur aanvraag
+Send request
+Enviar solicitud
+
+Bezig met versturen…
+Sending…
+Enviando…
+
+We gebruiken je gegevens alleen om je aanvraag af te handelen. De prijs is een indicatie op basis van de prijslijst.
+We only use your details to handle your request. The price is an indication based on the price list.
+Solo usamos tus datos para tramitar tu solicitud. El precio es orientativo, según la lista de tarifas.
+
+Stuur je aanvraag per e-mail naar
+Send your request by email to
+Envía tu solicitud por correo electrónico a
+
+. Dit bericht kun je kopiëren en plakken:
+. You can copy and paste this message:
+. Puedes copiar y pegar este mensaje:
+
+Kopieer bericht
+Copy message
+Copiar mensaje
+
+Bericht gekopieerd.
+Message copied.
+Mensaje copiado.
+
+Kopiëren lukte niet. De tekst is geselecteerd, kopieer hem zelf.
+Copying failed. The text is selected, please copy it yourself.
+No se pudo copiar. El texto está seleccionado, cópialo tú mismo.
+
+Kies eerst je data.
+Choose your dates first.
+Elige primero tus fechas.
+
+Je aanvraag is verstuurd
+Your request has been sent
+Tu solicitud se ha enviado
+
+We nemen per e-mail contact met je op. Je reservering is pas definitief na onze bevestiging.
+We will contact you by email. Your booking is only final after our confirmation.
+Nos pondremos en contacto contigo por correo electrónico. Tu reserva solo es definitiva tras nuestra confirmación.
+
+Kies het aantal volwassenen.
+Choose the number of adults.
+Elige el número de adultos.
+
+Kies het aantal kinderen. Kies Geen als er geen kinderen meekomen.
+Choose the number of children. Choose None if no children are coming.
+Elige el número de niños. Elige Ninguno si no viajan niños.
+
+De aankomstdatum ligt in het verleden.
+The arrival date is in the past.
+La fecha de llegada ya ha pasado.
+
+Deze periode is (deels) al bezet. Kies andere data.
+This period is already (partly) booked. Please choose other dates.
+Este periodo ya está (parcialmente) ocupado. Elige otras fechas.
+
+Vul je naam in.
+Please enter your name.
+Introduce tu nombre.
+
+Vul een geldig e-mailadres in.
+Please enter a valid email address.
+Introduce un correo electrónico válido.
+
+Ga akkoord met de huurvoorwaarden om je aanvraag te versturen.
+Please agree to the rental terms to send your request.
+Acepta las condiciones de alquiler para enviar tu solicitud.
+
+Versturen lukte niet. Stuur je aanvraag per e-mail naar info@casatintodeverano.com.
+Sending failed. Please send your request by email to info@casatintodeverano.com.
+No se pudo enviar. Envía tu solicitud por correo electrónico a info@casatintodeverano.com.
+
+De aanvraag is niet goed aangekomen.
+The request did not arrive correctly.
+La solicitud no ha llegado correctamente.
+
+Geef aan met hoeveel volwassenen je komt.
+Please state how many adults are coming.
+Indica cuántos adultos vienen.
+
+Geef aan met hoeveel kinderen je komt. Kies 0 als er geen kinderen meekomen.
+Please state how many children are coming. Choose 0 if no children are coming.
+Indica cuántos niños vienen. Elige 0 si no viajan niños.
+
+Vul van elk kind de leeftijd in (0 tot en met 17 jaar).
+Please enter the age of each child (0 to 17).
+Introduce la edad de cada niño (de 0 a 17 años).
+
+Kies een aankomst- en vertrekdatum.
+Choose an arrival and a departure date.
+Elige una fecha de llegada y otra de salida.
+
+Neem voor een verblijf langer dan 120 nachten contact op per e-mail.
+For a stay longer than 120 nights, please contact us by email.
+Para una estancia de más de 120 noches, ponte en contacto por correo electrónico.
+
+Er zijn net al meerdere aanvragen verstuurd. Probeer het over een uur opnieuw of stuur een e-mail.
+Several requests have just been sent. Please try again in an hour or send an email.
+Se acaban de enviar varias solicitudes. Inténtalo de nuevo dentro de una hora o envía un correo electrónico.
+
+Er ging iets mis. Probeer het later opnieuw.
+Something went wrong. Please try again later.
+Algo ha salido mal. Inténtalo de nuevo más tarde.
+
+# ---------- gastenboek ----------
+Gastenboek van Casa Tinto de Verano: lees wat gasten over hun verblijf in het penthouse in Punta Prima schrijven en laat zelf een bericht achter.
+Guestbook of Casa Tinto de Verano: read what guests write about their stay in the penthouse in Punta Prima and leave a message yourself.
+Libro de visitas de Casa Tinto de Verano: lee lo que escriben los huéspedes sobre su estancia en el ático de Punta Prima y deja tu propio mensaje.
+
+Gastenboek | Casa Tinto de Verano
+Guestbook | Casa Tinto de Verano
+Libro de visitas | Casa Tinto de Verano
+
+Ons
+Our
+Nuestro
+
+gastenboek
+guestbook
+libro de visitas
+
+Ben je bij ons te gast geweest? We lezen graag hoe je het hebt gehad.
+Have you stayed with us? We would love to read how you enjoyed it.
+¿Te has alojado con nosotros? Nos encantará leer cómo fue tu estancia.
+
+Berichten laden…
+Loading messages…
+Cargando mensajes…
+
+Er staan nog geen berichten. Schrijf jij het eerste?
+There are no messages yet. Will you write the first one?
+Todavía no hay mensajes. ¿Escribes tú el primero?
+
+De berichten kunnen nu niet worden geladen. Probeer het later opnieuw.
+The messages cannot be loaded right now. Please try again later.
+Ahora no se pueden cargar los mensajes. Inténtalo de nuevo más tarde.
+
+Schrijf een bericht
+Write a message
+Escribe un mensaje
+
+Wanneer was je er? (optioneel)
+When did you stay? (optional)
+¿Cuándo estuviste? (opcional)
+
+bijvoorbeeld juli 2027
+for example July 2027
+por ejemplo, julio de 2027
+
+Aantal sterren
+Number of stars
+Número de estrellas
+
+1 ster
+1 star
+1 estrella
+
+Je bericht
+Your message
+Tu mensaje
+
+Plaats bericht
+Post message
+Publicar mensaje
+
+Je bericht verschijnt nadat wij het hebben gelezen. Je naam en je bericht komen op deze pagina te staan.
+Your message will appear after we have read it. Your name and your message will be shown on this page.
+Tu mensaje aparecerá después de que lo hayamos leído. Tu nombre y tu mensaje se mostrarán en esta página.
+
+Kies het aantal sterren.
+Choose the number of stars.
+Elige el número de estrellas.
+
+Kies het aantal sterren, van 1 tot en met 5.
+Choose the number of stars, from 1 to 5.
+Elige el número de estrellas, de 1 a 5.
+
+Schrijf een bericht van minimaal 10 tekens.
+Write a message of at least 10 characters.
+Escribe un mensaje de al menos 10 caracteres.
+
+Versturen lukte niet. Probeer het later opnieuw.
+Sending failed. Please try again later.
+No se pudo enviar. Inténtalo de nuevo más tarde.
+
+Bedankt voor je bericht. Het verschijnt hier nadat wij het hebben gelezen.
+Thank you for your message. It will appear here after we have read it.
+Gracias por tu mensaje. Aparecerá aquí después de que lo hayamos leído.
+
+Je bericht is niet goed aangekomen.
+Your message did not arrive correctly.
+Tu mensaje no ha llegado correctamente.
+
+Er zijn net al berichten verstuurd. Probeer het later opnieuw.
+Messages have just been sent. Please try again later.
+Se acaban de enviar mensajes. Inténtalo de nuevo más tarde.
+
+# ---------- huurvoorwaarden ----------
+Huurvoorwaarden en huisregels van Casa Tinto de Verano in Punta Prima: reserveren, betalen, annuleren, borg en afspraken tijdens je verblijf.
+Rental terms and house rules of Casa Tinto de Verano in Punta Prima: booking, payment, cancellation, security deposit and arrangements during your stay.
+Condiciones de alquiler y normas de la casa de Casa Tinto de Verano en Punta Prima: reserva, pago, cancelación, fianza y acuerdos durante tu estancia.
+
+Huurvoorwaarden | Casa Tinto de Verano
+Rental terms | Casa Tinto de Verano
+Condiciones de alquiler | Casa Tinto de Verano
+
+Casa Tinto de Verano · Punta Prima
+Casa Tinto de Verano · Punta Prima
+Casa Tinto de Verano · Punta Prima
+
+Versie van 3 oktober 2026
+Version of 3 October 2026. This is a translation; in case of any difference, the Dutch text applies.
+Versión del 3 de octubre de 2026. Esta es una traducción; en caso de discrepancia, prevalece el texto en neerlandés.
+
+Deze voorwaarden gelden voor elk verblijf in Casa Tinto de Verano. "Wij" is de verhuurder, "je" is de hoofdhuurder.
+These terms apply to every stay at Casa Tinto de Verano. "We" is the landlord, "you" is the lead tenant.
+Estas condiciones se aplican a toda estancia en Casa Tinto de Verano. "Nosotros" es el arrendador, "tú" es el arrendatario principal.
+
+Je vraagt een reservering aan via de website of per e-mail. Een aanvraag is nog geen reservering.
+You request a booking via the website or by email. A request is not yet a booking.
+Solicitas una reserva a través de la web o por correo electrónico. Una solicitud todavía no es una reserva.
+
+De reservering is definitief zodra wij haar per e-mail hebben bevestigd. Met de aanvraag ga je akkoord met deze voorwaarden.
+The booking is final as soon as we have confirmed it by email. By sending the request you agree to these terms.
+La reserva es definitiva en cuanto la hayamos confirmado por correo electrónico. Al enviar la solicitud aceptas estas condiciones.
+
+De hoofdhuurder is minimaal 24 jaar en is verantwoordelijk voor alle gasten in het gezelschap.
+The lead tenant is at least 24 years old and is responsible for all guests in the party.
+El arrendatario principal tiene al menos 24 años y es responsable de todos los huéspedes del grupo.
+
+Verblijf en gezelschap
+Stay and party
+Estancia y grupo
+
+Het minimale verblijf is 10 nachten.
+The minimum stay is 10 nights.
+La estancia mínima es de 10 noches.
+
+Inchecken kan vanaf 15:00 uur op de dag van aankomst. Uitchecken doe je voor 10:00 uur op de dag van vertrek.
+Check-in is possible from 15:00 on the day of arrival. Check-out is before 10:00 on the day of departure.
+La entrada es posible a partir de las 15:00 del día de llegada. La salida es antes de las 10:00 del día de salida.
+
+Het penthouse is voor maximaal 4 personen. Alleen de personen die bij de reservering zijn opgegeven mogen er verblijven.
+The penthouse is for a maximum of 4 guests. Only the people stated in the booking may stay there.
+El ático es para un máximo de 4 personas. Solo pueden alojarse las personas indicadas en la reserva.
+
+We verhuren niet aan jongerengroepen. Alle gasten zijn 24 jaar of ouder, behalve kinderen die met hun ouders of verzorgers meereizen.
+We do not rent to youth groups. All guests are 24 or older, except children travelling with their parents or guardians.
+No alquilamos a grupos de jóvenes. Todos los huéspedes tienen 24 años o más, salvo los niños que viajan con sus padres o tutores.
+
+Onderverhuur of gebruik door anderen is niet toegestaan.
+Subletting or use by others is not permitted.
+No se permite el subarriendo ni el uso por parte de terceros.
+
+Prijs
+Price
+Precio
+
+De huurprijs staat in de prijslijst op de website en in de bevestiging. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
+The rent is stated in the price list on the website and in the confirmation. A stay that does not consist of full weeks is charged pro rata per night.
+El precio del alquiler figura en la lista de tarifas de la web y en la confirmación. Una estancia que no sea de semanas completas se calcula de forma proporcional por noche.
+
+De eindschoonmaak kost € 150 per verblijf.
+The final cleaning costs €150 per stay.
+La limpieza final cuesta 150 € por estancia.
+
+Bedlinnen, twee handdoeken per persoon en een washandje per persoon zijn bij de prijs inbegrepen.
+Bed linen, two towels per person and a washcloth per person are included in the price.
+La ropa de cama, dos toallas por persona y una manopla por persona están incluidas en el precio.
+
+Elektriciteit
+Electricity
+Electricidad
+
+Per week is 85 kWh elektriciteit inbegrepen. Bij een verblijf dat niet uit hele weken bestaat, geldt dit naar rato.
+85 kWh of electricity is included per week. For a stay that does not consist of full weeks, this applies pro rata.
+Se incluyen 85 kWh de electricidad por semana. En una estancia que no sea de semanas completas, se aplica de forma proporcional.
+
+Verbruik je meer, dan betaal je € 0,35 per kWh. Het meerverbruik wordt bij het uitchecken afgelezen en verrekend, in de regel met de borg.
+If you use more, you pay €0.35 per kWh. The extra use is read at check-out and settled, as a rule against the security deposit.
+Si consumes más, pagas 0,35 € por kWh. El consumo adicional se lee a la salida y se liquida, por regla general, con cargo a la fianza.
+
+Betalen
+Payment
+Pago
+
+Na de bevestiging ontvang je een factuur met de huur, de eindschoonmaak en de borg.
+After the confirmation you will receive an invoice for the rent, the final cleaning and the security deposit.
+Tras la confirmación recibirás una factura con el alquiler, la limpieza final y la fianza.
+
+Bij boeking betaal je een aanbetaling van 30% van de huur en de eindschoonmaak, binnen 7 dagen na de factuur.
+On booking you pay a down payment of 30% of the rent and the final cleaning, within 7 days of the invoice.
+Al reservar pagas un anticipo del 30 % del alquiler y de la limpieza final, en un plazo de 7 días desde la factura.
+
+Het restant en de borg betaal je uiterlijk 8 weken voor aankomst.
+You pay the balance and the security deposit no later than 8 weeks before arrival.
+El importe restante y la fianza se pagan, como muy tarde, 8 semanas antes de la llegada.
+
+Reserveer je binnen 8 weken voor aankomst, dan betaal je het volledige bedrag direct.
+If you book within 8 weeks before arrival, you pay the full amount immediately.
+Si reservas dentro de las 8 semanas anteriores a la llegada, pagas el importe total de inmediato.
+
+Is een betaling niet op tijd binnen, dan sturen wij een herinnering. Is het bedrag 5 dagen na die herinnering nog niet ontvangen, dan mogen wij de reservering laten vervallen. De regels voor annuleren gelden dan.
+If a payment is not received on time, we will send a reminder. If the amount has still not been received 5 days after that reminder, we may cancel the booking. The cancellation rules then apply.
+Si un pago no llega a tiempo, enviaremos un recordatorio. Si el importe sigue sin recibirse 5 días después de ese recordatorio, podremos anular la reserva. En ese caso se aplican las normas de cancelación.
+
+De borg is € 300 en betaal je samen met de factuur.
+The security deposit is €300 and is paid together with the invoice.
+La fianza es de 300 € y se paga junto con la factura.
+
+Binnen 2 weken na vertrek storten wij de borg terug, na controle van het penthouse.
+We refund the security deposit within 2 weeks after departure, after inspecting the penthouse.
+Devolvemos la fianza en un plazo de 2 semanas tras la salida, una vez revisado el ático.
+
+Schade, vermissing, extra schoonmaak en meerverbruik van elektriciteit mogen wij met de borg verrekenen. Is de schade hoger dan de borg, dan betaal je het verschil.
+We may deduct damage, missing items, extra cleaning and extra electricity use from the security deposit. If the damage exceeds the deposit, you pay the difference.
+Podemos descontar de la fianza los daños, los objetos que falten, la limpieza adicional y el consumo adicional de electricidad. Si los daños superan la fianza, pagas la diferencia.
+
+Annuleren
+Cancellation
+Cancelación
+
+Annuleren doe je per e-mail. De datum waarop wij je e-mail ontvangen telt.
+You cancel by email. The date on which we receive your email counts.
+La cancelación se hace por correo electrónico. Cuenta la fecha en que recibimos tu correo.
+
+Annuleer je tot 8 weken voor aankomst, dan ben je alleen de aanbetaling kwijt.
+If you cancel up to 8 weeks before arrival, you only lose the down payment.
+Si cancelas hasta 8 semanas antes de la llegada, solo pierdes el anticipo.
+
+Annuleer je binnen 8 weken voor aankomst, dan ben je het volledige bedrag voor huur en eindschoonmaak verschuldigd.
+If you cancel within 8 weeks before arrival, you owe the full amount for rent and final cleaning.
+Si cancelas dentro de las 8 semanas anteriores a la llegada, debes el importe total del alquiler y de la limpieza final.
+
+Een betaalde borg krijg je bij annulering altijd terug.
+A security deposit that has been paid is always refunded on cancellation.
+La fianza ya pagada se devuelve siempre en caso de cancelación.
+
+Wij raden je aan een annuleringsverzekering af te sluiten.
+We recommend taking out cancellation insurance.
+Te recomendamos contratar un seguro de cancelación.
+
+Huisregels
+House rules
+Normas de la casa
+
+Roken is in het penthouse niet toegestaan.
+Smoking is not permitted in the penthouse.
+No está permitido fumar en el ático.
+
+Huisdieren zijn niet toegestaan.
+Pets are not permitted.
+No se admiten mascotas.
+
+Feesten zijn niet toegestaan.
+Parties are not permitted.
+No se permiten fiestas.
+
+Barbecueën is niet toegestaan. Dit geldt voor het hele complex, ook voor het balkon en het dakterras.
+Barbecuing is not permitted. This applies to the whole complex, including the balcony and the roof terrace.
+No está permitido hacer barbacoas. Esto se aplica a toda la urbanización, incluidos el balcón y la azotea.
+
+Na 22:00 uur is het rust op het complex. Vanaf dat tijdstip mag er geen overlast zijn: doe zachtjes, praat op gedempte toon en zet muziek uit. Dit geldt ook op het balkon en het dakterras.
+After 22:00 it is quiet time in the complex. From then on there must be no nuisance: keep the noise down, speak quietly and turn off music. This also applies on the balcony and the roof terrace.
+A partir de las 22:00 es hora de silencio en la urbanización. Desde ese momento no debe haber molestias: no hagas ruido, habla en voz baja y apaga la música. Esto también se aplica en el balcón y en la azotea.
+
+Volg de regels van het complex die ter plaatse zijn aangegeven.
+Follow the rules of the complex as indicated on site.
+Sigue las normas de la urbanización indicadas en el lugar.
+
+Het zwembad en het kinderbad zijn gemeenschappelijk. Je deelt ze met de andere bewoners van het complex.
+The swimming pool and the children's pool are communal. You share them with the other residents of the complex.
+La piscina y la piscina infantil son comunitarias. Las compartes con los demás residentes de la urbanización.
+
+Douche voordat je gaat zwemmen.
+Shower before you swim.
+Dúchate antes de bañarte.
+
+Na 22:00 uur mag het zwembad niet meer worden gebruikt.
+The pool may not be used after 22:00.
+La piscina no puede utilizarse después de las 22:00.
+
+Het gebruik van het zwembad en het kinderbad is op eigen risico en eigen verantwoordelijkheid. Er is geen toezicht aanwezig.
+Use of the swimming pool and the children's pool is at your own risk and responsibility. There is no lifeguard or supervision.
+El uso de la piscina y de la piscina infantil es por cuenta, riesgo y responsabilidad propios. No hay vigilancia.
+
+Kinderen zwemmen alleen onder toezicht van hun ouders of een andere volwassene uit het gezelschap. De ouders blijven verantwoordelijk.
+Children may only swim under the supervision of their parents or another adult from the party. The parents remain responsible.
+Los niños solo pueden bañarse bajo la supervisión de sus padres o de otro adulto del grupo. Los padres siguen siendo responsables.
+
+Pergola en dakterras
+Pergola and roof terrace
+Pérgola y azotea
+
+Gebruik de pergola op het dakterras niet bij slecht weer, zoals harde wind, regen of onweer. Zet de pergola dan open.
+Do not use the pergola on the roof terrace in bad weather, such as strong wind, rain or thunderstorms. Leave the pergola open in that case.
+No utilices la pérgola de la azotea con mal tiempo, como viento fuerte, lluvia o tormenta. En ese caso, deja la pérgola abierta.
+
+Laat de buitenkeuken en het dakterras na gebruik schoon en opgeruimd achter.
+Leave the outdoor kitchen and the roof terrace clean and tidy after use.
+Deja la cocina exterior y la azotea limpias y recogidas después de usarlas.
+
+Zorg voor het penthouse
+Care of the penthouse
+Cuidado del ático
+
+Je gebruikt het penthouse en de inventaris zorgvuldig en laat het netjes achter: afwas gedaan, afval weggebracht en meubels op hun plaats.
+You use the penthouse and its contents with care and leave it tidy: dishes done, rubbish taken out and furniture in its place.
+Utilizas el ático y su equipamiento con cuidado y lo dejas ordenado: vajilla lavada, basura retirada y muebles en su sitio.
+
+Schade of gebreken meld je meteen aan ons, zodat we het kunnen oplossen.
+Report any damage or defects to us immediately, so that we can resolve it.
+Comunícanos de inmediato cualquier daño o desperfecto para que podamos solucionarlo.
+
+Schade die tijdens je verblijf door jou of je gezelschap ontstaat, komt voor jouw rekening.
+Damage caused by you or your party during your stay is at your expense.
+Los daños causados por ti o por tu grupo durante la estancia corren de tu cuenta.
+
+Als de regels niet worden nageleefd
+If the rules are not followed
+Si no se cumplen las normas
+
+We gaan ervan uit dat iedereen zich aan deze voorwaarden en de huisregels houdt, zodat het voor alle gasten en buren prettig blijft.
+We trust that everyone will keep to these terms and the house rules, so that it remains pleasant for all guests and neighbours.
+Confiamos en que todos respeten estas condiciones y las normas de la casa, para que la estancia siga siendo agradable para todos los huéspedes y vecinos.
+
+Gebeurt dat niet, dan spreken we je daar eerst vriendelijk op aan en krijg je de kans om het op te lossen.
+If that does not happen, we will first raise it with you in a friendly way and you will have the opportunity to put it right.
+Si no es así, primero te lo comentaremos amablemente y tendrás la oportunidad de solucionarlo.
+
+Bij een ernstige of herhaalde overtreding mogen wij het verblijf direct beëindigen. Jij en je gezelschap verlaten het penthouse dan op ons verzoek.
+In the event of a serious or repeated breach, we may end the stay immediately. You and your party will then leave the penthouse at our request.
+En caso de incumplimiento grave o reiterado, podremos dar por terminada la estancia de inmediato. Tú y tu grupo abandonaréis entonces el ático a petición nuestra.
+
+In dat geval krijg je de huur en de eindschoonmaak niet terug. De borg verrekenen we volgens artikel 6.
+In that case the rent and the final cleaning will not be refunded. The security deposit is settled in accordance with article 6.
+En ese caso no se devuelven el alquiler ni la limpieza final. La fianza se liquida conforme al artículo 6.
+
+Aansprakelijkheid
+Liability
+Responsabilidad
+
+Je verblijft op eigen risico in het penthouse en op het complex. Wij zijn niet aansprakelijk voor ongevallen, diefstal, verlies of schade aan eigendommen van gasten, tenzij de wet anders bepaalt.
+You stay in the penthouse and in the complex at your own risk. We are not liable for accidents, theft, loss of or damage to guests' property, unless the law provides otherwise.
+Te alojas en el ático y en la urbanización por tu cuenta y riesgo. No nos hacemos responsables de accidentes, robos, pérdidas o daños en las pertenencias de los huéspedes, salvo que la ley disponga otra cosa.
+
+Wij zijn niet aansprakelijk voor overlast of storingen die buiten onze invloed liggen, zoals het uitvallen van water, stroom of internet of werkzaamheden in de omgeving. We doen ons best om een storing zo snel mogelijk op te lossen.
+We are not liable for nuisance or faults beyond our control, such as a failure of water, electricity or internet, or works in the surrounding area. We will do our best to resolve a fault as quickly as possible.
+No nos hacemos responsables de las molestias o averías ajenas a nuestro control, como cortes de agua, electricidad o internet u obras en los alrededores. Haremos todo lo posible por resolver una avería cuanto antes.
+
+Wij raden je aan een reisverzekering af te sluiten.
+We recommend taking out travel insurance.
+Te recomendamos contratar un seguro de viaje.
+
+Als het penthouse niet beschikbaar is
+If the penthouse is not available
+Si el ático no está disponible
+
+Kunnen wij het penthouse door overmacht niet beschikbaar stellen, dan laten we je dat zo snel mogelijk weten en krijg je alles terug wat je hebt betaald. Verdere vergoeding is uitgesloten.
+If we cannot make the penthouse available due to force majeure, we will let you know as soon as possible and you will be refunded everything you have paid. Any further compensation is excluded.
+Si por causa de fuerza mayor no podemos poner el ático a tu disposición, te lo comunicaremos lo antes posible y te devolveremos todo lo que hayas pagado. Queda excluida cualquier otra indemnización.
+
+Je gegevens
+Your details
+Tus datos
+
+Wij gebruiken je gegevens alleen voor je reservering, de factuur en wat de wet van ons vraagt.
+We only use your details for your booking, the invoice and what the law requires of us.
+Solo usamos tus datos para tu reserva, la factura y lo que la ley nos exige.
+
+Als de Spaanse wet dat vereist, vragen we voor aankomst de identiteitsgegevens van alle gasten op.
+If Spanish law requires it, we will ask for the identity details of all guests before arrival.
+Si la ley española lo exige, solicitaremos antes de la llegada los datos de identidad de todos los huéspedes.
+
+Wij geven je gegevens niet door aan anderen, behalve als dat wettelijk verplicht is.
+We do not pass your details on to others, unless we are legally required to do so.
+No cedemos tus datos a terceros, salvo que la ley nos obligue a ello.
+
+Toepasselijk recht
+Applicable law
+Legislación aplicable
+
+Op deze voorwaarden is Spaans recht van toepassing, omdat het penthouse in Spanje ligt.
+These terms are governed by Spanish law, because the penthouse is located in Spain.
+Estas condiciones se rigen por la legislación española, ya que el ático se encuentra en España.
+
+Heb je een klacht, neem dan eerst contact met ons op. We zoeken graag samen een oplossing.
+If you have a complaint, please contact us first. We would be glad to find a solution together.
+Si tienes una queja, ponte primero en contacto con nosotros. Buscaremos juntos una solución con mucho gusto.

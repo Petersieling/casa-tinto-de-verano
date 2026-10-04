@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/taal.js?v=1"></script>
 <meta name="description" content="Vraag een reservering aan voor Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -250,7 +251,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 .menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
 .menu-knop:hover { background: var(--panel); color: var(--ink); }
 /* het menu klapt in zodra de onderdelen niet meer op één regel passen */
-@media (max-width: 60rem) {
+@media (max-width: 68rem) {
   .top .wrap { align-items: center; }
   .menu-knop { display: inline-block; }
   .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
@@ -462,17 +463,17 @@ section[id] { scroll-margin-top: 5.5rem; }
 import { SCHOONMAAK, BORG, MIN_NACHTEN, MAX_PERSONEN, KWH_PRIJS, huurprijs, nachten, isDatum, naarTijd, naarIso, kwhInbegrepen } from "./src/prijzen.js";
 
 const $ = (id) => document.getElementById(id);
-const euro = (n) => "€ " + n.toLocaleString("nl-NL");
+const euro = (n) => "€ " + n.toLocaleString((window.ctvLocale || "nl-NL"));
 const iso = (j, m, d) => `${j}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 const nu = new Date();
 const vandaag = iso(nu.getFullYear(), nu.getMonth(), nu.getDate());
-const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
+const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString((window.ctvLocale || "nl-NL"), { weekday: "short", day: "numeric", month: "long", year: "numeric" });
 const kwhPrijs = "€ " + KWH_PRIJS.toFixed(2).replace(".", ",");
 function stroomTekst(el, n) {
-  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString("nl-NL") + " kWh inbegrepen" }),
+  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString((window.ctvLocale || "nl-NL")) + " kWh inbegrepen" }),
     " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
 }
-const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString((window.ctvLocale || "nl-NL"), { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
 // ---- Beschikbaarheid ----
 let bezet = [], online = false;
@@ -569,7 +570,7 @@ function openDk(veld) {
 }
 function tekenDk() {
   const eerste = new Date(dkJaar, dkMaand, 1), blok = $("dk-dagen"), aank = leesDatum("aankomst"), nuGekozen = leesDatum(dkVeld);
-  $("dk-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
+  $("dk-titel").textContent = eerste.toLocaleDateString((window.ctvLocale || "nl-NL"), { month: "long", year: "numeric" });
   blok.replaceChildren();
   for (const d of ["ma", "di", "wo", "do", "vr", "za", "zo"]) { const b = document.createElement("b"); b.textContent = d; blok.append(b); }
   for (let i = (eerste.getDay() + 6) % 7; i > 0; i--) blok.append(document.createElement("i"));
@@ -628,7 +629,7 @@ $("aanvraag").addEventListener("submit", async (e) => {
   try {
     const r = await fetch("/api/aanvraag", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, naam, email, telefoon: $("telefoon").value, bericht: $("bericht").value, website: $("website").value })
+      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, naam, email, telefoon: $("telefoon").value, bericht: ({ en: "[Website bekeken in het Engels] ", es: "[Website bekeken in het Spaans] " }[window.ctvTaal] || "") + $("bericht").value, website: $("website").value })
     });
     const data = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar info@casatintodeverano.com.");
