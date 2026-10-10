@@ -1,7 +1,8 @@
 // Prijslijst 2026/2027. Deze lijst wordt gebruikt door de website én door de server.
 // "van" en "tot" zijn [maand, dag], beide inclusief. Prijzen zijn per week.
 export const PERIODES = [
-  { naam: "Januari – maart", prijs: 845, van: [1, 1], tot: [3, 31] },
+  { naam: "Januari – februari", prijs: 845, van: [1, 1], tot: [2, 29] },
+  { naam: "Maart", prijs: 895, van: [3, 1], tot: [3, 31] },
   { naam: "April", prijs: 945, van: [4, 1], tot: [4, 30] },
   { naam: "Mei", prijs: 1045, van: [5, 1], tot: [5, 31] },
   { naam: "Juni", prijs: 1200, van: [6, 1], tot: [6, 30] },
