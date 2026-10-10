@@ -5,7 +5,7 @@ export const PERIODES = [
   { naam: "Maart", prijs: 895, van: [3, 1], tot: [3, 31] },
   { naam: "April", prijs: 945, van: [4, 1], tot: [4, 30] },
   { naam: "Mei", prijs: 995, van: [5, 1], tot: [5, 31] },
-  { naam: "Juni", prijs: 1150, van: [6, 1], tot: [6, 30] },
+  { naam: "Juni", prijs: 1195, van: [6, 1], tot: [6, 30] },
   { naam: "Juli", prijs: 1400, piek: true, van: [7, 1], tot: [7, 31] },
   { naam: "Augustus", prijs: 1500, piek: true, van: [8, 1], tot: [8, 31] },
   { naam: "September", prijs: 1150, van: [9, 1], tot: [9, 30] },
