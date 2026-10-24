@@ -76,8 +76,8 @@ Bekijk prijzen en beschikbaarheid
 View prices and availability
 
 # ---------- voorpagina ----------
-Casa Tinto de Verano: penthouse met groot dakterras in Punta Prima, Costa Blanca. Voor maximaal 4 personen, met gedeeld zwembad. Prijslijst 2026/2027.
-Casa Tinto de Verano: penthouse with a large roof terrace in Punta Prima, Costa Blanca. For up to 4 guests, with a shared pool. Price list 2026/2027.
+Casa Tinto de Verano: penthouse met groot dakterras in Punta Prima, Costa Blanca. Voor maximaal 4 personen, met gedeeld zwembad.
+Casa Tinto de Verano: penthouse with a large roof terrace in Punta Prima, Costa Blanca. For up to 4 guests, with a shared pool.
 
 Penthouse met groot dakterras, onder de Spaanse
 Penthouse with a large roof terrace, under the Spanish
@@ -363,8 +363,8 @@ Lees alle afspraken en huisregels in de huurvoorwaarden
 Read all arrangements and house rules in the rental terms
 
 # ---------- prijzen ----------
-Prijslijst 2026/2027 en actuele beschikbaarheid van Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.
-Price list 2026/2027 and current availability of Casa Tinto de Verano, penthouse with a large roof terrace in Punta Prima on the Costa Blanca.
+Prijzen en actuele beschikbaarheid van Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.
+Prices and current availability of Casa Tinto de Verano, penthouse with a large roof terrace in Punta Prima on the Costa Blanca.
 
 Prijzen en beschikbaarheid · Casa Tinto de Verano
 Prices and availability · Casa Tinto de Verano
