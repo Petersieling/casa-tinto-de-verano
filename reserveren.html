@@ -46,8 +46,11 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
   background: var(--paper); border-bottom: 1px solid var(--line);
 }
-.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .7rem; }
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .7rem; }
 .brand { font-family: var(--display); font-weight: 600; font-size: 1.25rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: .7rem; }
+.brand img { height: 2.6rem; width: auto; mix-blend-mode: multiply; flex: none; }
+@media (max-width: 24rem) { .top .brand { font-size: .8rem; letter-spacing: .04em; gap: .45rem; } .top .brand img { height: 2.1rem; } .top .menu-knop { padding: .3rem .75rem; } }
 .top nav { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
 .top nav a { color: var(--ink); text-decoration: none; font-size: .95rem; padding-block: .15rem; border-bottom: 1px solid transparent; }
 .top nav a:hover { border-bottom-color: var(--gold); }
@@ -294,7 +297,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="index.html">Casa Tinto de Verano</a>
+    <a class="brand" href="index.html"><img src="/logo-klein.webp" width="107" height="132" alt="">Casa Tinto de Verano</a>
     <button type="button" class="menu-knop" aria-expanded="false" aria-controls="menu">Menu</button>
     <nav id="menu" aria-label="Onderdelen">
       <a href="index.html#penthouse">Het penthouse</a>
