@@ -70,7 +70,20 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .film-boog { position: relative; justify-self: center; width: min(100%, 20.5rem); padding: .55rem; border: 1px solid var(--gold); border-radius: 12rem 12rem .6rem .6rem; background: var(--paper); box-shadow: 0 24px 48px -28px rgba(58, 35, 21, .6); }
 .hero-film { display: block; width: 100%; aspect-ratio: 9 / 14; object-fit: cover; border-radius: 11.5rem 11.5rem .35rem .35rem; background: var(--panel); }
 .film-knop { position: absolute; right: 1.1rem; bottom: 1.1rem; width: 2.3rem; height: 2.3rem; border-radius: 50%; border: 1px solid rgba(255,255,255,.7); background: rgba(58,35,21,.45); color: #fff; font-size: .7rem; letter-spacing: -.1em; cursor: pointer; }
-@media (max-width: 40rem) { .film-boog { order: -1; width: min(62%, 14.5rem); } }
+@media (max-width: 40rem) {
+  /* Op de telefoon net als op de computer: tekst links, filmpje rechts ernaast. */
+  .hero-foto .wrap { grid-template-columns: minmax(0, 1fr) 7.6rem !important; gap: .9rem; align-items: start; padding-top: 1.6rem; }
+  .hero-foto .wrap > div:first-child { display: contents; }
+  .hero-foto .eyebrow { grid-column: 1 / -1; margin-bottom: .2rem; }
+  .hero-foto h1 { grid-column: 1; align-self: center; font-size: 1.85rem; }
+  .film-boog { order: 0; grid-column: 2; grid-row: 2; width: 100%; padding: .3rem; }
+  .hero-film { border-radius: 6rem 6rem .3rem .3rem; }
+  .film-boog .film-knop { width: 1.7rem; height: 1.7rem; right: .5rem; bottom: .5rem; font-size: .6rem; }
+  .hero-foto .lead, .hero-foto .facts, .hero-foto .cta { grid-column: 1 / -1; }
+  .hero-foto .lead { margin-top: .2rem; }
+  .hero-foto .facts { margin-top: .6rem; }
+  .hero-foto .cta { justify-self: start; margin-top: .4rem; }
+}
 
 .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; padding-block: clamp(2rem, 6vw, 4.5rem); }
 .eyebrow { font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1rem; }
