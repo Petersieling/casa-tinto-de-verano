@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Privacyverklaring van Casa Tinto de Verano: welke gegevens we gebruiken bij een aanvraag, reservering of gastenboekbericht, waarom, hoe lang en welke rechten je hebt.">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Privacyverklaring | Casa Tinto de Verano</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&family=Albert+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
+:root {
+  --paper: #FDFAF5;
+  --panel: #F7EFE0;
+  --ink: #3A2315;
+  --muted: #7B6552;
+  --gold: #B98A2E;
+  --gold-text: #8A6016;
+  --gold-soft: #F3DDB0;
+  --line: #E6D8BE;
+  --orange: #D6731B;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+  --body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+a { color: var(--gold-text); }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--orange); outline-offset: 2px;
+}
+.wrap { max-width: 68rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+/* kop */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .7rem; }
+.brand { font-family: var(--display); font-weight: 600; font-size: 1.25rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.top nav { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.top nav a { color: var(--ink); text-decoration: none; font-size: .95rem; padding-block: .15rem; border-bottom: 1px solid transparent; }
+.top nav a:hover { border-bottom-color: var(--gold); }
+
+/* hero */
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; padding-block: clamp(2rem, 6vw, 4.5rem); }
+.eyebrow { font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1rem; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.15rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+h3 { font-size: 1.45rem; }
+.script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.25em; line-height: 1; }
+.lead { font-size: 1.2rem; max-width: 34rem; margin: 1.25rem 0 0; color: var(--ink); }
+.facts { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin: 2rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid var(--line); list-style: none; }
+.facts li { display: flex; flex-direction: column; }
+.facts b { font-family: var(--display); font-weight: 600; font-size: 1.9rem; line-height: 1.1; }
+.facts span { font-size: .85rem; color: var(--muted); }
+.cta { display: inline-block; margin-top: 2rem; background: var(--ink); color: var(--paper); text-decoration: none; padding: .8rem 1.5rem; border-radius: 999px; font-weight: 500; }
+.cta:hover { background: var(--gold-text); }
+.crest { justify-self: center; width: min(100%, 26rem); }
+.crest img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); mask-composite: intersect; }
+
+/* secties */
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.band { background: var(--panel); border-block: 1px solid var(--line); }
+.head { max-width: 40rem; margin-bottom: 2rem; }
+.head p { color: var(--muted); margin: .75rem 0 0; }
+
+.rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
+.rooms ul { list-style: none; margin: 1rem 0 0; padding: 0; }
+.rooms li { padding: .7rem 0; border-top: 1px solid var(--line); }
+.rooms li small { display: block; color: var(--muted); font-size: .9rem; }
+
+/* prijslijst */
+.prices { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.tablebox { min-width: 0; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+caption { text-align: left; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-bottom: .6rem; }
+th, td { padding: .7rem .75rem; border-top: 1px solid var(--line); text-align: left; font-weight: 400; }
+thead th { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+td.amt, th.amt { text-align: right; white-space: nowrap; font-weight: 600; }
+td.bar { width: 38%; }
+td.bar i { display: block; height: .5rem; border-radius: 999px; background: var(--gold); }
+tr.peak th, tr.peak td { background: var(--gold-soft); }
+tr.peak td.bar i { background: var(--orange); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+/* rekenhulp */
+.calc { background: var(--paper); border: 1px solid var(--gold); border-radius: 10rem 10rem .75rem .75rem; padding: 3.25rem clamp(1.1rem, 3vw, 1.75rem) 1.5rem; min-width: 0; }
+.calc h3 { text-align: center; }
+.calc .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: .4rem 0 1.25rem; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .9rem; }
+.fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
+.fields .wide { grid-column: 1 / -1; }
+select, input[type="date"] { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
+.sum { margin: 1.25rem 0 0; font-variant-numeric: tabular-nums; }
+.sum div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid var(--line); }
+.sum dt { color: var(--muted); }
+.sum dd { margin: 0; white-space: nowrap; }
+.sum .total dt, .sum .total dd { color: var(--ink); font-weight: 600; font-size: 1.15rem; }
+.note { font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
+
+/* praktisch */
+.terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0 clamp(1.5rem, 4vw, 3rem); margin: 0; }
+.terms div { padding: 1rem 0; border-top: 1px solid var(--line); }
+.terms dt { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.terms dd { margin: .3rem 0 0; }
+.terms dd b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.2; display: block; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.contact > * { min-width: 0; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1rem 0 0; }
+.mail span { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; user-select: all; }
+button { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .55rem 1.1rem; }
+button:hover { background: var(--gold-text); }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+button.ghost:hover { background: var(--ink); color: var(--paper); }
+.where { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+.where li { padding: .6rem 0; border-top: 1px solid var(--line); }
+.msg { background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; margin: 1rem 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--body); font-size: .95rem; line-height: 1.55; user-select: all; }
+[role="status"] { font-size: .85rem; color: var(--gold-text); min-height: 1.3em; margin: .5rem 0 0; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2rem; text-align: center; color: var(--muted); font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; }
+
+@media (max-width: 52rem) {
+  .hero .wrap, .prices, .contact { grid-template-columns: minmax(0, 1fr); }
+  .crest { order: -1; width: min(100%, 17rem); }
+  td.bar { display: none; }
+  thead th.bar { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  td.bar i { transition: width .3s; }
+}
+section[id] { scroll-margin-top: 5.5rem; }
+</style>
+<style>
+.top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
+.vw { max-width: 44rem; }
+.vw .versie { color: var(--muted); font-size: .9rem; margin: .75rem 0 0; }
+.vw .lead { margin-top: 1.25rem; }
+.art { list-style: none; margin: 2.5rem 0 0; padding: 0; counter-reset: art; display: grid; gap: 2.25rem; }
+.art > li { counter-increment: art; }
+.art h2 { font-size: 1.6rem; }
+.art h2::before { content: counter(art) ". "; color: var(--gold-text); }
+.art ol { list-style: none; margin: .75rem 0 0; padding: 0; counter-reset: lid; display: grid; gap: .6rem; }
+.art ol li { counter-increment: lid; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); }
+.art ol li::before { content: counter(art) "." counter(lid); color: var(--muted); font-variant-numeric: tabular-nums; font-size: .9rem; padding-top: .1rem; }
+.vw .cta { margin-top: 2.5rem; }
+footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; color: var(--gold-text); }
+
+/* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
+.menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
+.menu-knop:hover { background: var(--panel); color: var(--ink); }
+/* het menu klapt in zodra de onderdelen niet meer op één regel passen */
+@media (max-width: 60rem) {
+  .top .wrap { align-items: center; }
+  .menu-knop { display: inline-block; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
+@media (max-width: 40rem) {
+  .top .wrap { align-items: center; }
+  .brand { font-size: 1rem; letter-spacing: .07em; }
+  .menu-knop { display: inline-block; padding: .3rem .9rem; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
+
+/* voettekst */
+.voet { background: var(--ink); color: #EFE3D0; border-top: 0; padding-block: 0; text-align: left; text-transform: none; letter-spacing: 0; font-size: .95rem; line-height: 1.6; }
+.voet > .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3rem); padding-block: 3rem 2.5rem; }
+@media (min-width: 60rem) { .voet > .wrap { grid-template-columns: 1.25fr .9fr 1fr 1.6fr; } }
+.voet h2 { font-family: var(--body); font-weight: 500; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: #E0B45C; margin: 0 0 .8rem; }
+.voet ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.voet p { margin: 0; }
+.voet a { display: inline; margin: 0; color: inherit; font-size: inherit; letter-spacing: 0; text-decoration: none; overflow-wrap: anywhere; }
+.voet a:hover { text-decoration: underline; text-decoration-color: #E0B45C; text-underline-offset: 3px; }
+.voet a:focus-visible { outline: 2px solid #E0B45C; outline-offset: 2px; }
+.voet-naam { font-family: var(--display); font-weight: 600; font-size: 1.45rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; margin-bottom: .6rem !important; }
+.voet-slogan { font-family: var(--script); color: #E0B45C; font-size: 1.7rem; line-height: 1.2; margin-top: .9rem !important; }
+.voet-onder { border-top: 1px solid rgba(239, 227, 208, .18); color: #C9B79C; font-size: .82rem; }
+.voet-ster { color: #E0B45C; letter-spacing: .12em; font-size: 1rem; margin-right: .5rem; }
+.voet-ster i { font-style: normal; color: rgba(239, 227, 208, .3); }
+.voet-onder a { color: #EFE3D0; }
+.voet-onder .wrap { padding-block: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; }
+
+.cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
+.voet .cam { color: #E0B45C; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Casa Tinto de Verano</a>
+    <button type="button" class="menu-knop" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav id="menu" aria-label="Onderdelen">
+      <a href="index.html#penthouse">Het penthouse</a>
+      <a href="impressie.html">Impressie</a>
+      <a href="prijzen.html">Prijzen</a>
+      <a href="praktisch.html">Praktisch</a>
+      <a href="locatie.html">Locatie</a>
+      <a href="reserveren.html">Reserveren</a>
+    </nav>
+  </div>
+</header>
+<script>
+(function () {
+  var knop = document.querySelector(".menu-knop"), menu = document.getElementById("menu");
+  if (!knop || !menu) return;
+  function zet(open) { menu.classList.toggle("open", open); knop.setAttribute("aria-expanded", open ? "true" : "false"); knop.textContent = open ? "Sluiten" : "Menu"; }
+  knop.addEventListener("click", function () { zet(!menu.classList.contains("open")); });
+  menu.addEventListener("click", function (e) { if (e.target.tagName === "A") zet(false); });
+  // Gemiddelde beoordeling uit het gastenboek, rechts onderin de voettekst.
+  fetch("/api/gastenboek").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
+    var met = (d.berichten || []).filter(function (b) { return b.sterren; }), el = document.getElementById("voet-sterren");
+    if (!met.length || !el) return;
+    var gem = met.reduce(function (t, b) { return t + b.sterren; }, 0) / met.length, vol = Math.round(gem);
+    var link = document.createElement("a"), ster = document.createElement("span"), leeg = document.createElement("i");
+    link.href = "/gastenboek"; ster.className = "voet-ster";
+    ster.textContent = "★★★★★".slice(0, vol); leeg.textContent = "★★★★★".slice(vol); ster.append(leeg);
+    link.setAttribute("aria-label", "Beoordeling: " + gem.toFixed(1).replace(".", ",") + " van 5 sterren uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen") + ". Naar het gastenboek.");
+    link.append(ster, document.createTextNode(gem.toFixed(1).replace(".", ",") + " uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen")));
+    el.replaceChildren(link);
+  }).catch(function () {});
+})();
+</script>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="vw">
+        <p class="eyebrow">Casa Tinto de Verano · Punta Prima</p>
+        <h1>Privacyverklaring</h1>
+        <p class="versie">Versie van 24 oktober 2026</p>
+        <p class="lead">Hier lees je welke gegevens we van je gebruiken als je een verblijf aanvraagt of een bericht achterlaat, waarom we dat doen en welke rechten je hebt.</p>
+        <ol class="art">
+        <li><h2>Wie wij zijn</h2><ol><li><span>Casa Tinto de Verano is een vakantiepenthouse in Punta Prima dat wij als particulier verhuren. Wij zijn verantwoordelijk voor de verwerking van je gegevens: P.A. Sieling, Casa Tinto de Verano.</span></li><li><span>Heb je een vraag over je gegevens, mail dan naar <a href="mailto:info@casatintodeverano.com">info@casatintodeverano.com</a>.</span></li></ol></li>
+        <li><h2>Welke gegevens wij gebruiken</h2><ol><li><span><b>Bij een aanvraag of reservering:</b> je naam, e-mailadres en, als je die invult, je telefoonnummer en je bericht. Verder je aankomst- en vertrekdatum, het aantal volwassenen en kinderen en de leeftijd van de kinderen.</span></li><li><span><b>Bij een bevestigde reservering:</b> de gegevens die nodig zijn voor de factuur en de betaling, zoals je adres als je dat doorgeeft, en de betalingen die we van je ontvangen.</span></li><li><span><b>Als de Spaanse wet dat vereist:</b> de identiteitsgegevens van alle gasten, die we voor aankomst opvragen en doorgeven aan de Spaanse overheid.</span></li><li><span><b>Bij een bericht in het gastenboek:</b> je naam, wanneer je er was (als je dat invult), het aantal sterren en je bericht.</span></li><li><span><b>Tegen misbruik:</b> bij een aanvraag of een gastenboekbericht slaan we kort je IP-adres op, zodat we spam kunnen tegenhouden. Dat IP-adres wissen we automatisch na 24 uur.</span></li></ol></li>
+        <li><h2>Waarvoor wij ze gebruiken</h2><ol><li><span>Om je aanvraag te beantwoorden, je reservering te regelen, je te factureren en contact met je te houden over je verblijf. Dit is nodig om de huurovereenkomst met je te kunnen sluiten en uit te voeren.</span></li><li><span>Om te doen wat de wet van ons vraagt, zoals het bewaren van facturen voor de belasting en, als dat verplicht is, het registreren van gasten.</span></li><li><span>Om berichten in het gastenboek te tonen. Je naam en je bericht komen alleen op de website te staan als je zelf een bericht plaatst en nadat wij het hebben gelezen.</span></li><li><span>Wij gebruiken je gegevens niet voor reclame, verkopen ze niet en geven ze niet aan anderen, behalve aan de diensten hieronder en als de wet dat verplicht.</span></li></ol></li>
+        <li><h2>Wie je gegevens nog meer verwerkt</h2><ol><li><span><b>Cloudflare</b> host de website en bewaart de aanvragen, reserveringen en facturen. De database staat in de Europese Unie.</span></li><li><span><b>TransIP</b> verzorgt onze mailbox info@casatintodeverano.com. Mails die je ons stuurt, staan daar.</span></li><li><span><b>Resend</b> verstuurt ons een melding per e-mail als er een nieuwe aanvraag binnenkomt. Die melding bevat de gegevens uit je aanvraag. Resend is een Amerikaans bedrijf; de doorgifte naar buiten de Europese Unie gebeurt volgens de regels van de Europese privacywet.</span></li><li><span><b>Google Fonts</b> levert de lettertypes van de website. Je browser haalt die op bij Google, waarbij Google je IP-adres ziet.</span></li><li><span>Met deze diensten zijn afspraken gemaakt over het zorgvuldig omgaan met gegevens, via hun standaardvoorwaarden voor verwerking.</span></li></ol></li>
+        <li><h2>Hoe lang wij je gegevens bewaren</h2><ol><li><span>Een aanvraag die niet tot een reservering leidt, verwijderen we uiterlijk een jaar na de gevraagde periode.</span></li><li><span>Gegevens van een reservering en de facturen bewaren we zo lang als de belastingregels voorschrijven. Daarna verwijderen we ze.</span></li><li><span>Een bericht in het gastenboek blijft staan tot je vraagt het te verwijderen.</span></li></ol></li>
+        <li><h2>Cookies</h2><ol><li><span>De website gebruikt geen cookies om je te volgen of voor reclame, en geen programma's die je bezoek meten.</span></li><li><span>Alleen in ons eigen beheer, waar wij inloggen, gebruiken we een cookie om ingelogd te blijven. Bezoekers van de website krijgen die cookie niet.</span></li></ol></li>
+        <li><h2>Jouw rechten</h2><ol><li><span>Je mag ons altijd vragen welke gegevens we van je hebben, en vragen om ze te verbeteren, aan te vullen of te verwijderen.</span></li><li><span>Je mag bezwaar maken tegen het gebruik van je gegevens, vragen om het gebruik te beperken, en een kopie van je gegevens vragen om aan een ander te geven.</span></li><li><span>Heb je toestemming gegeven, bijvoorbeeld voor een bericht in het gastenboek, dan kun je die altijd intrekken.</span></li><li><span>Mail je verzoek naar <a href="mailto:info@casatintodeverano.com">info@casatintodeverano.com</a>. We reageren binnen een maand. Gegevens die we volgens de wet moeten bewaren, zoals facturen, kunnen we pas na die termijn verwijderen.</span></li><li><span>Ben je niet tevreden over hoe we met je gegevens omgaan, laat het ons dan eerst weten. Je mag ook een klacht indienen bij de Spaanse toezichthouder, de Agencia Española de Protección de Datos (aepd.es), of bij de toezichthouder in je eigen land, in Nederland de Autoriteit Persoonsgegevens.</span></li></ol></li>
+        <li><h2>Beveiliging</h2><ol><li><span>De website werkt alleen via een beveiligde verbinding (https). Ons beheer is afgeschermd met een wachtwoord en alleen voor ons toegankelijk.</span></li><li><span>Mocht er toch iets misgaan met je gegevens, dan laten we je dat weten als dat nodig is en melden we het waar de wet dat vraagt.</span></li></ol></li>
+        <li><h2>Wijzigingen</h2><ol><li><span>Veranderen we iets aan hoe we met gegevens omgaan, dan passen we deze verklaring aan. Bovenaan staat altijd de datum van de laatste versie.</span></li></ol></li>
+        </ol>
+        <a class="cta" href="reserveren.html">Reservering aanvragen</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="voet">
+  <div class="wrap">
+    <div>
+      <p class="voet-naam">Casa Tinto de Verano</p>
+      <p>Penthouse met groot dakterras in Punta Prima, aan de Costa Blanca.</p>
+      <p class="voet-slogan">Your place under the sun</p>
+    </div>
+    <nav aria-label="Voettekst">
+      <h2>Ontdek</h2>
+      <ul>
+        <li><a href="/#penthouse">Het penthouse</a></li>
+        <li><a href="/impressie">Impressie</a></li>
+        <li><a href="/prijzen">Prijzen en beschikbaarheid</a></li>
+        <li><a href="/locatie">Locatie en omgeving</a></li>
+        <li><a href="/gastenboek">Gastenboek</a></li>
+        <li><a href="/over-ons">Over ons</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>Je verblijf</h2>
+      <ul>
+        <li><a href="/reserveren">Reservering aanvragen</a></li>
+        <li><a href="/praktisch">Praktische informatie</a></li>
+        <li><a href="/huurvoorwaarden">Huurvoorwaarden</a></li>
+        <li><a href="/privacy">Privacyverklaring</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><a href="mailto:info@casatintodeverano.com">info@casatintodeverano.com</a></li>
+        <li><a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener"><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: casa_tinto_de_verano</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
+</footer>
+</body>
+</html>
