@@ -126,7 +126,22 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 #factuur th, #factuur td { border-top: 1px solid var(--line); padding: .7rem 0; }
 #factuur thead th { border-top: 0; border-bottom: 1px solid var(--gold); color: var(--gold-text); }
 #factuur tfoot td { border-top: 1px solid var(--gold); border-bottom: 3px double var(--gold); font-family: var(--display); font-weight: 600; font-size: 1.45rem; padding: .6rem 0; }
-.f-betaling { margin-top: 1.75rem; border: 1px solid var(--gold); border-radius: .5rem; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem 2rem; break-inside: avoid; }
+.f-betaling { margin-top: 1.75rem; border: 1px solid var(--gold); border-radius: .5rem; padding: 1.1rem 1.35rem; display: grid; grid-template-columns: 1fr 1.1fr; gap: 1rem 2.25rem; break-inside: avoid; }
+.f-gezelschap { text-align: center; margin: 1rem 0 0; padding: .9rem 1rem; background: var(--panel); border-radius: .5rem; break-inside: avoid; }
+.f-gez-wie { font-family: var(--display); font-weight: 600; font-size: 1.15rem; }
+.f-gez-noot { color: var(--muted); font-size: .85rem; margin-top: .2rem !important; }
+.f-termijnen { display: grid; gap: .55rem; }
+.f-termijn { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline; padding-bottom: .55rem; border-bottom: 1px solid var(--line); }
+.f-termijn:last-child { border-bottom: 0; padding-bottom: 0; }
+.f-t-wat { font-weight: 600; }
+.f-t-wanneer { color: var(--muted); font-size: .85rem; }
+.f-t-bedrag { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.f-over dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: .35rem .9rem; }
+.f-over dt { color: var(--muted); font-size: .85rem; align-self: baseline; white-space: nowrap; }
+.f-over dd { margin: 0; }
+.f-iban { font-weight: 600; letter-spacing: .02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.f-ref { font-weight: 600; }
+.f-betaaltekst { text-align: center; color: var(--ink); font-size: .9rem; margin: 1.1rem auto 0 !important; max-width: 36rem; break-inside: avoid; }
 .f-voet { margin-top: 1.4rem; text-align: center; color: var(--muted); font-size: .85rem; display: grid; gap: .3rem; break-inside: avoid; }
 .f-voet .f-slogan { font-family: "Pinyon Script", cursive; font-size: 1.9rem; color: var(--gold-text); line-height: 1.2; }
 @media (max-width: 34rem) { .f-partijen, .f-betaling { grid-template-columns: 1fr; } .f-kop { flex-direction: column; align-items: flex-start; } .f-titel, .f-titel dl { text-align: left; justify-content: start; } }
@@ -137,7 +152,26 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
   body > :not(#factuurlaag) { display: none !important; }
   #factuurlaag { position: static; overflow: visible; background: var(--paper); }
   #factuurlaag .balk { display: none; }
-  #factuur { padding: 13mm 16mm; max-width: none; }
+  #factuur { padding: 11mm 15mm; max-width: none; font-size: 9.6pt; }
+  /* Compacter op papier, zodat een factuur op één A4 past. */
+  .f-kop { padding-bottom: .8rem; }
+  .f-kop img { width: 5.2rem; }
+  .f-titel h1 { font-size: 2.1rem; }
+  .f-titel dl { margin-top: .6rem; }
+  .f-partijen { margin-block: .9rem; gap: 1.5rem; }
+  .f-naam { font-size: 1.15rem; }
+  .f-verblijf { font-size: 1.1rem; padding: .5rem 0; }
+  .f-gezelschap { margin-top: .7rem; padding: .6rem .9rem; }
+  .f-gez-wie { font-size: 1.05rem; }
+  #factuur table { margin-top: 1rem; }
+  #factuur th, #factuur td { padding: .45rem 0; }
+  #factuur tfoot td { font-size: 1.25rem; padding: .45rem 0; }
+  .f-betaling { margin-top: 1.1rem; padding: .8rem 1.1rem; }
+  .f-termijnen { gap: .4rem; }
+  .f-termijn { padding-bottom: .4rem; }
+  .f-betaaltekst { margin-top: .8rem !important; font-size: .88rem; }
+  .f-voet { margin-top: .8rem; gap: .15rem; }
+  .f-voet .f-slogan { font-size: 1.5rem; }
 }
 </style>
 </head>
@@ -588,7 +622,9 @@ const VIEWS = {
 function toonFactuur(f) {
   const g = f.gegevens, a = g.afzender || {};
   const regelTekst = (...delen) => delen.filter(Boolean).join("\n");
-  $("#factuur").replaceChildren(
+  // Lege onderdelen (null) overslaan, anders verschijnt het woord "null" op de factuur.
+  const vul = (el, ...delen) => el.replaceChildren(...delen.flat().filter((d) => d != null && d !== false));
+  vul($("#factuur"),
     h("div", { class: "f-kop" },
       h("img", { src: "logo.webp?v=3", alt: "Casa Tinto de Verano", width: 420, height: 520 }),
       h("div", { class: "f-titel" },
@@ -601,18 +637,36 @@ function toonFactuur(f) {
         h("p", null, regelTekst(g.klant?.adres, g.klant?.email)))),
     g.aankomst && g.vertrek ? h("p", { class: "f-verblijf" }, "Verblijf in Casa Tinto de Verano", h("span", null, "♥"),
       `${datum(g.aankomst, true)} t/m ${datum(g.vertrek, true)}`) : null,
-    g.verblijf_adres || g.gezelschap ? h("p", { class: "f-adres" }, regelTekst(g.verblijf_adres ? g.verblijf_adres.replace(/\s*\n\s*/g, ", ") : "", g.gezelschap ? "Gezelschap: " + g.gezelschap : "")) : null,
+    g.verblijf_adres ? h("p", { class: "f-adres" }, g.verblijf_adres.replace(/\s*\n\s*/g, ", ")) : null,
+    g.gezelschap && g.soort !== "credit" ? h("div", { class: "f-gezelschap" },
+      h("p", { class: "label" }, "Gezelschap"),
+      h("p", { class: "f-gez-wie" }, g.gezelschap),
+      h("p", { class: "f-gez-noot" }, g.personen
+        ? `Deze reservering geldt voor ${g.personen} ${g.personen === 1 ? "persoon" : "personen"}. Alleen de hier genoemde personen mogen in het penthouse overnachten.`
+        : "Alleen de hier genoemde personen mogen in het penthouse overnachten.")) : null,
     h("table", null,
       h("thead", null, h("tr", null, h("th", null, "Omschrijving"), h("th", { class: "bedrag" }, "Bedrag"))),
       h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
       h("tfoot", null, h("tr", null, h("td", null, "Totaal"), h("td", { class: "bedrag" }, euro(f.totaal))))),
-    h("div", { class: "f-betaling" },
-      h("div", null, h("p", { class: "label" }, g.soort === "credit" ? "Toelichting" : "Betaling"),
-        h("p", null, regelTekst(g.betaling, g.borg ? `Daarnaast te voldoen: borg ${euro(g.borg)}.` : "", g.soort === "credit" ? "" : a.betaal_tekst))),
-      g.soort === "credit"
-        ? h("div", null, h("p", { class: "label" }, "Hoort bij"), h("p", null, `Factuur ${g.credit_van}`))
-        : h("div", null, h("p", { class: "label" }, "Overmaken naar"),
-          h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `Ten name van: ${a.iban_naam}` : "", `Onder vermelding van: ${f.nummer}`)))),
+    g.termijnen && g.soort !== "credit"
+      ? h("div", { class: "f-betaling" },
+          h("div", null, h("p", { class: "label" }, "Betaling"),
+            h("div", { class: "f-termijnen" }, g.termijnen.map((t) => h("div", { class: "f-termijn" },
+              h("div", null, h("p", { class: "f-t-wat" }, t.omschrijving), h("p", { class: "f-t-wanneer" }, t.wanneer)),
+              h("p", { class: "f-t-bedrag" }, euro(t.bedrag)))))),
+          h("div", { class: "f-over" }, h("p", { class: "label" }, "Overmaken naar"),
+            h("dl", null,
+              a.iban ? [h("dt", null, "IBAN"), h("dd", { class: "f-iban" }, a.iban)] : null,
+              a.iban_naam ? [h("dt", null, "Ten name van"), h("dd", null, a.iban_naam)] : null,
+              h("dt", null, "Omschrijving"), h("dd", { class: "f-ref" }, f.nummer))))
+      : h("div", { class: "f-betaling" },
+          h("div", null, h("p", { class: "label" }, g.soort === "credit" ? "Toelichting" : "Betaling"),
+            h("p", null, regelTekst(g.betaling, g.borg ? `Daarnaast te voldoen: borg ${euro(g.borg)}.` : "", g.soort === "credit" ? "" : a.betaal_tekst))),
+          g.soort === "credit"
+            ? h("div", null, h("p", { class: "label" }, "Hoort bij"), h("p", null, `Factuur ${g.credit_van}`))
+            : h("div", null, h("p", { class: "label" }, "Overmaken naar"),
+              h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `Ten name van: ${a.iban_naam}` : "", `Onder vermelding van: ${f.nummer}`)))),
+    g.termijnen && g.soort !== "credit" && a.betaal_tekst ? h("p", { class: "f-betaaltekst" }, a.betaal_tekst) : null,
     h("div", { class: "f-voet" },
       a.btw_regel ? h("p", null, a.btw_regel) : null,
       h("p", { class: "f-slogan" }, "Your place under the sun"),

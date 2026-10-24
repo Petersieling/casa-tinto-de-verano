@@ -189,13 +189,19 @@ export const onRequest = veilig(async ({ request, env, params }) => {
     const betaling = uiterlijk <= datum
       ? `Je verblijf begint binnen ${RESTANT_DAGEN / 7} weken. Graag het volledige bedrag van ${euro(totaal)} direct overmaken.`
       : `Aanbetaling: ${euro(aanbetaling)} binnen 7 dagen na deze factuur.\nRestant inclusief borg: ${euro(totaal - aanbetaling)} uiterlijk op ${datumNl(uiterlijk)}.`;
+    // Betaaltermijnen als losse regels, zodat de factuur ze overzichtelijk kan tonen.
+    const binnenZeven = naarIso(naarTijd(datum) + 7 * 864e5);
+    const termijnen = uiterlijk <= datum
+      ? [{ omschrijving: "Volledig bedrag, inclusief borg", wanneer: "Direct na ontvangst van deze factuur", bedrag: totaal }]
+      : [{ omschrijving: `Aanbetaling (${Math.round(AANBETALING * 100)}%)`, wanneer: `Uiterlijk ${datumNl(binnenZeven)}`, bedrag: aanbetaling },
+         { omschrijving: "Restant en borg", wanneer: `Uiterlijk ${datumNl(uiterlijk)}`, bedrag: totaal - aanbetaling }];
     // Gezelschap zoals bij de boeking opgegeven, bijvoorbeeld "2 volwassenen, 1 kind (6 jaar)".
     const v = bo.volwassenen || 0, k = bo.kinderen || 0;
     const gezelschap = bo.volwassenen == null && bo.kinderen == null
       ? (bo.personen ? `${bo.personen} personen` : "")
       : `${v} ${v === 1 ? "volwassene" : "volwassenen"}` + (k ? `, ${k} ${k === 1 ? "kind" : "kinderen"}${bo.leeftijden ? ` (${bo.leeftijden} jaar)` : ""}` : ", geen kinderen");
     const gegevens = {
-      afzender: ins, gezelschap, verblijf_adres: ins.verblijf_adres || "",
+      afzender: ins, gezelschap, personen: (bo.volwassenen == null && bo.kinderen == null) ? (bo.personen || 0) : v + k, termijnen, verblijf_adres: ins.verblijf_adres || "",
       klant: { naam: klant?.naam || bo.naam, adres: klant?.adres || "", email: klant?.email || bo.email || "" },
       regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek
     };
