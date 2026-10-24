@@ -74,7 +74,8 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
   /* Op de telefoon net als op de computer: tekst links, filmpje rechts ernaast. */
   .hero-foto .wrap { grid-template-columns: minmax(0, 1fr) 7.6rem !important; gap: .9rem; align-items: start; padding-top: 1.6rem; }
   .hero-foto .wrap > div:first-child { display: contents; }
-  .hero-foto .eyebrow { grid-column: 1 / -1; margin-bottom: .2rem; }
+  .hero-foto .eyebrow { grid-column: 1 / -1; margin-bottom: .2rem; font-size: .66rem; letter-spacing: .13em; white-space: nowrap; }
+  @media (max-width: 23rem) { .hero-foto .eyebrow { font-size: .6rem; letter-spacing: .09em; } }
   .hero-foto h1 { grid-column: 1; align-self: center; font-size: 1.85rem; }
   .film-boog { order: 0; grid-column: 2; grid-row: 2; width: 100%; padding: .3rem; }
   .hero-film { border-radius: 6rem 6rem .3rem .3rem; }
