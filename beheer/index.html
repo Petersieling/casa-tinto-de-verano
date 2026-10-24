@@ -418,7 +418,7 @@ function gegevensAlinea(b) {
   if (!r || r.ingevuld) return "";
   const uiterlijk = new Date(b.aankomst + "T12:00:00"); uiterlijk.setDate(uiterlijk.getDate() - 7);
   const wanneer = uiterlijk.toISOString().slice(0, 10) > D.vandaag ? `uiterlijk ${datum(uiterlijk.toISOString().slice(0, 10), true)}` : "zo snel mogelijk";
-  return `Gegevens van de gasten\nDe Spaanse wet verplicht ons de gegevens van iedereen die in het penthouse verblijft door te geven aan de overheid. Vul ze ${wanneer} in via je persoonlijke link:\n${r.link}\nHoud daarvoor de paspoorten of identiteitskaarten bij de hand. Heb je het nog niet ingevuld, dan sturen we je voor aankomst een herinnering.\n\n`;
+  return `Gegevens van de gasten\nDe Spaanse wet verplicht ons de gegevens van iedereen die in het penthouse verblijft door te geven aan de overheid. Vul ze ${wanneer} in via je persoonlijke link:\n${r.link}\nHoud daarvoor de paspoorten of identiteitskaarten bij de hand.\n\n`;
 }
 
 // Gastgegevens bekijken, om over te nemen in SES.Hospedajes.
