@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mailhandtekening · Casa Tinto de Verano</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root { --paper: #FDFAF5; --panel: #F7EFE0; --ink: #3A2315; --muted: #7B6552; --gold: #B98A2E; --gold-text: #8A6016; --line: #E6D8BE; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 44rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  h1 { font: 600 2rem/1.15 Georgia, "Times New Roman", serif; margin: 0 0 .5rem; }
+  h2 { font: 600 1.25rem/1.2 Georgia, "Times New Roman", serif; margin: 2.25rem 0 .5rem; }
+  .uitleg { color: var(--muted); margin: 0 0 1.5rem; }
+  .voorbeeld { background: #fff; border: 1px solid var(--line); border-radius: .6rem; padding: 1.25rem; overflow-x: auto; }
+  button { font: inherit; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .65rem 1.25rem; cursor: pointer; margin-top: 1rem; }
+  button.licht { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .status { color: var(--gold-text); min-height: 1.6em; margin: .5rem 0 0; }
+  ol { padding-left: 1.25rem; margin: .25rem 0 0; }
+  li { margin: .3rem 0; }
+  .tekstversie { background: #fff; border: 1px solid var(--line); border-radius: .6rem; padding: 1rem 1.25rem; white-space: pre-line; font-size: .95rem; }
+  .let { background: var(--panel); border-radius: .6rem; padding: .9rem 1.1rem; font-size: .95rem; margin-top: 1rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mailhandtekening</h1>
+  <p class="uitleg">Deze pagina is alleen voor jou en staat niet in het menu van de site. Kopieer de handtekening en plak hem in je mailprogramma. Hij komt dan onder elke mail, ook onder de bevestigingen en afwijzingen uit het beheer.</p>
+
+  <h2>Op de computer: met logo</h2>
+  <div class="voorbeeld">
+    <div id="handtekening">
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Georgia,'Times New Roman',serif;color:#3A2315;">
+        <tr>
+          <td style="padding:0 16px 0 0;vertical-align:middle;">
+            <a href="https://casa-tinto-de-verano.pages.dev" style="text-decoration:none;"><img src="https://casa-tinto-de-verano.pages.dev/mail/logo.jpg" width="90" height="111" alt="Casa Tinto de Verano" style="display:block;width:90px;height:111px;border:0;"></a>
+          </td>
+          <td style="padding:0 0 0 16px;vertical-align:middle;border-left:1px solid #B98A2E;">
+            <div style="font-size:18px;font-weight:bold;letter-spacing:1px;color:#3A2315;line-height:1.3;">CASA TINTO DE VERANO</div>
+            <div style="font-size:14px;font-style:italic;color:#8A6016;line-height:1.5;padding:2px 0 8px;">Penthouse in Punta Prima &middot; Costa Blanca</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#7B6552;">
+              <a href="mailto:info@casatintodeverano.com" style="color:#3A2315;text-decoration:none;">info@casatintodeverano.com</a><br>
+              <a href="https://casa-tinto-de-verano.pages.dev" style="color:#3A2315;text-decoration:none;">casa-tinto-de-verano.pages.dev</a>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <button type="button" id="kopieer">Kopieer handtekening met logo</button>
+  <p class="status" id="status" role="status"></p>
+
+  <p><b>Outlook</b> (Windows, Mac of de website van Outlook)</p>
+  <ol>
+    <li>Open Instellingen, dan Account (of E-mail), dan Handtekeningen. In het oude Outlook op Windows: Bestand, Opties, E-mail, Handtekeningen.</li>
+    <li>Maak een nieuwe handtekening, bijvoorbeeld "Casa Tinto", en plak hem in het tekstvak.</li>
+    <li>Kies hem als standaard voor nieuwe berichten en voor antwoorden, voor het account info@casatintodeverano.com. Sla op.</li>
+  </ol>
+  <p><b>Apple Mail</b> (Mac)</p>
+  <ol>
+    <li>Open Mail, dan Instellingen, dan Handtekeningen.</li>
+    <li>Kies links het account info@casatintodeverano.com en klik op het plusje.</li>
+    <li>Zet het vinkje "Gebruik altijd mijn standaardlettertype" uit en plak de handtekening rechts in het vak.</li>
+  </ol>
+  <p><b>Webmail van TransIP</b></p>
+  <ol>
+    <li>Open Instellingen, dan Identiteiten, en kies je adres.</li>
+    <li>Zet de handtekening op opgemaakte tekst (HTML) en plak hem in het vak. Sla op.</li>
+  </ol>
+
+  <h2>Op de iPhone: zonder logo</h2>
+  <p class="uitleg">De Mail-app op de iPhone kan geen plaatje in de handtekening bewaren. Gebruik daar deze tekst.</p>
+  <div class="tekstversie" id="tekstversie">Casa Tinto de Verano
+Penthouse in Punta Prima · Costa Blanca
+info@casatintodeverano.com
+casa-tinto-de-verano.pages.dev</div>
+  <button type="button" class="licht" id="kopieer-tekst">Kopieer tekstversie</button>
+  <p class="status" id="status-tekst" role="status"></p>
+  <ol>
+    <li>Open Instellingen, dan Apps, dan Mail, dan Handtekening. Op oudere iPhones: Instellingen, Mail, Handtekening.</li>
+    <li>Kies "Per account" en plak de tekst bij info@casatintodeverano.com.</li>
+  </ol>
+
+  <p class="let">Koppel je later je eigen domein aan de site, dan pas ik het webadres in de handtekening aan. Je plakt hem dan opnieuw in je mailprogramma.</p>
+</main>
+<script>
+(function () {
+  var hand = document.getElementById("handtekening"), tekst = document.getElementById("tekstversie");
+  function selecteer(el) { var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  function kopieer(el, rijk, statusId) {
+    var status = document.getElementById(statusId);
+    var klaar = function () { status.textContent = "Gekopieerd. Plak hem nu in je mailprogramma."; };
+    var zelf = function () { selecteer(el); status.textContent = "Kopiëren lukte niet vanzelf. De handtekening is geselecteerd; kopieer hem zelf."; };
+    try {
+      if (rijk && window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        navigator.clipboard.write([new ClipboardItem({
+          "text/html": new Blob([el.innerHTML], { type: "text/html" }),
+          "text/plain": new Blob([el.innerText], { type: "text/plain" })
+        })]).then(klaar, function () { selecteer(el); if (document.execCommand("copy")) klaar(); else zelf(); });
+      } else if (!rijk && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(el.innerText).then(klaar, zelf);
+      } else { selecteer(el); if (document.execCommand("copy")) klaar(); else zelf(); }
+    } catch (e) { zelf(); }
+  }
+  document.getElementById("kopieer").addEventListener("click", function () { kopieer(hand, true, "status"); });
+  document.getElementById("kopieer-tekst").addEventListener("click", function () { kopieer(tekst, false, "status-tekst"); });
+})();
+</script>
+</body>
+</html>
