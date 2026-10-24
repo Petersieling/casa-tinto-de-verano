@@ -747,8 +747,8 @@ Stay and party
 Het minimale verblijf is 10 nachten.
 The minimum stay is 10 nights.
 
-Inchecken kan vanaf 15:00 uur op de dag van aankomst. Uitchecken doe je voor 10:00 uur op de dag van vertrek.
-Check-in is possible from 15:00 on the day of arrival. Check-out is before 10:00 on the day of departure.
+Inchecken kan vanaf 15:00 uur op de dag van aankomst. Uitchecken doe je voor 10:00 uur op de dag van vertrek. Deze tijden staan vast; eerder inchecken of later uitchecken is niet mogelijk.
+Check-in is possible from 15:00 on the day of arrival. Check-out is before 10:00 on the day of departure. These times are fixed; early check-in or late check-out is not possible.
 
 Het penthouse is voor maximaal 4 personen. Alleen de personen die bij de reservering zijn opgegeven mogen er verblijven.
 The penthouse is for a maximum of 4 guests. Only the people stated in the booking may stay there.
@@ -1237,11 +1237,11 @@ The penthouse of Casa Tinto de Verano in Punta Prima: living room with open kitc
 Het penthouse · Casa Tinto de Verano
 The penthouse · Casa Tinto de Verano
 
-Onze contactpersoon neemt een paar dagen van tevoren contact met je op en ontvangt je.
-Our contact person will get in touch a few days beforehand and welcome you.
+Onze contactpersoon neemt uiterlijk 24 uur voor aankomst contact met je op en ontvangt je. Eerder inchecken is helaas niet mogelijk.
+Our contact person will get in touch no later than 24 hours before arrival and welcome you. Early check-in is unfortunately not possible.
 
-Het tijdstip spreek je af met onze contactpersoon.
-You arrange the time with our contact person.
+Het tijdstip spreek je af met onze contactpersoon. Later uitchecken is helaas niet mogelijk.
+You arrange the time with our contact person. Late check-out is unfortunately not possible.
 
 120 kWh per week
 120 kWh per week
@@ -1609,3 +1609,9 @@ provides our mailbox info@casatintodeverano.com. Emails you send us are stored t
 
 Postcode (niet nodig in dit land)
 Postal code (not needed in this country)
+
+Inchecken vanaf 15:00, uitchecken voor 10:00.
+Check-in from 15:00, check-out before 10:00.
+
+Deze tijden staan vast. Uiterlijk 24 uur voor aankomst neemt onze contactpersoon contact met je op.
+These times are fixed. Our contact person will get in touch no later than 24 hours before arrival.
