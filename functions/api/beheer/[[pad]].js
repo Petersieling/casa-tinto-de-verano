@@ -1,4 +1,5 @@
 import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Melding } from "../../../src/lib.js";
+import { maakGastmail } from "../../../src/gastmail.js";
 import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../../../src/prijzen.js";
 
 // Beheer-API: boekingen, blokkades, klanten, facturen en instellingen. Alleen bereikbaar na inloggen.
@@ -61,8 +62,28 @@ export const onRequest = veilig(async ({ request, env, params }) => {
       gastenboek: gb.results,
       facturen: fa.results.map((f) => ({ ...f, gegevens: JSON.parse(f.gegevens || "{}") })),
       instellingen: Object.fromEntries(ins.results.map((r) => [r.sleutel, r.waarde])),
-      agendaUrl: `${u.origin}/api/agenda?sleutel=${await agendaSleutel(env)}`
+      agendaUrl: `${u.origin}/api/agenda?sleutel=${await agendaSleutel(env)}`,
+      // Versturen vanuit het beheer kan pas als het domein bij Resend is gekoppeld en MAIL_VAN is ingesteld.
+      mailVersturen: !!(env.RESEND_API_KEY && env.MAIL_VAN)
     });
+  }
+
+  // ---- Mail aan een gast versturen ----
+  if (deel === "mail" && m === "POST") {
+    if (!env.RESEND_API_KEY || !env.MAIL_VAN) throw new Melding("Versturen vanuit het beheer is nog niet ingesteld.");
+    const aan = tekst(b.aan, 200), onderwerp = tekst(b.onderwerp, 200), inhoud = String(b.tekst || "").slice(0, 10000);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(aan)) throw new Melding("Het mailadres van de gast klopt niet.");
+    if (!onderwerp || !inhoud.trim()) throw new Melding("Vul een onderwerp en een bericht in.");
+    const { html, text } = maakGastmail(inhoud);
+    const kopie = env.MAIL_KOPIE || env.MELDING_EMAIL;
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + env.RESEND_API_KEY, "content-type": "application/json" },
+      body: JSON.stringify({ from: env.MAIL_VAN, to: [aan], subject: onderwerp, html, text,
+        reply_to: env.MAIL_ANTWOORD || "info@casatintodeverano.com", ...(kopie ? { bcc: [kopie] } : {}) })
+    });
+    if (!r.ok) throw new Melding("De mail kon niet worden verstuurd. Probeer het via je mailprogramma.");
+    return json({ ok: true });
   }
 
   // ---- Boekingen en blokkades ----
