@@ -8,13 +8,17 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   if (!b || typeof b !== "object") throw new Melding("De aanvraag is niet goed aangekomen.");
   if (b.website) return json({ ok: true }); // verborgen veld dat alleen spamrobots invullen
 
-  const naam = tekst(b.naam, 100), email = tekst(b.email, 150), telefoon = tekst(b.telefoon, 40), bericht = tekst(b.bericht, 1500);
+  const voornaam = tekst(b.voornaam, 50), achternaam = tekst(b.achternaam, 50);
+  const naam = voornaam || achternaam ? `${voornaam} ${achternaam}`.trim() : tekst(b.naam, 100);
+  const email = tekst(b.email, 150), telefoon = tekst(b.telefoon, 40), bericht = tekst(b.bericht, 1500);
   const volwassenen = Math.trunc(+b.volwassenen), kinderen = Math.trunc(+b.kinderen);
   const leeftijden = Array.isArray(b.leeftijden) ? b.leeftijden.map((l) => Math.trunc(+l)) : [];
   const personen = volwassenen + kinderen;
-  if (naam.length < 2) throw new Melding("Vul je naam in.");
+  if (!voornaam) throw new Melding("Vul je voornaam in.");
+  if (achternaam.length < 2) throw new Melding("Vul je achternaam in.");
   if (b.akkoord !== true) throw new Melding("Ga akkoord met de huurvoorwaarden om je aanvraag te versturen.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Melding("Vul een geldig e-mailadres in.");
+  if (telefoon.replace(/\D/g, "").length < 8) throw new Melding("Vul je telefoonnummer in.");
   if (!(volwassenen >= 1)) throw new Melding("Geef aan met hoeveel volwassenen je komt.");
   if (!(kinderen >= 0) || b.kinderen === "" || b.kinderen == null) throw new Melding("Geef aan met hoeveel kinderen je komt. Kies 0 als er geen kinderen meekomen.");
   if (personen > MAX_PERSONEN) throw new Melding(`Het penthouse is voor maximaal ${MAX_PERSONEN} personen.`);
