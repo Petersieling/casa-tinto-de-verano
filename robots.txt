@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /beheer/
+Disallow: /api/
+Disallow: /mail/
+
+Sitemap: https://casa-tinto-de-verano.pages.dev/sitemap.xml

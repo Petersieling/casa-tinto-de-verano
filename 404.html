@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Deze pagina van Casa Tinto de Verano bestaat niet.">
+<meta name="robots" content="noindex">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Pagina niet gevonden · Casa Tinto de Verano</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
+:root {
+  --paper: #FDFAF5;
+  --panel: #F7EFE0;
+  --ink: #3A2315;
+  --muted: #7B6552;
+  --gold: #B98A2E;
+  --gold-text: #8A6016;
+  --gold-soft: #F3DDB0;
+  --line: #E6D8BE;
+  --orange: #D6731B;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+  --body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+a { color: var(--gold-text); }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--orange); outline-offset: 2px;
+}
+.wrap { max-width: 68rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+/* kop */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .7rem; }
+.brand { font-family: var(--display); font-weight: 600; font-size: 1.25rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: .7rem; }
+.brand img { height: 2.6rem; width: auto; mix-blend-mode: multiply; flex: none; }
+@media (max-width: 24rem) { .top .brand { font-size: .8rem; letter-spacing: .04em; gap: .45rem; } .top .brand img { height: 2.1rem; } .top .menu-knop { padding: .3rem .75rem; } }
+.top nav { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.top nav a { color: var(--ink); text-decoration: none; font-size: .95rem; padding-block: .15rem; border-bottom: 1px solid transparent; }
+.top nav a:hover { border-bottom-color: var(--gold); }
+
+/* hero */
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; padding-block: clamp(2rem, 6vw, 4.5rem); }
+.eyebrow { font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1rem; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.15rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+h3 { font-size: 1.45rem; }
+.script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.25em; line-height: 1; }
+.lead { font-size: 1.2rem; max-width: 34rem; margin: 1.25rem 0 0; color: var(--ink); }
+.facts { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin: 2rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid var(--line); list-style: none; }
+.facts li { display: flex; flex-direction: column; }
+.facts b { font-family: var(--display); font-weight: 600; font-size: 1.9rem; line-height: 1.1; }
+.facts span { font-size: .85rem; color: var(--muted); }
+.cta { display: inline-block; margin-top: 2rem; background: var(--ink); color: var(--paper); text-decoration: none; padding: .8rem 1.5rem; border-radius: 999px; font-weight: 500; }
+.cta:hover { background: var(--gold-text); }
+.crest { justify-self: center; width: min(100%, 26rem); }
+.crest img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); mask-composite: intersect; }
+
+/* secties */
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.band { background: var(--panel); border-block: 1px solid var(--line); }
+.head { max-width: 40rem; margin-bottom: 2rem; }
+.head p { color: var(--muted); margin: .75rem 0 0; }
+
+.rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
+.rooms ul { list-style: none; margin: 1rem 0 0; padding: 0; }
+.rooms li { padding: .7rem 0; border-top: 1px solid var(--line); }
+.rooms li small { display: block; color: var(--muted); font-size: .9rem; }
+
+/* prijslijst */
+.prices { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.tablebox { min-width: 0; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+caption { text-align: left; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-bottom: .6rem; }
+th, td { padding: .7rem .75rem; border-top: 1px solid var(--line); text-align: left; font-weight: 400; }
+thead th { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+td.amt, th.amt { text-align: right; white-space: nowrap; font-weight: 600; }
+td.bar { width: 38%; }
+td.bar i { display: block; height: .5rem; border-radius: 999px; background: var(--gold); }
+tr.peak th, tr.peak td { background: var(--gold-soft); }
+tr.peak td.bar i { background: var(--orange); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+/* rekenhulp */
+.calc { background: var(--paper); border: 1px solid var(--gold); border-radius: 10rem 10rem .75rem .75rem; padding: 3.25rem clamp(1.1rem, 3vw, 1.75rem) 1.5rem; min-width: 0; }
+.calc h3 { text-align: center; }
+.calc .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: .4rem 0 1.25rem; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .9rem; }
+.fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
+.fields .wide { grid-column: 1 / -1; }
+select, input[type="date"] { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
+.sum { margin: 1.25rem 0 0; font-variant-numeric: tabular-nums; }
+.sum div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid var(--line); }
+.sum dt { color: var(--muted); }
+.sum dd { margin: 0; white-space: nowrap; }
+.sum .total dt, .sum .total dd { color: var(--ink); font-weight: 600; font-size: 1.15rem; }
+.note { font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
+
+/* praktisch */
+.terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0 clamp(1.5rem, 4vw, 3rem); margin: 0; }
+.terms div { padding: 1rem 0; border-top: 1px solid var(--line); }
+.terms dt { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.terms dd { margin: .3rem 0 0; }
+.terms dd b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.2; display: block; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.contact > * { min-width: 0; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1rem 0 0; }
+.mail span { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; user-select: all; }
+button { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .55rem 1.1rem; }
+button:hover { background: var(--gold-text); }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+button.ghost:hover { background: var(--ink); color: var(--paper); }
+.where { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+.where li { padding: .6rem 0; border-top: 1px solid var(--line); }
+.msg { background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; margin: 1rem 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--body); font-size: .95rem; line-height: 1.55; user-select: all; }
+[role="status"] { font-size: .85rem; color: var(--gold-text); min-height: 1.3em; margin: .5rem 0 0; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2rem; text-align: center; color: var(--muted); font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; }
+
+@media (max-width: 52rem) {
+  .hero .wrap, .prices, .contact { grid-template-columns: minmax(0, 1fr); }
+  .crest { order: -1; width: min(100%, 17rem); }
+  td.bar { display: none; }
+  thead th.bar { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  td.bar i { transition: width .3s; }
+}
+section[id] { scroll-margin-top: 5.5rem; }
+</style>
+<style>
+.top nav a[aria-current="page"] { border-bottom-color: var(--gold); }
+.vw { max-width: 44rem; }
+.vw .versie { color: var(--muted); font-size: .9rem; margin: .75rem 0 0; }
+.vw .lead { margin-top: 1.25rem; }
+.art { list-style: none; margin: 2.5rem 0 0; padding: 0; counter-reset: art; display: grid; gap: 2.25rem; }
+.art > li { counter-increment: art; }
+.art h2 { font-size: 1.6rem; }
+.art h2::before { content: counter(art) ". "; color: var(--gold-text); }
+.art ol { list-style: none; margin: .75rem 0 0; padding: 0; counter-reset: lid; display: grid; gap: .6rem; }
+.art ol li { counter-increment: lid; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); }
+.art ol li::before { content: counter(art) "." counter(lid); color: var(--muted); font-variant-numeric: tabular-nums; font-size: .9rem; padding-top: .1rem; }
+.vw .cta { margin-top: 2.5rem; }
+footer a { display: block; margin-top: .75rem; letter-spacing: .06em; text-transform: none; font-size: .9rem; color: var(--gold-text); }
+
+/* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
+.menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
+.menu-knop:hover { background: var(--panel); color: var(--ink); }
+/* het menu klapt in zodra de onderdelen niet meer op één regel passen */
+@media (max-width: 60rem) {
+  .top .wrap { align-items: center; }
+  .menu-knop { display: inline-block; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
+@media (max-width: 40rem) {
+  .top .wrap { align-items: center; }
+  .brand { font-size: 1rem; letter-spacing: .07em; }
+  .menu-knop { display: inline-block; padding: .3rem .9rem; }
+  .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
+  .top nav.open { display: flex; }
+  .top nav a { padding: .75rem 0; border-top: 1px solid var(--line); border-bottom: 0; font-size: 1rem; }
+  .top nav a:hover { border-bottom: 0; }
+}
+
+/* voettekst */
+.voet { background: var(--ink); color: #EFE3D0; border-top: 0; padding-block: 0; text-align: left; text-transform: none; letter-spacing: 0; font-size: .95rem; line-height: 1.6; }
+.voet > .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3rem); padding-block: 3rem 2.5rem; }
+@media (min-width: 60rem) { .voet > .wrap { grid-template-columns: 1.25fr .9fr 1fr 1.6fr; } }
+.voet h2 { font-family: var(--body); font-weight: 500; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: #E0B45C; margin: 0 0 .8rem; }
+.voet ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+.voet p { margin: 0; }
+.voet a { display: inline; margin: 0; color: inherit; font-size: inherit; letter-spacing: 0; text-decoration: none; overflow-wrap: anywhere; }
+.voet a:hover { text-decoration: underline; text-decoration-color: #E0B45C; text-underline-offset: 3px; }
+.voet a:focus-visible { outline: 2px solid #E0B45C; outline-offset: 2px; }
+.voet-naam { font-family: var(--display); font-weight: 600; font-size: 1.45rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; margin-bottom: .6rem !important; }
+.voet-slogan { font-family: var(--script); color: #E0B45C; font-size: 1.7rem; line-height: 1.2; margin-top: .9rem !important; }
+.voet-onder { border-top: 1px solid rgba(239, 227, 208, .18); color: #C9B79C; font-size: .82rem; }
+.voet-ster { color: #E0B45C; letter-spacing: .12em; font-size: 1rem; margin-right: .5rem; }
+.voet-ster i { font-style: normal; color: rgba(239, 227, 208, .3); }
+.voet-onder a { color: #EFE3D0; }
+.voet-onder .wrap { padding-block: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; }
+
+.cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
+.voet .cam { color: #E0B45C; }
+.niet-gevonden { text-align: center; max-width: 38rem; margin: clamp(2rem, 8vw, 5rem) auto; }
+.niet-gevonden .lead { margin: 1.25rem auto 0; color: var(--muted); }
+.nf-knoppen { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin-top: 2rem; }
+.nf-knoppen .cta { margin: 0; }
+.cta.licht { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/index.html"><img src="/logo-klein.webp" width="107" height="132" alt="">Casa Tinto de Verano</a>
+    <button type="button" class="menu-knop" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav id="menu" aria-label="Onderdelen">
+      <a href="/penthouse.html">Het penthouse</a>
+      <a href="/impressie.html">Impressie</a>
+      <a href="/prijzen.html">Prijzen</a>
+      <a href="/praktisch.html">Praktisch</a>
+      <a href="/locatie.html">Locatie</a>
+      <a href="/reserveren.html">Reserveren</a>
+    </nav>
+  </div>
+</header>
+<script>
+(function () {
+  var knop = document.querySelector(".menu-knop"), menu = document.getElementById("menu");
+  if (!knop || !menu) return;
+  function zet(open) { menu.classList.toggle("open", open); knop.setAttribute("aria-expanded", open ? "true" : "false"); knop.textContent = open ? "Sluiten" : "Menu"; }
+  knop.addEventListener("click", function () { zet(!menu.classList.contains("open")); });
+  menu.addEventListener("click", function (e) { if (e.target.tagName === "A") zet(false); });
+  // Gemiddelde beoordeling uit het gastenboek, rechts onderin de voettekst.
+  fetch("/api/gastenboek").then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
+    var met = (d.berichten || []).filter(function (b) { return b.sterren; }), el = document.getElementById("voet-sterren");
+    if (!met.length || !el) return;
+    var gem = met.reduce(function (t, b) { return t + b.sterren; }, 0) / met.length, vol = Math.round(gem);
+    var link = document.createElement("a"), ster = document.createElement("span"), leeg = document.createElement("i");
+    link.href = "/gastenboek"; ster.className = "voet-ster";
+    ster.textContent = "★★★★★".slice(0, vol); leeg.textContent = "★★★★★".slice(vol); ster.append(leeg);
+    link.setAttribute("aria-label", "Beoordeling: " + gem.toFixed(1).replace(".", ",") + " van 5 sterren uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen") + ". Naar het gastenboek.");
+    link.append(ster, document.createTextNode(gem.toFixed(1).replace(".", ",") + " uit " + met.length + (met.length === 1 ? " beoordeling" : " beoordelingen")));
+    el.replaceChildren(link);
+  }).catch(function () {});
+})();
+</script>
+
+<main>
+  <section>
+    <div class="wrap">
+      <div class="niet-gevonden">
+        <p class="eyebrow">Punta Prima · Costa Blanca</p>
+        <h1>Deze pagina <span class="script">bestaat niet</span></h1>
+        <p class="lead">Misschien is het adres verkeerd getypt, of is de pagina verplaatst. Geen zorgen: vanaf hier vind je makkelijk je weg.</p>
+        <p class="nf-knoppen"><a class="cta" href="/">Naar de voorpagina</a> <a class="cta licht" href="/prijzen.html">Prijzen en beschikbaarheid</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="voet">
+  <div class="wrap">
+    <div>
+      <p class="voet-naam">Casa Tinto de Verano</p>
+      <p>Penthouse met groot dakterras in Punta Prima, aan de Costa Blanca.</p>
+      <p class="voet-slogan">Your place under the sun</p>
+    </div>
+    <nav aria-label="Voettekst">
+      <h2>Ontdek</h2>
+      <ul>
+        <li><a href="/penthouse">Het penthouse</a></li>
+        <li><a href="/impressie">Impressie</a></li>
+        <li><a href="/prijzen">Prijzen en beschikbaarheid</a></li>
+        <li><a href="/locatie">Locatie en omgeving</a></li>
+        <li><a href="/gastenboek">Gastenboek</a></li>
+        <li><a href="/over-ons">Over ons</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2>Je verblijf</h2>
+      <ul>
+        <li><a href="/reserveren">Reservering aanvragen</a></li>
+        <li><a href="/praktisch">Praktische informatie</a></li>
+        <li><a href="/huurvoorwaarden">Huurvoorwaarden</a></li>
+        <li><a href="/privacy">Privacyverklaring</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li><a href="mailto:info@casatintodeverano.com">info@casatintodeverano.com</a></li>
+        <li><a href="https://www.instagram.com/casa_tinto_de_verano/" target="_blank" rel="noopener"><svg class="cam" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6.500 9.500 4h5L16 6.500"/><rect x="2.500" y="6.500" width="19" height="13" rx="2.500"/><circle cx="12" cy="13" r="3.600"/></svg>Instagram: casa_tinto_de_verano</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
+</footer>
+</body>
+</html>
