@@ -28,8 +28,13 @@ const HANDTEKENING_HTML = (en) => `
 
 export function maakGastmail(tekst, taal) {
   const en = taal === "en";
-  const alineas = tekst.trim().split(/\n\s*\n/).map((a) =>
-    `<p style="margin:0 0 14px;">${linkjes(esc(a.trim())).replace(/\n/g, "<br>")}</p>`).join("\n");
+  // Een korte eerste regel zonder punt, met tekst eronder, is een kopje en wordt vet.
+  const alineas = tekst.trim().split(/\n\s*\n/).map((a) => {
+    const regels = a.trim().split("\n");
+    const kop = regels.length > 1 && regels[0].length <= 40 && !/[.,:;!?]$/.test(regels[0]) ? regels.shift() : null;
+    const romp = linkjes(esc(regels.join("\n"))).replace(/\n/g, "<br>");
+    return `<p style="margin:0 0 16px;">${kop ? `<strong style="font-family:Georgia,'Times New Roman',serif;font-size:16px;color:#8A6016;">${esc(kop)}</strong><br>` : ""}${romp}</p>`;
+  }).join("\n");
   const html = `<!doctype html><html lang="${en ? "en" : "nl"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#ffffff;">
 <div style="max-width:600px;padding:20px 16px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;color:#3A2315;">
