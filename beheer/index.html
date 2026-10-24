@@ -691,7 +691,7 @@ function toonFactuur(f) {
     h("div", { class: "f-voet" },
       a.btw_regel ? h("p", null, a.btw_regel) : null,
       h("p", { class: "f-slogan" }, "Your place under the sun"),
-      h("p", null, "Casa Tinto de Verano · Punta Prima · Torrevieja · Costa Blanca")));
+      h("p", null, "Casa Tinto de Verano · Punta Prima · Costa Blanca")));
   $("#factuurlaag").hidden = false;
 }
 $("#factuursluit").addEventListener("click", () => { $("#factuurlaag").hidden = true; });
