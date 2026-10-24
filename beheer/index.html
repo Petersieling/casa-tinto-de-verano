@@ -141,6 +141,7 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 .f-over dd { margin: 0; }
 .f-iban { font-weight: 600; letter-spacing: .02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .f-ref { font-weight: 600; }
+.f-stroom { color: var(--muted); font-size: .85rem; margin: .7rem 0 0 !important; }
 .f-betaaltekst { text-align: center; color: var(--ink); font-size: .9rem; margin: 1.1rem auto 0 !important; max-width: 36rem; break-inside: avoid; }
 .f-voet { margin-top: 1.4rem; text-align: center; color: var(--muted); font-size: .85rem; display: grid; gap: .3rem; break-inside: avoid; }
 .f-voet .f-slogan { font-family: "Pinyon Script", cursive; font-size: 1.9rem; color: var(--gold-text); line-height: 1.2; }
@@ -209,7 +210,7 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 </div>
 
 <script type="module">
-import { huurprijs, nachten, isDatum, SCHOONMAAK, BORG, AANBETALING, RESTANT_DAGEN } from "../src/prijzen.js";
+import { huurprijs, nachten, isDatum, SCHOONMAAK, BORG, AANBETALING, RESTANT_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../src/prijzen.js";
 
 const $ = (s) => document.querySelector(s);
 // Bouwt een element op zonder HTML-tekst, zodat invoer van bezoekers nooit als code wordt uitgevoerd.
@@ -422,7 +423,7 @@ function mailLink(b, soort) {
     ? `Bij je aanvraag ben je akkoord gegaan met onze huurvoorwaarden. Je kunt ze nog eens nalezen op ${link}`
     : `Met het betalen van ${uiterlijkIso <= D.vandaag ? "de factuur" : "de aanbetaling"} ga je akkoord met onze huurvoorwaarden. Je leest ze op ${link}`;
   const tekst = soort === "bevestig"
-    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nGezelschap: ${gezelschap(b)}\n\nHuur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nBetalen\n${betalen}\n\n${voorwaarden}\n\nHeb je nog vragen, dan horen we het graag. We kijken ernaar uit je te verwelkomen in Punta Prima.\n\n`
+    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nGezelschap: ${gezelschap(b)}\n\nHuur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nElektriciteit: ${kwhInbegrepen(b.aankomst, b.vertrek)} kWh is inbegrepen bij je verblijf. Verbruik je meer, dan betaal je € ${KWH_PRIJS.toFixed(2).replace(".", ",")} per kWh; dat verrekenen we bij vertrek met de borg.\n\nBetalen\n${betalen}\n\n${voorwaarden}\n\nHeb je nog vragen, dan horen we het graag. We kijken ernaar uit je te verwelkomen in Punta Prima.\n\n`
     : `${groet}Bedankt voor je aanvraag voor Casa Tinto de Verano van ${datum(b.aankomst, true)} t/m ${datum(b.vertrek, true)}. Helaas kunnen we deze periode niet voor je reserveren.\n\nMisschien past een andere periode? De vrije data bekijk je op ${location.origin}/prijzen\n\nWe hopen je in de toekomst alsnog te mogen verwelkomen in Punta Prima.\n\n`;
   const onderwerp = soort === "bevestig" ? "Bevestiging reservering Casa Tinto de Verano" : "Je aanvraag voor Casa Tinto de Verano";
   return `mailto:${encodeURIComponent(b.email || "")}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(tekst)}`;
@@ -648,6 +649,7 @@ function toonFactuur(f) {
       h("thead", null, h("tr", null, h("th", null, "Omschrijving"), h("th", { class: "bedrag" }, "Bedrag"))),
       h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
       h("tfoot", null, h("tr", null, h("td", null, "Totaal"), h("td", { class: "bedrag" }, euro(f.totaal))))),
+    g.stroom && g.soort !== "credit" ? h("p", { class: "f-stroom" }, g.stroom) : null,
     g.termijnen && g.soort !== "credit"
       ? h("div", { class: "f-betaling" },
           h("div", null, h("p", { class: "label" }, "Betaling"),

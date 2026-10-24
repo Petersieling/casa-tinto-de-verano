@@ -472,8 +472,8 @@ const nu = new Date();
 const vandaag = iso(nu.getFullYear(), nu.getMonth(), nu.getDate());
 const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
 const kwhPrijs = "€ " + KWH_PRIJS.toFixed(2).replace(".", ",");
-function stroomTekst(el, n) {
-  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString("nl-NL") + " kWh inbegrepen" }),
+function stroomTekst(el, a, v) {
+  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(a, v).toLocaleString("nl-NL") + " kWh inbegrepen" }),
     " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
 }
 const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -550,7 +550,7 @@ function reken() {
   $("huurlabel").textContent = `Huur (${n} nachten)`;
   $("huur").textContent = euro(huur);
   $("totaal").textContent = euro(huur + SCHOONMAAK);
-  stroomTekst($("stroom"), n);
+  stroomTekst($("stroom"), a, v);
   $("mailtekst").textContent =
     "Hallo,\n\nIk wil graag Casa Tinto de Verano reserveren.\n\n" +
     "Aankomst: " + lang(a) + "\nVertrek: " + lang(v) + " (" + n + " nachten)\n" +

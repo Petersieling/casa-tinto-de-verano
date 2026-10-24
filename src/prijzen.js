@@ -17,7 +17,9 @@ export const SCHOONMAAK = 150;
 export const BORG = 300;
 export const MIN_NACHTEN = 10;
 export const MAX_PERSONEN = 4;
-export const KWH_PER_WEEK = 85;
+export const KWH_PER_WEEK = 85;        // inbegrepen elektriciteit per week, september tot en met juni
+export const KWH_PER_WEEK_ZOMER = 140; // in juli en augustus, vanwege de airco
+export const ZOMER_MAANDEN = [7, 8];
 export const AANBETALING = 0.30;     // deel van huur en eindschoonmaak dat bij boeking wordt betaald
 export const RESTANT_DAGEN = 56;     // restant en borg uiterlijk 8 weken voor aankomst, gelijk aan de annuleringsgrens
 export const ANNULEER_DAGEN = 56;    // tot 8 weken voor aankomst is alleen de aanbetaling verschuldigd
@@ -44,5 +46,13 @@ export function huurprijs(aankomst, vertrek) {
   return Math.round(som);
 }
 
-// Inbegrepen elektriciteit voor een verblijf, naar rato van het aantal nachten.
-export const kwhInbegrepen = (aantalNachten) => Math.round(aantalNachten / 7 * KWH_PER_WEEK);
+// Inbegrepen elektriciteit per week voor de nacht die op deze datum begint.
+export const kwhPerWeek = (iso) => ZOMER_MAANDEN.includes(+iso.slice(5, 7)) ? KWH_PER_WEEK_ZOMER : KWH_PER_WEEK;
+
+// Inbegrepen elektriciteit voor een verblijf: per nacht een zevende van de weekhoeveelheid van die maand.
+export function kwhInbegrepen(aankomst, vertrek) {
+  if (typeof aankomst === "number") return Math.round(aankomst / 7 * KWH_PER_WEEK); // oude aanroep met alleen het aantal nachten
+  let som = 0;
+  for (let t = naarTijd(aankomst), eind = naarTijd(vertrek); t < eind; t += DAG) som += kwhPerWeek(naarIso(t)) / 7;
+  return Math.round(som);
+}

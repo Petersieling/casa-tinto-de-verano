@@ -427,8 +427,8 @@ const nu = new Date();
 const vandaag = iso(nu.getFullYear(), nu.getMonth(), nu.getDate());
 const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
 const kwhPrijs = "€ " + KWH_PRIJS.toFixed(2).replace(".", ",");
-function stroomTekst(el, n) {
-  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(n).toLocaleString("nl-NL") + " kWh inbegrepen" }),
+function stroomTekst(el, a, v) {
+  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(a, v).toLocaleString("nl-NL") + " kWh inbegrepen" }),
     " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
 }
 const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -480,7 +480,7 @@ function rekenKeuze() {
     $("kies-schoonmaak").textContent = euro(SCHOONMAAK);
     $("kies-totaal").textContent = euro(huur + SCHOONMAAK);
     $("kies-borg").textContent = euro(BORG);
-    stroomTekst($("kies-stroom"), n);
+    stroomTekst($("kies-stroom"), keuze.aankomst, keuze.vertrek);
     $("kies-knop").href = "reserveren.html?aankomst=" + keuze.aankomst + "&vertrek=" + keuze.vertrek;
   }
   tekenKalender();
