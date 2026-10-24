@@ -380,6 +380,13 @@ function mailLink(b, soort) {
   const onderwerp = soort === "bevestig" ? "Bevestiging reservering Casa Tinto de Verano" : "Je aanvraag voor Casa Tinto de Verano";
   return `mailto:${encodeURIComponent(b.email || "")}?subject=${encodeURIComponent(onderwerp)}&body=${encodeURIComponent(tekst)}`;
 }
+// Opent je mailprogramma met de klaargezette mail. Versturen doe je daar zelf.
+function openMail(b, soort) {
+  if (!b.email) return;
+  const a = document.createElement("a");
+  a.href = mailLink(b, soort);
+  document.body.append(a); a.click(); a.remove();
+}
 
 // ---- Onderdelen ----
 const TABS = [["aanvragen", "Aanvragen"], ["agenda", "Agenda"], ["boekingen", "Boekingen"], ["klanten", "Klanten"], ["facturen", "Facturen"], ["gastenboek", "Gastenboek"], ["instellingen", "Instellingen"]];
@@ -397,7 +404,7 @@ const VIEWS = {
     const lijst = D.boekingen.filter((b) => b.status === "aangevraagd");
     return [
       h("div", { class: "kopregel" }, h("h1", null, "Aanvragen")),
-      h("p", { class: "uitleg" }, "Aanvragen via de website staan hier. Een periode is pas bezet op de website nadat je de aanvraag hebt bevestigd."),
+      h("p", { class: "uitleg" }, "Aanvragen via de website staan hier. Een periode is pas bezet op de website nadat je de aanvraag hebt bevestigd. Na Bevestigen of Afwijzen opent je mail met een klaargezet bericht voor de gast; dat verstuur je zelf."),
       lijst.length ? h("div", { class: "kaarten" }, lijst.map((b) => h("div", { class: "kaart" },
         h("h3", null, b.naam || "Onbekende gast"),
         h("p", null, `${periode(b)} · ${nachten(b.aankomst, b.vertrek)} nachten`),
@@ -407,9 +414,9 @@ const VIEWS = {
         b.bericht ? h("p", { class: "bericht" }, b.bericht) : null,
         h("p", { class: "klein-tekst" }, "Ontvangen op " + new Date(b.aangemaakt).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" })),
         h("div", { class: "acties" },
-          h("button", { type: "button", class: "klein", onclick: async () => { if (await doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "bevestigd" }))) { tab = "boekingen"; render(); } } }, "Bevestigen"),
+          h("button", { type: "button", class: "klein", onclick: async () => { if (await doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "bevestigd" }))) { tab = "boekingen"; render(); openMail(b, "bevestig"); } } }, "Bevestigen"),
           h("button", { type: "button", class: "klein licht", onclick: () => boekingFormulier(b, false) }, "Prijs of data aanpassen"),
-          h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Deze aanvraag afwijzen?")) doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "afgewezen" })); } }, "Afwijzen"),
+          h("button", { type: "button", class: "klein rood", onclick: async () => { if (confirm(b.email ? "Deze aanvraag afwijzen? Daarna opent je mail met de afwijzing voor de gast." : "Deze aanvraag afwijzen?") && await doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "afgewezen" }))) openMail(b, "afwijs"); } }, "Afwijzen"),
           b.email ? h("a", { class: "knop klein licht", href: mailLink(b, "afwijs") }, "Mail afwijzing") : null)
       ))) : h("p", { class: "leeg" }, "Er zijn geen open aanvragen. Nieuwe aanvragen via de website verschijnen hier.")
     ];
