@@ -20,7 +20,6 @@
   .status { color: var(--gold-text); min-height: 1.6em; margin: .5rem 0 0; }
   ol { padding-left: 1.25rem; margin: .25rem 0 0; }
   li { margin: .3rem 0; }
-  .tekstversie { background: #fff; border: 1px solid var(--line); border-radius: .6rem; padding: 1rem 1.25rem; white-space: pre-line; font-size: .95rem; }
   .let { background: var(--panel); border-radius: .6rem; padding: .9rem 1.1rem; font-size: .95rem; margin-top: 1rem; }
 </style>
 </head>
@@ -69,16 +68,24 @@
     <li>Zet de handtekening op opgemaakte tekst (HTML) en plak hem in het vak. Sla op.</li>
   </ol>
 
-  <h2>Op de iPhone: zonder logo</h2>
-  <p class="uitleg">De Mail-app op de iPhone kan geen plaatje in de handtekening bewaren. Gebruik daar deze tekst.</p>
-  <div class="tekstversie" id="tekstversie">Casa Tinto de Verano
-Penthouse in Punta Prima · Costa Blanca
-info@casatintodeverano.com</div>
-  <button type="button" class="licht" id="kopieer-tekst">Kopieer tekstversie</button>
+  <h2>Op de iPhone: zonder logo, wel in stijl</h2>
+  <p class="uitleg">De Mail-app op de iPhone kan geen plaatje in de handtekening bewaren, maar wel opgemaakte tekst: letters, kleur en een gouden lijntje.</p>
+  <div class="voorbeeld">
+    <div id="tekstversie">
+      <div style="font-family:Georgia,'Times New Roman',serif;color:#3A2315;line-height:1.45;">
+        <div style="color:#B98A2E;font-size:14px;letter-spacing:2px;">&#8212;&#8212;&#8212;</div>
+        <div style="font-size:15px;font-weight:bold;letter-spacing:2px;color:#3A2315;">CASA TINTO DE VERANO</div>
+        <div style="font-size:13px;font-style:italic;color:#8A6016;">Penthouse in Punta Prima &middot; Costa Blanca</div>
+        <div style="font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#7B6552;padding-top:4px;"><a href="mailto:info@casatintodeverano.com" style="color:#7B6552;text-decoration:none;">info@casatintodeverano.com</a></div>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="kopieer-tekst">Kopieer handtekening voor de iPhone</button>
   <p class="status" id="status-tekst" role="status"></p>
   <ol>
     <li>Open Instellingen, dan Apps, dan Mail, dan Handtekening. Op oudere iPhones: Instellingen, Mail, Handtekening.</li>
-    <li>Kies "Per account" en plak de tekst bij info@casatintodeverano.com.</li>
+    <li>Kies "Per account", wis de oude tekst bij info@casatintodeverano.com en plak de handtekening.</li>
+    <li>Is de opmaak na het plakken verdwenen, schud dan je iPhone kort en kies "Herstel" (of "Wijzig kenmerken herstellen"). De kleur en letters komen dan terug.</li>
   </ol>
 
   <p class="let">Het webadres staat er nog niet in. Koppel je later je eigen domein aan de site, dan zet ik casatintodeverano.com erbij en plak je de handtekening opnieuw in je mailprogramma.</p>
@@ -103,7 +110,7 @@ info@casatintodeverano.com</div>
     } catch (e) { zelf(); }
   }
   document.getElementById("kopieer").addEventListener("click", function () { kopieer(hand, true, "status"); });
-  document.getElementById("kopieer-tekst").addEventListener("click", function () { kopieer(tekst, false, "status-tekst"); });
+  document.getElementById("kopieer-tekst").addEventListener("click", function () { kopieer(tekst, true, "status-tekst"); });
 })();
 </script>
 </body>
