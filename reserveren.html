@@ -544,9 +544,12 @@ function tekenLeeftijden() {
   $("leeftijden").hidden = k === 0;
   while (blok.children.length > k) blok.lastChild.remove();
   for (let i = blok.children.length + 1; i <= k; i++) {
-    const lab = document.createElement("label"), inp = document.createElement("input");
+    // Leeftijd kiezen uit een lijst: jonger dan 1 jaar, 1 jaar, 2 jaar … 17 jaar.
+    const lab = document.createElement("label"), inp = document.createElement("select");
     lab.htmlFor = inp.id = "leeftijd-" + i; lab.textContent = "Kind " + i;
-    Object.assign(inp, { type: "number", min: "0", max: "17", step: "1", required: true, inputMode: "numeric", placeholder: "jaar" });
+    inp.required = true;
+    inp.append(new Option("Kies leeftijd…", ""), new Option("Jonger dan 1 jaar", "0"));
+    for (let j = 1; j <= 17; j++) inp.append(new Option(j + " jaar", String(j)));
     lab.append(inp); blok.append(lab);
   }
 }
@@ -558,7 +561,7 @@ function gezelschap() {
   const leeftijden = [];
   for (let i = 1; i <= +k; i++) {
     const veld = $("leeftijd-" + i), w = veld ? veld.value : "";
-    if (w === "" || !(+w >= 0 && +w <= 17) || !Number.isInteger(+w)) return { fout: `Vul de leeftijd van kind ${i} in (0 tot en met 17 jaar).`, veld: "leeftijd-" + i };
+    if (w === "" || !(+w >= 0 && +w <= 17) || !Number.isInteger(+w)) return { fout: `Kies de leeftijd van kind ${i}.`, veld: "leeftijd-" + i };
     leeftijden.push(+w);
   }
   return { volwassenen: +v, kinderen: +k, leeftijden };
