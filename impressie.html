@@ -163,7 +163,10 @@ section[id] { scroll-margin-top: 5.5rem; }
 .fotos .breed img { aspect-ratio: 4 / 3; object-fit: cover; border-radius: 50% 50% .25rem .25rem / 44% 44% .25rem .25rem; }
 .fotos .staand .lijst { border-radius: 12rem 12rem .5rem .5rem; }
 .fotos .staand img { aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12rem 12rem .25rem .25rem; }
-.fotos .staand + .staand { margin-top: 2.5rem; }
+.fotos .verspring { margin-top: 2.5rem; }
+.fotos .alleen { grid-column: 1 / -1; max-width: 19rem; margin-inline: auto; width: 100%; }
+.groep { text-align: center; font-family: var(--script); color: var(--gold-text); font-size: 2.6rem; font-weight: 400; line-height: 1.1; margin: 4rem 0 2rem; }
+.hartje + .groep { margin-top: 0; }
 .fotos figcaption { margin-top: 1rem; font-family: var(--script); color: var(--gold-text); font-size: 2rem; line-height: 1.1; }
 .fotos figcaption small { display: block; font-family: var(--body); font-size: .88rem; color: var(--muted); margin-top: .3rem; letter-spacing: .04em; }
 .impressie .slot { text-align: center; }
@@ -171,7 +174,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 @media (max-width: 34rem) {
   .fotos { grid-template-columns: minmax(0, 1fr); }
   .fotos .staand { max-width: 17rem; margin-inline: auto; width: 100%; }
-  .fotos .staand + .staand { margin-top: 0; }
+  .fotos .verspring { margin-top: 0; }
 }
 
 /* menu: vijf onderdelen; op de telefoon één knop die uitklapt */
@@ -261,23 +264,72 @@ section[id] { scroll-margin-top: 5.5rem; }
       <div class="head">
         <p class="eyebrow">Punta Prima · Torrevieja · Costa Blanca</p>
         <h1>Een <span class="script">impressie</span></h1>
-        <p>Zo ziet het penthouse er van binnen uit.</p>
+        <p>Zo ziet het penthouse eruit, binnen en buiten.</p>
       </div>
       <p class="hartje" aria-hidden="true">&#9829;</p>
 
       <!-- FOTO TOEVOEGEN: kopieer een <figure>-blok en pas de bestandsnaam en de tekst aan. Gebruik class="breed" voor een liggende foto en class="staand" voor een staande. -->
+      <h2 class="groep">Binnen</h2>
       <div class="fotos">
         <figure class="breed">
           <div class="lijst"><img src="fotos/woonkamer.jpg?v=2" width="1400" height="1087" alt="Woonkamer met hoekbank, ronde eettafel en open keuken met bar"></div>
           <figcaption>Woonkamer<small>met eethoek en open keuken</small></figcaption>
         </figure>
         <figure class="staand">
+          <div class="lijst"><img src="fotos/keuken-bar.jpg" width="962" height="1283" loading="lazy" alt="Open keuken met witte bar, twee barkrukken en rieten hanglampen"></div>
+          <figcaption>Keuken<small>met bar voor het ontbijt</small></figcaption>
+        </figure>
+        <figure class="staand verspring">
+          <div class="lijst"><img src="fotos/keuken.jpg" width="962" height="1283" loading="lazy" alt="Keuken met inbouwoven, magnetron, inductiekookplaat en koffiezetapparaat"></div>
+          <figcaption>Volledig uitgerust<small>oven, magnetron en inductie</small></figcaption>
+        </figure>
+        <figure class="staand">
+          <div class="lijst"><img src="fotos/eethoek.jpg" width="962" height="1283" loading="lazy" alt="Ronde donkere eettafel met vier gestoffeerde stoelen onder een rieten hanglamp"></div>
+          <figcaption>Eethoek<small>voor vier personen</small></figcaption>
+        </figure>
+        <figure class="staand verspring">
+          <div class="lijst"><img src="fotos/entree.jpg" width="962" height="1283" loading="lazy" alt="Hal met grote ovale spiegel en zicht op keuken en woonkamer"></div>
+          <figcaption>Entree<small>met zicht op de woonkamer</small></figcaption>
+        </figure>
+        <figure class="staand">
+          <div class="lijst"><img src="fotos/slaapkamer-1.jpg" width="962" height="1283" loading="lazy" alt="Slaapkamer met tweepersoonsbed, fluwelen hoofdbord en rieten hanglamp"></div>
+          <figcaption>Slaapkamer 1<small>met tweepersoonsbed</small></figcaption>
+        </figure>
+        <figure class="staand verspring">
           <div class="lijst"><img src="fotos/slaapkamer.jpg" width="962" height="1282" loading="lazy" alt="Slaapkamer met twee losse bedden en een goudkleurige waaier aan de muur"></div>
           <figcaption>Slaapkamer 2<small>met twee losse bedden</small></figcaption>
         </figure>
-        <figure class="staand">
+        <figure class="staand alleen">
           <div class="lijst"><img src="fotos/badkamer.jpg" width="962" height="1282" loading="lazy" alt="Badkamer met inloopdouche, wastafel en ronde spiegel"></div>
           <figcaption>Badkamer<small>met inloopdouche</small></figcaption>
+        </figure>
+      </div>
+
+      <h2 class="groep">Buiten</h2>
+      <div class="fotos">
+        <figure class="breed">
+          <div class="lijst"><img src="fotos/dakterras-ligbedden.jpg" width="1400" height="1050" loading="lazy" alt="Twee ligbedden op het zonnige dakterras met uitzicht over de omgeving"></div>
+          <figcaption>Dakterras<small>zonnen met uitzicht</small></figcaption>
+        </figure>
+        <figure class="staand">
+          <div class="lijst"><img src="fotos/dakterras-lounge.jpg" width="962" height="1283" loading="lazy" alt="Loungeset met kussens en salontafel onder de pergola op het dakterras"></div>
+          <figcaption>Lounge<small>onder de pergola</small></figcaption>
+        </figure>
+        <figure class="staand verspring">
+          <div class="lijst"><img src="fotos/buitenkeuken.jpg" width="962" height="1283" loading="lazy" alt="Buitenkeuken met granieten blad en spoelbak naast een buitendouche"></div>
+          <figcaption>Buitenkeuken<small>met buitendouche</small></figcaption>
+        </figure>
+        <figure class="staand">
+          <div class="lijst"><img src="fotos/balkon.jpg" width="962" height="1275" loading="lazy" alt="Gedekte ontbijttafel met vier stoelen op het overdekte balkon"></div>
+          <figcaption>Balkon<small>ontbijten onder het zonnescherm</small></figcaption>
+        </figure>
+        <figure class="staand verspring">
+          <div class="lijst"><img src="fotos/zwembad.jpg" width="962" height="1283" loading="lazy" alt="Gemeenschappelijk zwembad tussen palmen en gazon bij zonsondergang"></div>
+          <figcaption>Zwembad<small>gemeenschappelijk, in de tuin</small></figcaption>
+        </figure>
+        <figure class="staand alleen">
+          <div class="lijst"><img src="fotos/gevel.jpg" width="962" height="1281" loading="lazy" alt="Witte gevel van het appartementencomplex met trappen, balkons en dakterras"></div>
+          <figcaption>Het complex<small>modern en rustig gelegen</small></figcaption>
         </figure>
       </div>
 
