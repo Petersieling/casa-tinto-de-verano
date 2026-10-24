@@ -2,7 +2,7 @@ import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Meldi
 import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN } from "../../../src/prijzen.js";
 
 // Beheer-API: boekingen, blokkades, klanten, facturen en instellingen. Alleen bereikbaar na inloggen.
-const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst"];
+const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst", "verblijf_adres"];
 const datumNl = (iso) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 
 // Volwassenen en kinderen uit het formulier; het totaal wordt het aantal personen.
@@ -189,8 +189,13 @@ export const onRequest = veilig(async ({ request, env, params }) => {
     const betaling = uiterlijk <= datum
       ? `Je verblijf begint binnen ${RESTANT_DAGEN / 7} weken. Graag het volledige bedrag van ${euro(totaal)} direct overmaken.`
       : `Aanbetaling: ${euro(aanbetaling)} binnen 7 dagen na deze factuur.\nRestant inclusief borg: ${euro(totaal - aanbetaling)} uiterlijk op ${datumNl(uiterlijk)}.`;
+    // Gezelschap zoals bij de boeking opgegeven, bijvoorbeeld "2 volwassenen, 1 kind (6 jaar)".
+    const v = bo.volwassenen || 0, k = bo.kinderen || 0;
+    const gezelschap = bo.volwassenen == null && bo.kinderen == null
+      ? (bo.personen ? `${bo.personen} personen` : "")
+      : `${v} ${v === 1 ? "volwassene" : "volwassenen"}` + (k ? `, ${k} ${k === 1 ? "kind" : "kinderen"}${bo.leeftijden ? ` (${bo.leeftijden} jaar)` : ""}` : ", geen kinderen");
     const gegevens = {
-      afzender: ins,
+      afzender: ins, gezelschap, verblijf_adres: ins.verblijf_adres || "",
       klant: { naam: klant?.naam || bo.naam, adres: klant?.adres || "", email: klant?.email || bo.email || "" },
       regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek
     };

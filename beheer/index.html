@@ -121,6 +121,7 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 .f-naam { font-family: var(--display); font-weight: 600; font-size: 1.3rem; line-height: 1.2; }
 .f-verblijf { text-align: center; font-family: var(--display); font-weight: 500; font-size: 1.25rem; padding: .7rem 0; border-block: 1px solid var(--line); }
 .f-verblijf span { color: var(--gold-text); margin-inline: .6rem; }
+.f-adres { text-align: center; color: var(--muted); font-size: .9rem; white-space: pre-line; margin: -.4rem 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--line); }
 #factuur table { margin-top: 1.5rem; }
 #factuur th, #factuur td { border-top: 1px solid var(--line); padding: .7rem 0; }
 #factuur thead th { border-top: 0; border-bottom: 1px solid var(--gold); color: var(--gold-text); }
@@ -560,7 +561,8 @@ const VIEWS = {
     const velden = [
       ["afzender_naam", "Je naam (afzender op de factuur)"], ["afzender_adres", "Je adres", true], ["afzender_email", "E-mail"], ["afzender_telefoon", "Telefoon"],
       ["afzender_nummer", "Fiscaal nummer (bijvoorbeeld NIE of NIF), als dat op de factuur moet"], ["iban", "IBAN"], ["iban_naam", "Rekening op naam van"],
-      ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true]
+      ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true],
+      ["verblijf_adres", "Adres van het penthouse (komt alleen op de factuur, niet op de website)", true]
     ];
     const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Bedankt voor je reservering. We wensen je een fijn verblijf." };
     const inv = {};
@@ -599,6 +601,7 @@ function toonFactuur(f) {
         h("p", null, regelTekst(g.klant?.adres, g.klant?.email)))),
     g.aankomst && g.vertrek ? h("p", { class: "f-verblijf" }, "Verblijf in Casa Tinto de Verano", h("span", null, "♥"),
       `${datum(g.aankomst, true)} t/m ${datum(g.vertrek, true)}`) : null,
+    g.verblijf_adres || g.gezelschap ? h("p", { class: "f-adres" }, regelTekst(g.verblijf_adres ? g.verblijf_adres.replace(/\s*\n\s*/g, ", ") : "", g.gezelschap ? "Gezelschap: " + g.gezelschap : "")) : null,
     h("table", null,
       h("thead", null, h("tr", null, h("th", null, "Omschrijving"), h("th", { class: "bedrag" }, "Bedrag"))),
       h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
