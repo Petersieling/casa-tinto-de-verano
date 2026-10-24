@@ -195,6 +195,7 @@ section[id] { scroll-margin-top: 5.5rem; }
     </div>
   </section>
 </main>
+<script src="/landen.js"></script>
 <script>
 (function () {
   var t = new URLSearchParams(location.search).get("t") || "";
@@ -222,6 +223,7 @@ section[id] { scroll-margin-top: 5.5rem; }
     var veld = function (naam, label, el, breed) { el.name = naam; el.id = "g" + i + "-" + naam; return h("label", { class: breed ? "breed" : "", for: el.id }, label, el); };
     var inp = function (naam, waarde, extra) { var el = h("input", Object.assign({ type: "text", value: waarde || "" }, extra || {})); return el; };
     var sel = function (lijst, leeg, waarde) { var el = h("select", null, opties(lijst, leeg)); el.value = waarde || ""; return el; };
+    var landSel = function (waarde) { var el = h("select"); vulLanden(el, waarde || "", "Kies…"); return el; };
     var gebEl = inp("geboortedatum", g.geboortedatum, { type: "date", max: new Date().toISOString().slice(0, 10), min: "1900-01-01", required: true });
     var verwEl = sel(D.keuzes.verwantschap, "Kies…", g.verwantschap);
     var verw = veld("verwantschap", "Wat is deze gast van gast 1?", verwEl, true);
@@ -229,7 +231,7 @@ section[id] { scroll-margin-top: 5.5rem; }
       veld("adres", "Straat en huisnummer", inp("adres", g.adres, { autocomplete: i ? "off" : "street-address" }), true),
       veld("postcode", "Postcode", inp("postcode", g.postcode, { autocomplete: i ? "off" : "postal-code" })),
       veld("plaats", "Woonplaats", inp("plaats", g.plaats, { autocomplete: i ? "off" : "address-level2" })),
-      veld("land", "Land", inp("land", g.land || (i ? "" : "Nederland"), { autocomplete: i ? "off" : "country-name" }), true));
+      veld("land", "Land", landSel(g.land || (i ? "" : "Nederland")), true));
     var zelfde = i ? h("input", { type: "checkbox", name: "zelfde_adres", checked: g.zelfde_adres !== false && !g.adres }) : null;
     function werk() {
       var l = leeftijd(gebEl.value, D.aankomst);
@@ -244,7 +246,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         veld("achternaam", "Achternaam", inp("achternaam", g.achternaam, { autocomplete: i ? "off" : "family-name" })),
         veld("geslacht", "Geslacht", sel(D.keuzes.geslachten, "Kies…", g.geslacht)),
         veld("geboortedatum", "Geboortedatum", gebEl),
-        veld("nationaliteit", "Nationaliteit", inp("nationaliteit", g.nationaliteit || (i ? "" : "Nederlandse"))),
+        veld("nationaliteit", "Nationaliteit", landSel(g.nationaliteit || (i ? "" : (g.land || "Nederland")))),
         veld("document", "Soort document", sel(D.keuzes.documenten, "Kies…", g.document)),
         veld("documentnummer", "Documentnummer", inp("documentnummer", g.documentnummer, { autocapitalize: "characters", spellcheck: false }), true),
         verw,

@@ -61,7 +61,7 @@ export function leesGasten(invoer, boeking) {
     if (!r.voornaam || !r.achternaam) throw new Invoerfout(`Vul de voor- en achternaam van ${nr} in.`);
     if (!r.geslacht) throw new Invoerfout(`Kies het geslacht van ${nr}.`);
     if (!isDatum(r.geboortedatum) || r.geboortedatum > vandaag() || r.geboortedatum < "1900-01-01") throw new Invoerfout(`Vul een geldige geboortedatum in voor ${nr}.`);
-    if (r.nationaliteit.length < 2) throw new Invoerfout(`Vul de nationaliteit van ${nr} in.`);
+    if (r.nationaliteit.length < 2) throw new Invoerfout(`Kies de nationaliteit van ${nr}.`);
     if (!r.document || r.documentnummer.length < 4) throw new Invoerfout(`Vul het soort document en het documentnummer van ${nr} in.`);
     const leeftijd = leeftijdOp(r.geboortedatum, boeking.aankomst);
     if (i === 0 && leeftijd < 18) throw new Invoerfout("Gast 1 is de hoofdhuurder en moet 18 jaar of ouder zijn.");

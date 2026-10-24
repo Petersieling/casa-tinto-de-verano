@@ -149,6 +149,10 @@ tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--
 .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .9rem; }
 .fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
 .fields .wide { grid-column: 1 / -1; }
+.fields .twee { grid-column: span 2; }
+.tel-rij { display: flex; gap: .4rem; min-width: 0; }
+.tel-rij select { flex: 0 0 auto; width: 45%; max-width: 12rem; }
+.tel-rij input { flex: 1 1 auto; min-width: 0; }
 select, input, textarea { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
 .sum { margin: 1.25rem 0 0; font-variant-numeric: tabular-nums; }
 .sum div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid var(--line); }
@@ -402,13 +406,10 @@ section[id] { scroll-margin-top: 5.5rem; }
                 <label for="achternaam"><span>Achternaam <span class="ster" aria-hidden="true">*</span></span>
                   <input type="text" id="achternaam" autocomplete="family-name" required>
                 </label>
-                <label for="email"><span>E-mailadres <span class="ster" aria-hidden="true">*</span></span>
+                <label class="twee" for="email"><span>E-mailadres <span class="ster" aria-hidden="true">*</span></span>
                   <input type="email" id="email" autocomplete="email" required>
                 </label>
-                <label for="telefoon"><span>Telefoon <span class="ster" aria-hidden="true">*</span></span>
-                  <input type="tel" id="telefoon" autocomplete="tel" required>
-                </label>
-                <label class="wide" for="adres"><span>Straat en huisnummer <span class="ster" aria-hidden="true">*</span></span>
+                <label class="twee" for="adres"><span>Straat en huisnummer <span class="ster" aria-hidden="true">*</span></span>
                   <input type="text" id="adres" autocomplete="street-address" required>
                 </label>
                 <label for="postcode"><span>Postcode <span class="ster" aria-hidden="true">*</span></span>
@@ -417,8 +418,11 @@ section[id] { scroll-margin-top: 5.5rem; }
                 <label for="plaats"><span>Woonplaats <span class="ster" aria-hidden="true">*</span></span>
                   <input type="text" id="plaats" autocomplete="address-level2" required>
                 </label>
-                <label for="land"><span>Land <span class="ster" aria-hidden="true">*</span></span>
-                  <input type="text" id="land" autocomplete="country-name" value="Nederland" required>
+                <label class="twee" for="land"><span>Land <span class="ster" aria-hidden="true">*</span></span>
+                  <select id="land" autocomplete="country-name" required><option value="Nederland">Nederland</option></select>
+                </label>
+                <label class="twee" for="telefoon"><span>Telefoon <span class="ster" aria-hidden="true">*</span></span>
+                  <span class="tel-rij"><select id="landnummer" aria-label="Landnummer"><option value="NL">Nederland (+31)</option></select><input type="tel" id="telefoon" autocomplete="tel-national" placeholder="6 12345678" required></span>
                 </label>
                 <label class="wide" for="bericht">Bericht (optioneel)
                   <textarea id="bericht" rows="3"></textarea>
@@ -489,10 +493,16 @@ section[id] { scroll-margin-top: 5.5rem; }
   <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
 </footer>
 
+<script src="/landen.js"></script>
 <script type="module">
 import { SCHOONMAAK, BORG, MIN_NACHTEN, MAX_PERSONEN, KWH_PRIJS, huurprijs, nachten, isDatum, naarTijd, naarIso, kwhInbegrepen } from "./src/prijzen.js";
 
 const $ = (id) => document.getElementById(id);
+// Land en landnummer: kies je een land, dan volgt het landnummer, tenzij je dat zelf al hebt gekozen.
+vulLanden($("land"), "Nederland"); vulLandnummers($("landnummer"), "NL");
+let nummerZelf = false;
+$("landnummer").addEventListener("change", () => { nummerZelf = true; });
+$("land").addEventListener("change", () => { const c = landcodeVan($("land").value); if (!nummerZelf && c && landnummer(c)) $("landnummer").value = c; });
 const euro = (n) => "€ " + n.toLocaleString("nl-NL");
 const iso = (j, m, d) => `${j}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 const nu = new Date();
@@ -650,11 +660,13 @@ $("aanvraag").addEventListener("submit", async (e) => {
   $("gasten-melding").hidden = !g.fout;
   $("gasten-melding").textContent = g.fout || "";
   if (g.fout) { status.textContent = g.fout; $(g.veld).focus(); return; }
-  const voornaam = $("voornaam").value.trim(), achternaam = $("achternaam").value.trim(), email = $("email").value.trim(), telefoon = $("telefoon").value.trim();
+  const voornaam = $("voornaam").value.trim(), achternaam = $("achternaam").value.trim(), email = $("email").value.trim();
+  // Telefoon als internationaal nummer: +31 6 12345678 (de 0 vooraan valt weg).
+  const eigen = $("telefoon").value.trim(), telefoon = eigen.startsWith("+") ? eigen : `+${landnummer($("landnummer").value)} ${eigen.replace(/^0+/, "")}`;
   if (voornaam.length < 1) { status.textContent = "Vul je voornaam in."; $("voornaam").focus(); return; }
   if (achternaam.length < 2) { status.textContent = "Vul je achternaam in."; $("achternaam").focus(); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = "Vul een geldig e-mailadres in."; $("email").focus(); return; }
-  if (telefoon.replace(/\D/g, "").length < 8) { status.textContent = "Vul je telefoonnummer in, met landnummer als je buiten Nederland woont."; $("telefoon").focus(); return; }
+  if (eigen.replace(/\D/g, "").length < 6) { status.textContent = "Vul je telefoonnummer in, met landnummer als je buiten Nederland woont."; $("telefoon").focus(); return; }
   const adres = $("adres").value.trim(), postcode = $("postcode").value.trim(), plaats = $("plaats").value.trim(), land = $("land").value.trim();
   if (adres.length < 3) { status.textContent = "Vul je straat en huisnummer in."; $("adres").focus(); return; }
   if (postcode.length < 3) { status.textContent = "Vul je postcode in."; $("postcode").focus(); return; }
