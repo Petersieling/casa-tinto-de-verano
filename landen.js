@@ -6,26 +6,30 @@ window.LANDEN = [["AF","Afghanistan","Afghanistan","93"],["AX","Åland","Åland 
 window.LANDEN_EERST = ["NL", "BE", "DE", "GB", "ES", "FR"];
 
 // Vult een keuzelijst met alle landen; de waarde is de Nederlandse naam.
+var EN = function () { return window.ctvTaal === "en"; };
+var naamVan = function (r) { return EN() ? r[2] : r[1]; };
+var gesorteerd = function () { return EN() ? LANDEN.slice().sort(function (a, b) { return a[2].localeCompare(b[2], "en"); }) : LANDEN; };
 window.vulLanden = function (sel, gekozen, leegTekst) {
-  var maak = function (r) { var o = document.createElement("option"); o.value = r[1]; o.textContent = r[1]; o.dataset.code = r[0]; return o; };
+  // De waarde blijft de Nederlandse naam (zo staat het in het beheer); de bezoeker ziet de naam in zijn eigen taal.
+  var maak = function (r) { var o = document.createElement("option"); o.value = r[1]; o.textContent = naamVan(r); o.dataset.code = r[0]; o.setAttribute("data-nt", ""); return o; };
   sel.replaceChildren();
   if (leegTekst) { var l = document.createElement("option"); l.value = ""; l.textContent = leegTekst; sel.append(l); }
   var eerst = document.createElement("optgroup"); eerst.label = "Veel gekozen";
   LANDEN_EERST.forEach(function (c) { var r = LANDEN.find(function (x) { return x[0] === c; }); if (r) eerst.append(maak(r)); });
   var alle = document.createElement("optgroup"); alle.label = "Alle landen";
-  LANDEN.forEach(function (r) { alle.append(maak(r)); });
+  gesorteerd().forEach(function (r) { alle.append(maak(r)); });
   sel.append(eerst, alle);
   if (gekozen != null) sel.value = gekozen;
 };
 
 // Vult een keuzelijst met landnummers, bijvoorbeeld "Nederland (+31)"; de waarde is de landcode.
 window.vulLandnummers = function (sel, code) {
-  var maak = function (r) { var o = document.createElement("option"); o.value = r[0]; o.textContent = r[1] + " (+" + r[3] + ")"; return o; };
+  var maak = function (r) { var o = document.createElement("option"); o.value = r[0]; o.textContent = naamVan(r) + " (+" + r[3] + ")"; o.setAttribute("data-nt", ""); return o; };
   sel.replaceChildren();
   var eerst = document.createElement("optgroup"); eerst.label = "Veel gekozen";
   LANDEN_EERST.forEach(function (c) { var r = LANDEN.find(function (x) { return x[0] === c; }); if (r) eerst.append(maak(r)); });
   var alle = document.createElement("optgroup"); alle.label = "Alle landen";
-  LANDEN.forEach(function (r) { alle.append(maak(r)); });
+  gesorteerd().forEach(function (r) { alle.append(maak(r)); });
   sel.append(eerst, alle);
   sel.value = code || "NL";
 };

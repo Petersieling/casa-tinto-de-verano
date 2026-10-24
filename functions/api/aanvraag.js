@@ -11,6 +11,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   const voornaam = tekst(b.voornaam, 50), achternaam = tekst(b.achternaam, 50);
   const naam = voornaam || achternaam ? `${voornaam} ${achternaam}`.trim() : tekst(b.naam, 100);
   const email = tekst(b.email, 150), telefoon = tekst(b.telefoon, 40), bericht = tekst(b.bericht, 1500);
+  const taal = b.taal === "en" ? "en" : "nl";
   const adres = tekst(b.adres, 120), postcode = tekst(b.postcode, 15), plaats = tekst(b.plaats, 60), land = tekst(b.land, 40);
   const volwassenen = Math.trunc(+b.volwassenen), kinderen = Math.trunc(+b.kinderen);
   const leeftijden = Array.isArray(b.leeftijden) ? b.leeftijden.map((l) => Math.trunc(+l)) : [];
@@ -40,8 +41,8 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   await noteerPoging(d, "aanvraag", ip);
 
   const huur = huurprijs(b.aankomst, b.vertrek);
-  await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, adres, postcode, plaats, land, huur, schoonmaak, borg, bron, bericht, aangemaakt) VALUES ('aangevraagd', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'site', ?, ?)")
-    .bind(b.aankomst, b.vertrek, personen, volwassenen, kinderen, leeftijden.join(", "), naam, email, telefoon, adres, postcode, plaats, land, huur, SCHOONMAAK, BORG, bericht, new Date().toISOString()).run();
+  await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, adres, postcode, plaats, land, taal, huur, schoonmaak, borg, bron, bericht, aangemaakt) VALUES ('aangevraagd', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'site', ?, ?)")
+    .bind(b.aankomst, b.vertrek, personen, volwassenen, kinderen, leeftijden.join(", "), naam, email, telefoon, adres, postcode, plaats, land, taal, huur, SCHOONMAAK, BORG, bericht, new Date().toISOString()).run();
 
   const nl = (iso) => `${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)}`;
   const euro = (x) => "€ " + x.toLocaleString("nl-NL");
@@ -52,6 +53,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
     `Naam: ${naam}`,
     `E-mail: ${email}`,
     `Telefoon: ${telefoon || "niet opgegeven"}`,
+    `Taal van de website: ${taal === "en" ? "Engels" : "Nederlands"}`,
     `Adres: ${adresBlok({ adres, postcode, plaats, land }).replace(/\n/g, ", ")}`,
     "",
     `Aankomst: ${nl(b.aankomst)}`,

@@ -22,7 +22,7 @@ export async function db(env) {
   if (!schemaKlaar) {
     await env.DB.batch(SCHEMA.map((s) => env.DB.prepare(s)));
     // Kolommen die later zijn toegevoegd, bijwerken in een bestaande database.
-    const NIEUW = { boekingen: [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"], ["adres", "TEXT"], ["postcode", "TEXT"], ["plaats", "TEXT"], ["land", "TEXT"]], gastenboek: [["sterren", "INTEGER"]] };
+    const NIEUW = { boekingen: [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"], ["adres", "TEXT"], ["postcode", "TEXT"], ["plaats", "TEXT"], ["land", "TEXT"], ["taal", "TEXT"]], gastenboek: [["sterren", "INTEGER"]] };
     for (const [tabel, kolommen] of Object.entries(NIEUW)) {
       const { results } = await env.DB.prepare(`SELECT name FROM pragma_table_info('${tabel}')`).all();
       const aanwezig = new Set(results.map((r) => r.name));

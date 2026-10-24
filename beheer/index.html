@@ -532,6 +532,7 @@ const VIEWS = {
         h("h3", null, b.naam || "Onbekende gast"),
         h("p", null, `${periode(b)} · ${nachten(b.aankomst, b.vertrek)} nachten`),
         h("p", null, gezelschap(b) || "Gezelschap onbekend"),
+        b.taal === "en" ? h("p", { class: "klein-tekst" }, "Gast gebruikte de Engelse website") : null,
         h("p", null, `Indicatie: ${euro(totaal(b))} (huur ${euro(b.huur)}, schoonmaak ${euro(b.schoonmaak)}), borg ${euro(b.borg)}`),
         h("p", { class: "klein-tekst" }, [b.email, b.telefoon].filter(Boolean).join(" · ")),
         b.adres ? h("p", { class: "klein-tekst" }, [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), b.land].filter(Boolean).join(", ")) : null,

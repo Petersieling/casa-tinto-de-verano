@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/taal.js?v=2"></script>
 <meta name="description" content="Vraag een reservering aan voor Casa Tinto de Verano, penthouse met groot dakterras in Punta Prima aan de Costa Blanca.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Casa Tinto de Verano">
@@ -269,7 +270,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 .menu-knop { display: none; font: inherit; font-size: .95rem; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: .35rem 1.1rem; cursor: pointer; }
 .menu-knop:hover { background: var(--panel); color: var(--ink); }
 /* het menu klapt in zodra de onderdelen niet meer op één regel passen */
-@media (max-width: 60rem) {
+@media (max-width: 66rem) {
   .top .wrap { align-items: center; }
   .menu-knop { display: inline-block; }
   .top nav { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: .6rem; }
@@ -503,17 +504,17 @@ vulLanden($("land"), "Nederland"); vulLandnummers($("landnummer"), "NL");
 let nummerZelf = false;
 $("landnummer").addEventListener("change", () => { nummerZelf = true; });
 $("land").addEventListener("change", () => { const c = landcodeVan($("land").value); if (!nummerZelf && c && landnummer(c)) $("landnummer").value = c; });
-const euro = (n) => "€ " + n.toLocaleString("nl-NL");
+const euro = (n) => "€ " + n.toLocaleString((window.ctvLocale || "nl-NL"));
 const iso = (j, m, d) => `${j}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 const nu = new Date();
 const vandaag = iso(nu.getFullYear(), nu.getMonth(), nu.getDate());
-const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "long", year: "numeric" });
+const kort = (s) => new Date(s + "T12:00:00").toLocaleDateString((window.ctvLocale || "nl-NL"), { weekday: "short", day: "numeric", month: "long", year: "numeric" });
 const kwhPrijs = "€ " + KWH_PRIJS.toFixed(2).replace(".", ",");
 function stroomTekst(el, a, v) {
-  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(a, v).toLocaleString("nl-NL") + " kWh inbegrepen" }),
+  el.replaceChildren("Elektriciteit: ", Object.assign(document.createElement("strong"), { textContent: kwhInbegrepen(a, v).toLocaleString((window.ctvLocale || "nl-NL")) + " kWh inbegrepen" }),
     " bij dit verblijf. Verbruik je meer, dan betaal je bij het uitchecken ", Object.assign(document.createElement("strong"), { textContent: kwhPrijs + " per kWh" }), " extra.");
 }
-const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const lang = (s) => new Date(s + "T12:00:00").toLocaleDateString((window.ctvLocale || "nl-NL"), { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
 // ---- Beschikbaarheid ----
 let bezet = [], online = false;
@@ -610,7 +611,7 @@ function openDk(veld) {
 }
 function tekenDk() {
   const eerste = new Date(dkJaar, dkMaand, 1), blok = $("dk-dagen"), aank = leesDatum("aankomst"), nuGekozen = leesDatum(dkVeld);
-  $("dk-titel").textContent = eerste.toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
+  $("dk-titel").textContent = eerste.toLocaleDateString((window.ctvLocale || "nl-NL"), { month: "long", year: "numeric" });
   blok.replaceChildren();
   for (const d of ["ma", "di", "wo", "do", "vr", "za", "zo"]) { const b = document.createElement("b"); b.textContent = d; blok.append(b); }
   for (let i = (eerste.getDay() + 6) % 7; i > 0; i--) blok.append(document.createElement("i"));
@@ -666,7 +667,7 @@ $("aanvraag").addEventListener("submit", async (e) => {
   if (voornaam.length < 1) { status.textContent = "Vul je voornaam in."; $("voornaam").focus(); return; }
   if (achternaam.length < 2) { status.textContent = "Vul je achternaam in."; $("achternaam").focus(); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = "Vul een geldig e-mailadres in."; $("email").focus(); return; }
-  if (eigen.replace(/\D/g, "").length < 6) { status.textContent = "Vul je telefoonnummer in, met landnummer als je buiten Nederland woont."; $("telefoon").focus(); return; }
+  if (eigen.replace(/\D/g, "").length < 6) { status.textContent = "Vul je telefoonnummer in."; $("telefoon").focus(); return; }
   const adres = $("adres").value.trim(), postcode = $("postcode").value.trim(), plaats = $("plaats").value.trim(), land = $("land").value.trim();
   if (adres.length < 3) { status.textContent = "Vul je straat en huisnummer in."; $("adres").focus(); return; }
   if (postcode.length < 3) { status.textContent = "Vul je postcode in."; $("postcode").focus(); return; }
@@ -678,7 +679,7 @@ $("aanvraag").addEventListener("submit", async (e) => {
   try {
     const r = await fetch("/api/aanvraag", {
       method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, voornaam, achternaam, email, telefoon, adres, postcode, plaats, land, bericht: $("bericht").value, website: $("website").value })
+      body: JSON.stringify({ ...per, volwassenen: g.volwassenen, kinderen: g.kinderen, leeftijden: g.leeftijden, akkoord: true, taal: window.ctvTaal || "nl", voornaam, achternaam, email, telefoon, adres, postcode, plaats, land, bericht: $("bericht").value, website: $("website").value })
     });
     const data = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(data.fout || "Versturen lukte niet. Stuur je aanvraag per e-mail naar info@casatintodeverano.com.");
