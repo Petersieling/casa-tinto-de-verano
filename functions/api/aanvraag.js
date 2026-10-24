@@ -1,4 +1,4 @@
-import { db, json, veilig, vandaag, ipVan, tekst, teVaak, noteerPoging, overlapt, stuurMelding, Melding } from "../../src/lib.js";
+import { db, json, veilig, vandaag, ipVan, tekst, teVaak, noteerPoging, overlapt, stuurMelding, Melding, adresBlok } from "../../src/lib.js";
 import { isDatum, nachten, huurprijs, SCHOONMAAK, BORG, MIN_NACHTEN, MAX_PERSONEN } from "../../src/prijzen.js";
 
 // Openbaar: een bezoeker vraagt een reservering aan. Die is pas definitief na bevestiging in het beheer.
@@ -11,6 +11,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   const voornaam = tekst(b.voornaam, 50), achternaam = tekst(b.achternaam, 50);
   const naam = voornaam || achternaam ? `${voornaam} ${achternaam}`.trim() : tekst(b.naam, 100);
   const email = tekst(b.email, 150), telefoon = tekst(b.telefoon, 40), bericht = tekst(b.bericht, 1500);
+  const adres = tekst(b.adres, 120), postcode = tekst(b.postcode, 15), plaats = tekst(b.plaats, 60), land = tekst(b.land, 40);
   const volwassenen = Math.trunc(+b.volwassenen), kinderen = Math.trunc(+b.kinderen);
   const leeftijden = Array.isArray(b.leeftijden) ? b.leeftijden.map((l) => Math.trunc(+l)) : [];
   const personen = volwassenen + kinderen;
@@ -19,6 +20,10 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   if (b.akkoord !== true) throw new Melding("Ga akkoord met de huurvoorwaarden om je aanvraag te versturen.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Melding("Vul een geldig e-mailadres in.");
   if (telefoon.replace(/\D/g, "").length < 8) throw new Melding("Vul je telefoonnummer in.");
+  if (adres.length < 3) throw new Melding("Vul je straat en huisnummer in.");
+  if (postcode.length < 3) throw new Melding("Vul je postcode in.");
+  if (plaats.length < 2) throw new Melding("Vul je woonplaats in.");
+  if (land.length < 2) throw new Melding("Vul je land in.");
   if (!(volwassenen >= 1)) throw new Melding("Geef aan met hoeveel volwassenen je komt.");
   if (!(kinderen >= 0) || b.kinderen === "" || b.kinderen == null) throw new Melding("Geef aan met hoeveel kinderen je komt. Kies 0 als er geen kinderen meekomen.");
   if (personen > MAX_PERSONEN) throw new Melding(`Het penthouse is voor maximaal ${MAX_PERSONEN} personen.`);
@@ -35,8 +40,8 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   await noteerPoging(d, "aanvraag", ip);
 
   const huur = huurprijs(b.aankomst, b.vertrek);
-  await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, huur, schoonmaak, borg, bron, bericht, aangemaakt) VALUES ('aangevraagd', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'site', ?, ?)")
-    .bind(b.aankomst, b.vertrek, personen, volwassenen, kinderen, leeftijden.join(", "), naam, email, telefoon, huur, SCHOONMAAK, BORG, bericht, new Date().toISOString()).run();
+  await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, adres, postcode, plaats, land, huur, schoonmaak, borg, bron, bericht, aangemaakt) VALUES ('aangevraagd', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'site', ?, ?)")
+    .bind(b.aankomst, b.vertrek, personen, volwassenen, kinderen, leeftijden.join(", "), naam, email, telefoon, adres, postcode, plaats, land, huur, SCHOONMAAK, BORG, bericht, new Date().toISOString()).run();
 
   const nl = (iso) => `${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)}`;
   const euro = (x) => "€ " + x.toLocaleString("nl-NL");
@@ -47,6 +52,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
     `Naam: ${naam}`,
     `E-mail: ${email}`,
     `Telefoon: ${telefoon || "niet opgegeven"}`,
+    `Adres: ${adresBlok({ adres, postcode, plaats, land }).replace(/\n/g, ", ")}`,
     "",
     `Aankomst: ${nl(b.aankomst)}`,
     `Vertrek: ${nl(b.vertrek)}`,

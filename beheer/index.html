@@ -477,6 +477,7 @@ const VIEWS = {
         h("p", null, gezelschap(b) || "Gezelschap onbekend"),
         h("p", null, `Indicatie: ${euro(totaal(b))} (huur ${euro(b.huur)}, schoonmaak ${euro(b.schoonmaak)}), borg ${euro(b.borg)}`),
         h("p", { class: "klein-tekst" }, [b.email, b.telefoon].filter(Boolean).join(" · ")),
+        b.adres ? h("p", { class: "klein-tekst" }, [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), b.land].filter(Boolean).join(", ")) : null,
         b.bericht ? h("p", { class: "bericht" }, b.bericht) : null,
         h("p", { class: "klein-tekst" }, "Ontvangen op " + new Date(b.aangemaakt).toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" })),
         h("div", { class: "acties" },

@@ -1,4 +1,4 @@
-import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Melding } from "../../../src/lib.js";
+import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Melding, adresBlok } from "../../../src/lib.js";
 import { maakGastmail } from "../../../src/gastmail.js";
 import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../../../src/prijzen.js";
 
@@ -30,11 +30,15 @@ async function volgendNummer(d, datum) {
 async function klantVoor(d, boeking) {
   if (boeking.klant_id) return boeking.klant_id;
   if (boeking.email) {
-    const k = await d.prepare("SELECT id FROM klanten WHERE lower(email) = lower(?)").bind(boeking.email).first();
-    if (k) return k.id;
+    const k = await d.prepare("SELECT id, adres FROM klanten WHERE lower(email) = lower(?)").bind(boeking.email).first();
+    if (k) {
+      // Bekende klant zonder adres: het adres uit de aanvraag overnemen.
+      if (!k.adres && adresBlok(boeking)) await d.prepare("UPDATE klanten SET adres = ? WHERE id = ?").bind(adresBlok(boeking), k.id).run();
+      return k.id;
+    }
   }
-  const r = await d.prepare("INSERT INTO klanten (naam, email, telefoon, aangemaakt) VALUES (?, ?, ?, ?)")
-    .bind(boeking.naam || "Onbekende gast", boeking.email || "", boeking.telefoon || "", new Date().toISOString()).run();
+  const r = await d.prepare("INSERT INTO klanten (naam, email, telefoon, adres, aangemaakt) VALUES (?, ?, ?, ?, ?)")
+    .bind(boeking.naam || "Onbekende gast", boeking.email || "", boeking.telefoon || "", adresBlok(boeking), new Date().toISOString()).run();
   return r.meta.last_row_id;
 }
 
@@ -225,7 +229,7 @@ export const onRequest = veilig(async ({ request, env, params }) => {
       : `${v} ${v === 1 ? "volwassene" : "volwassenen"}` + (k ? `, ${k} ${k === 1 ? "kind" : "kinderen"}${bo.leeftijden ? ` (${bo.leeftijden} jaar)` : ""}` : ", geen kinderen");
     const gegevens = {
       afzender: ins, gezelschap, stroom, personen: (bo.volwassenen == null && bo.kinderen == null) ? (bo.personen || 0) : v + k, termijnen, verblijf_adres: ins.verblijf_adres || "",
-      klant: { naam: klant?.naam || bo.naam, adres: klant?.adres || "", email: klant?.email || bo.email || "" },
+      klant: { naam: klant?.naam || bo.naam, adres: klant?.adres || adresBlok(bo), email: klant?.email || bo.email || "" },
       regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek
     };
     await d.prepare("INSERT INTO facturen (nummer, boeking_id, datum, gegevens, totaal) VALUES (?, ?, ?, ?, ?)").bind(nummer, bo.id, datum, JSON.stringify(gegevens), totaal).run();

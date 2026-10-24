@@ -21,7 +21,7 @@ export async function db(env) {
   if (!schemaKlaar) {
     await env.DB.batch(SCHEMA.map((s) => env.DB.prepare(s)));
     // Kolommen die later zijn toegevoegd, bijwerken in een bestaande database.
-    const NIEUW = { boekingen: [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"]], gastenboek: [["sterren", "INTEGER"]] };
+    const NIEUW = { boekingen: [["volwassenen", "INTEGER"], ["kinderen", "INTEGER"], ["leeftijden", "TEXT"], ["adres", "TEXT"], ["postcode", "TEXT"], ["plaats", "TEXT"], ["land", "TEXT"]], gastenboek: [["sterren", "INTEGER"]] };
     for (const [tabel, kolommen] of Object.entries(NIEUW)) {
       const { results } = await env.DB.prepare(`SELECT name FROM pragma_table_info('${tabel}')`).all();
       const aanwezig = new Set(results.map((r) => r.name));
@@ -48,6 +48,8 @@ export const veilig = (fn) => async (ctx) => {
 export const vandaag = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Madrid" }).format(new Date());
 export const ipVan = (request) => request.headers.get("CF-Connecting-IP") || "onbekend";
 export const tekst = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
+// Adres van een boeking als blok voor de factuur: straat, postcode en plaats, land.
+export const adresBlok = (b) => [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), b.land].filter(Boolean).join("\n");
 export const getal = (v) => (Number.isFinite(+v) && +v >= 0 ? Math.round(+v * 100) / 100 : 0);
 
 // Telt pogingen per IP-adres, tegen spam en tegen het raden van het wachtwoord.
