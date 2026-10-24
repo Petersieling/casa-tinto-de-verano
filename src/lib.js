@@ -49,8 +49,17 @@ export const veilig = (fn) => async (ctx) => {
 export const vandaag = () => new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Madrid" }).format(new Date());
 export const ipVan = (request) => request.headers.get("CF-Connecting-IP") || "onbekend";
 export const tekst = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
-// Adres van een boeking als blok voor de factuur: straat, postcode en plaats, land.
-export const adresBlok = (b) => [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), b.land].filter(Boolean).join("\n");
+// Adres van een boeking als blok voor de factuur, in de vorm die in dat land gebruikelijk is.
+// Meeste landen: straat / postcode plaats / land. Brits en Iers: straat / plaats / postcode / land.
+// Noord-Amerika en Oceanië: straat / plaats postcode / land.
+const PLAATS_DAN_POSTCODE_REGEL = ["Verenigd Koninkrijk", "Ierland", "Guernsey", "Jersey", "Isle of Man", "Gibraltar"];
+const PLAATS_DAN_POSTCODE = ["Verenigde Staten", "Canada", "Australië", "Nieuw-Zeeland"];
+export const adresBlok = (b) => {
+  const r = PLAATS_DAN_POSTCODE_REGEL.includes(b.land) ? [b.adres, b.plaats, b.postcode, b.land]
+    : PLAATS_DAN_POSTCODE.includes(b.land) ? [b.adres, [b.plaats, b.postcode].filter(Boolean).join(" "), b.land]
+    : [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), b.land];
+  return r.filter(Boolean).join("\n");
+};
 export const getal = (v) => (Number.isFinite(+v) && +v >= 0 ? Math.round(+v * 100) / 100 : 0);
 
 // Telt pogingen per IP-adres, tegen spam en tegen het raden van het wachtwoord.

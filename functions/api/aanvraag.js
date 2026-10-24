@@ -22,7 +22,7 @@ export const onRequestPost = veilig(async ({ request, env, waitUntil }) => {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Melding("Vul een geldig e-mailadres in.");
   if (telefoon.replace(/\D/g, "").length < 8) throw new Melding("Vul je telefoonnummer in.");
   if (adres.length < 3) throw new Melding("Vul je straat en huisnummer in.");
-  if (postcode.length < 3) throw new Melding("Vul je postcode in.");
+  if (postcode.length < 2 && b.zonderPostcode !== true) throw new Melding("Vul je postcode in.");
   if (plaats.length < 2) throw new Melding("Vul je woonplaats in.");
   if (land.length < 2) throw new Melding("Vul je land in.");
   if (!(volwassenen >= 1)) throw new Melding("Geef aan met hoeveel volwassenen je komt.");

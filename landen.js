@@ -35,3 +35,18 @@ window.vulLandnummers = function (sel, code) {
 };
 window.landnummer = function (code) { var r = LANDEN.find(function (x) { return x[0] === code; }); return r ? r[3] : ""; };
 window.landcodeVan = function (naam) { var r = LANDEN.find(function (x) { return x[1] === naam; }); return r ? r[0] : ""; };
+
+// Landen zonder postcode: daar is het veld niet verplicht.
+window.ZONDER_POSTCODE = ["AE","AG","AO","AW","BF","BI","BJ","BO","BS","BW","BZ","CD","CF","CG","CI","CK","CM","DJ","DM","ER","FJ","GA","GD","GH","GM","GQ","GY","HK","KI","KM","KN","KP","LY","ML","MO","MR","MW","NR","NU","QA","RW","SB","SC","SL","SR","ST","SY","TG","TK","TL","TO","TV","UG","VU","YE","ZW"];
+// Voorbeeld van een postcode per land, als hulp in het veld.
+window.POSTCODE_VOORBEELD = { NL: "1234 AB", BE: "1000", DE: "10115", GB: "SW1A 1AA", ES: "03189", FR: "75001", IT: "00100", PT: "1000-001", AT: "1010", CH: "8001", LU: "L-1009", DK: "1050", SE: "111 22", NO: "0150", FI: "00100", PL: "00-001", IE: "D02 X285", US: "12345", CA: "K1A 0B1", AU: "2000", NZ: "6011", CZ: "110 00", HU: "1051", GR: "105 57", RO: "010011", SK: "811 01", SI: "1000", HR: "10000", BG: "1000", LT: "LT-01100", LV: "LV-1010", EE: "10111", IS: "101", MT: "VLT 1117", CY: "1010", TR: "34000", IL: "6100000", ZA: "0001", BR: "01000-000", MX: "01000", AR: "C1000", JP: "100-0001", CN: "100000", IN: "110001", RU: "101000", UA: "01001", MA: "10000", SG: "018956", KR: "03000" };
+// Past het postcodeveld aan het gekozen land aan: voorbeeld in het veld en wel of niet verplicht.
+window.zetPostcodeVeld = function (invoer, labelTekst, landNaam) {
+  var c = landcodeVan(landNaam);
+  var zonder = ZONDER_POSTCODE.indexOf(c) >= 0;
+  invoer.placeholder = POSTCODE_VOORBEELD[c] || "";
+  invoer.required = !zonder;
+  invoer.dataset.zonder = zonder ? "1" : "";
+  if (labelTekst) labelTekst.textContent = zonder ? "Postcode (niet nodig in dit land)" : "Postcode";
+  return zonder;
+};

@@ -1415,7 +1415,7 @@ Straat en huisnummer
 Street and house number
 
 Postcode
-Postcode
+Postal code
 
 Woonplaats
 Town or city
@@ -1606,3 +1606,6 @@ Play video
 
 verzorgt onze mailbox info@casatintodeverano.com. Mails die je ons stuurt, staan daar.
 provides our mailbox info@casatintodeverano.com. Emails you send us are stored there.
+
+Postcode (niet nodig in dit land)
+Postal code (not needed in this country)
