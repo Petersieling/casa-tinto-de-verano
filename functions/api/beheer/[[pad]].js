@@ -4,7 +4,8 @@ import { zorgVoorLinks, dagelijks, linkVoor } from "../../../src/registratie.js"
 import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../../../src/prijzen.js";
 
 // Beheer-API: boekingen, blokkades, klanten, facturen en instellingen. Alleen bereikbaar na inloggen.
-const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst", "verblijf_adres"];
+const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst", "btw_regel_en", "betaal_tekst_en", "verblijf_adres"];
+const datumEn = (iso) => new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 const datumNl = (iso) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 
 // Volwassenen en kinderen uit het formulier; het totaal wordt het aantal personen.
@@ -68,7 +69,7 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
       boekingen: bo.results,
       klanten: kl.results,
       gastenboek: gb.results,
-      registraties: Object.fromEntries(rg.results.map((r) => [r.boeking_id, { ...r, link: linkVoor(r.token) }])),
+      registraties: Object.fromEntries(rg.results.map((r) => [r.boeking_id, { ...r, link: linkVoor(r.token, (bo.results.find((x) => x.id === r.boeking_id) || {}).taal) }])),
       facturen: fa.results.map((f) => ({ ...f, gegevens: JSON.parse(f.gegevens || "{}") })),
       instellingen: Object.fromEntries(ins.results.map((r) => [r.sleutel, r.waarde])),
       agendaUrl: `${u.origin}/api/agenda?sleutel=${await agendaSleutel(env)}`,
@@ -89,7 +90,7 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
     const aan = tekst(b.aan, 200), onderwerp = tekst(b.onderwerp, 200), inhoud = String(b.tekst || "").slice(0, 10000);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(aan)) throw new Melding("Het mailadres van de gast klopt niet.");
     if (!onderwerp || !inhoud.trim()) throw new Melding("Vul een onderwerp en een bericht in.");
-    const { html, text } = maakGastmail(inhoud);
+    const { html, text } = maakGastmail(inhoud, b.taal);
     const kopie = env.MAIL_KOPIE || env.MELDING_EMAIL;
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -117,10 +118,10 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
       } else klantId = await klantVoor(d, gast);
     }
     const g = leesGezelschap(b);
-    const r = await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, klant_id, huur, schoonmaak, borg, betaald, bron, notitie, aangemaakt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'handmatig', ?, ?)")
+    const r = await d.prepare("INSERT INTO boekingen (status, aankomst, vertrek, personen, volwassenen, kinderen, leeftijden, naam, email, telefoon, klant_id, huur, schoonmaak, borg, betaald, bron, notitie, taal, aangemaakt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 'handmatig', ?, ?, ?)")
       .bind(blokkade ? "geblokkeerd" : "bevestigd", b.aankomst, b.vertrek, blokkade ? null : g.personen, blokkade ? null : g.volwassenen, blokkade ? null : g.kinderen, blokkade ? "" : g.leeftijden,
         blokkade ? "" : gast.naam, blokkade ? "" : gast.email, blokkade ? "" : gast.telefoon, klantId,
-        blokkade ? 0 : getal(b.huur), blokkade ? 0 : getal(b.schoonmaak), blokkade ? 0 : getal(b.borg), tekst(b.notitie, 1000), new Date().toISOString()).run();
+        blokkade ? 0 : getal(b.huur), blokkade ? 0 : getal(b.schoonmaak), blokkade ? 0 : getal(b.borg), tekst(b.notitie, 1000), b.taal === "en" ? "en" : "nl", new Date().toISOString()).run();
     return json({ ok: true, id: r.meta.last_row_id });
   }
 
@@ -146,9 +147,9 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
       const actief = huidig.status === "bevestigd" || huidig.status === "geblokkeerd";
       if (actief && (await overlapt(d, b.aankomst, b.vertrek, id))) throw new Melding("Deze periode overlapt met een andere boeking of blokkade.", 409);
       const g = leesGezelschap(b);
-      await d.prepare("UPDATE boekingen SET aankomst = ?, vertrek = ?, personen = ?, volwassenen = ?, kinderen = ?, leeftijden = ?, naam = ?, email = ?, telefoon = ?, huur = ?, schoonmaak = ?, borg = ?, betaald = ?, notitie = ? WHERE id = ?")
+      await d.prepare("UPDATE boekingen SET aankomst = ?, vertrek = ?, personen = ?, volwassenen = ?, kinderen = ?, leeftijden = ?, naam = ?, email = ?, telefoon = ?, huur = ?, schoonmaak = ?, borg = ?, betaald = ?, notitie = ?, taal = ? WHERE id = ?")
         .bind(b.aankomst, b.vertrek, g.personen, g.volwassenen, g.kinderen, g.leeftijden, tekst(b.naam, 100), tekst(b.email, 150), tekst(b.telefoon, 40),
-          getal(b.huur), getal(b.schoonmaak), getal(b.borg), b.betaald ? 1 : 0, tekst(b.notitie, 1000), id).run();
+          getal(b.huur), getal(b.schoonmaak), getal(b.borg), b.betaald ? 1 : 0, tekst(b.notitie, 1000), b.taal === "en" ? "en" : "nl", id).run();
       return json({ ok: true });
     }
 
@@ -193,10 +194,12 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
     if (og.gecrediteerd) throw new Melding(`Deze factuur is al gecrediteerd met ${og.gecrediteerd}.`, 409);
     const datum = vandaag(), nummer = await volgendNummer(d, datum);
     const gegevens = {
-      soort: "credit", credit_van: origineel.nummer, afzender: og.afzender, klant: og.klant, borg: 0,
+      soort: "credit", credit_van: origineel.nummer, afzender: og.afzender, klant: og.klant, borg: 0, taal: og.taal || "nl",
       aankomst: og.aankomst, vertrek: og.vertrek,
       regels: (og.regels || []).map((r) => ({ omschrijving: r.omschrijving, bedrag: -r.bedrag })),
-      betaling: `Creditfactuur bij factuur ${origineel.nummer} van ${datumNl(origineel.datum)}.\nWat je al hebt betaald, wordt verrekend of teruggestort.`
+      betaling: og.taal === "en"
+        ? `Credit note for invoice ${origineel.nummer} of ${datumEn(origineel.datum)}.\nAnything you have already paid will be settled or refunded.`
+        : `Creditfactuur bij factuur ${origineel.nummer} van ${datumNl(origineel.datum)}.\nWat je al hebt betaald, wordt verrekend of teruggestort.`
     };
     await d.batch([
       d.prepare("INSERT INTO facturen (nummer, boeking_id, datum, gegevens, totaal) VALUES (?, NULL, ?, ?, ?)").bind(nummer, datum, JSON.stringify(gegevens), -origineel.totaal),
@@ -215,32 +218,44 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
     const datum = vandaag();
     const nummer = await volgendNummer(d, datum);
     const n = nachten(bo.aankomst, bo.vertrek);
-    const regels = [{ omschrijving: `Huur Casa Tinto de Verano, ${datumNl(bo.aankomst)} t/m ${datumNl(bo.vertrek)} (${n} nachten)`, bedrag: bo.huur || 0 }];
-    if (bo.schoonmaak) regels.push({ omschrijving: "Eindschoonmaak", bedrag: bo.schoonmaak });
-    if (bo.borg) regels.push({ omschrijving: `Borg (terug binnen ${BORG_TERUG_DAGEN} dagen na vertrek, na controle van het penthouse)`, bedrag: bo.borg });
+    // Een Engelstalige gast krijgt de factuur in het Engels.
+    const en = bo.taal === "en", dt = en ? datumEn : datumNl;
+    const regels = [{ omschrijving: en ? `Rent Casa Tinto de Verano, ${dt(bo.aankomst)} to ${dt(bo.vertrek)} (${n} nights)` : `Huur Casa Tinto de Verano, ${dt(bo.aankomst)} t/m ${dt(bo.vertrek)} (${n} nachten)`, bedrag: bo.huur || 0 }];
+    if (bo.schoonmaak) regels.push({ omschrijving: en ? "Final cleaning" : "Eindschoonmaak", bedrag: bo.schoonmaak });
+    if (bo.borg) regels.push({ omschrijving: en ? `Security deposit (refunded within ${BORG_TERUG_DAGEN} days after departure, after inspection of the penthouse)` : `Borg (terug binnen ${BORG_TERUG_DAGEN} dagen na vertrek, na controle van het penthouse)`, bedrag: bo.borg });
     const totaal = regels.reduce((s, r) => s + r.bedrag, 0);
-    const euro = (n) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" }).format(n);
+    const euro = (n) => new Intl.NumberFormat(en ? "en-GB" : "nl-NL", { style: "currency", currency: "EUR" }).format(n);
     const aanbetaling = Math.round(((bo.huur || 0) + (bo.schoonmaak || 0)) * AANBETALING);
     const uiterlijk = naarIso(naarTijd(bo.aankomst) - RESTANT_DAGEN * 864e5);
-    const betaling = uiterlijk <= datum
-      ? `Je verblijf begint binnen ${RESTANT_DAGEN / 7} weken. Graag het volledige bedrag van ${euro(totaal)} direct overmaken.`
-      : `Aanbetaling: ${euro(aanbetaling)} binnen 7 dagen na deze factuur.\nRestant inclusief borg: ${euro(totaal - aanbetaling)} uiterlijk op ${datumNl(uiterlijk)}.`;
+    const betaling = en
+      ? (uiterlijk <= datum
+        ? `Your stay begins within ${RESTANT_DAGEN / 7} weeks. Please transfer the full amount of ${euro(totaal)} straight away.`
+        : `Down payment: ${euro(aanbetaling)} within 7 days of this invoice.\nBalance including security deposit: ${euro(totaal - aanbetaling)} no later than ${dt(uiterlijk)}.`)
+      : (uiterlijk <= datum
+        ? `Je verblijf begint binnen ${RESTANT_DAGEN / 7} weken. Graag het volledige bedrag van ${euro(totaal)} direct overmaken.`
+        : `Aanbetaling: ${euro(aanbetaling)} binnen 7 dagen na deze factuur.\nRestant inclusief borg: ${euro(totaal - aanbetaling)} uiterlijk op ${dt(uiterlijk)}.`);
     // Inbegrepen elektriciteit voor dit verblijf, met het tarief voor meerverbruik.
-    const stroom = `Elektriciteit: ${kwhInbegrepen(bo.aankomst, bo.vertrek)} kWh inbegrepen bij dit verblijf. Meerverbruik € ${KWH_PRIJS.toFixed(2).replace(".", ",")} per kWh, bij vertrek verrekend met de borg.`;
+    const kwh = kwhInbegrepen(bo.aankomst, bo.vertrek);
+    const stroom = en
+      ? `Electricity: ${kwh} kWh included in this stay. Additional use €${KWH_PRIJS.toFixed(2)} per kWh, settled with the security deposit on departure.`
+      : `Elektriciteit: ${kwh} kWh inbegrepen bij dit verblijf. Meerverbruik € ${KWH_PRIJS.toFixed(2).replace(".", ",")} per kWh, bij vertrek verrekend met de borg.`;
     // Betaaltermijnen als losse regels, zodat de factuur ze overzichtelijk kan tonen.
     const binnenZeven = naarIso(naarTijd(datum) + 7 * 864e5);
     const termijnen = uiterlijk <= datum
-      ? [{ omschrijving: "Volledig bedrag, inclusief borg", wanneer: "Direct na ontvangst van deze factuur", bedrag: totaal }]
-      : [{ omschrijving: `Aanbetaling (${Math.round(AANBETALING * 100)}%)`, wanneer: `Uiterlijk ${datumNl(binnenZeven)}`, bedrag: aanbetaling },
-         { omschrijving: "Restant en borg", wanneer: `Uiterlijk ${datumNl(uiterlijk)}`, bedrag: totaal - aanbetaling }];
+      ? [{ omschrijving: en ? "Full amount, including security deposit" : "Volledig bedrag, inclusief borg", wanneer: en ? "Immediately on receipt of this invoice" : "Direct na ontvangst van deze factuur", bedrag: totaal }]
+      : [{ omschrijving: en ? `Down payment (${Math.round(AANBETALING * 100)}%)` : `Aanbetaling (${Math.round(AANBETALING * 100)}%)`, wanneer: en ? `By ${dt(binnenZeven)}` : `Uiterlijk ${dt(binnenZeven)}`, bedrag: aanbetaling },
+         { omschrijving: en ? "Balance and security deposit" : "Restant en borg", wanneer: en ? `By ${dt(uiterlijk)}` : `Uiterlijk ${dt(uiterlijk)}`, bedrag: totaal - aanbetaling }];
     // Gezelschap zoals bij de boeking opgegeven, bijvoorbeeld "2 volwassenen, 1 kind (6 jaar)".
     const v = bo.volwassenen || 0, k = bo.kinderen || 0;
     const gezelschap = bo.volwassenen == null && bo.kinderen == null
-      ? (bo.personen ? `${bo.personen} personen` : "")
-      : `${v} ${v === 1 ? "volwassene" : "volwassenen"}` + (k ? `, ${k} ${k === 1 ? "kind" : "kinderen"}${bo.leeftijden ? ` (${bo.leeftijden} jaar)` : ""}` : ", geen kinderen");
+      ? (bo.personen ? (en ? `${bo.personen} people` : `${bo.personen} personen`) : "")
+      : en
+        ? `${v} ${v === 1 ? "adult" : "adults"}` + (k ? `, ${k} ${k === 1 ? "child" : "children"}${bo.leeftijden ? ` (aged ${bo.leeftijden})` : ""}` : ", no children")
+        : `${v} ${v === 1 ? "volwassene" : "volwassenen"}` + (k ? `, ${k} ${k === 1 ? "kind" : "kinderen"}${bo.leeftijden ? ` (${bo.leeftijden} jaar)` : ""}` : ", geen kinderen");
     const gegevens = {
+      taal: en ? "en" : "nl",
       afzender: ins, gezelschap, stroom, personen: (bo.volwassenen == null && bo.kinderen == null) ? (bo.personen || 0) : v + k, termijnen, verblijf_adres: ins.verblijf_adres || "",
-      klant: { naam: klant?.naam || bo.naam, adres: klant?.adres || adresBlok(bo), email: klant?.email || bo.email || "" },
+      klant: { naam: klant?.naam || bo.naam, adres: en && bo.adres ? adresBlok(bo, "en") : (klant?.adres || adresBlok(bo)), email: klant?.email || bo.email || "" },
       regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek
     };
     await d.prepare("INSERT INTO facturen (nummer, boeking_id, datum, gegevens, totaal) VALUES (?, ?, ?, ?, ?)").bind(nummer, bo.id, datum, JSON.stringify(gegevens), totaal).run();

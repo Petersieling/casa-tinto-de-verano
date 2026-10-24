@@ -4,10 +4,10 @@ const SITE = "https://www.casatintodeverano.com";
 const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const linkjes = (t) => t.replace(/https?:\/\/[^\s<]+[^\s<.,;:!?)]/g, (u) => `<a href="${u}" style="color:#8A6016;">${u}</a>`);
 
-const HANDTEKENING_TEKST = "Met vriendelijke groet,\n\nCasa Tinto de Verano\nPenthouse in Punta Prima · Costa Blanca\ninfo@casatintodeverano.com\nwww.casatintodeverano.com\nInstagram: casa_tinto_de_verano";
+const HANDTEKENING_TEKST = (en) => (en ? "Kind regards," : "Met vriendelijke groet,") + "\n\nCasa Tinto de Verano\nPenthouse in Punta Prima · Costa Blanca\ninfo@casatintodeverano.com\nwww.casatintodeverano.com\nInstagram: casa_tinto_de_verano";
 
-const HANDTEKENING_HTML = `
-<p style="margin:24px 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#3A2315;">Met vriendelijke groet,</p>
+const HANDTEKENING_HTML = (en) => `
+<p style="margin:24px 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#3A2315;">${en ? "Kind regards," : "Met vriendelijke groet,"}</p>
 <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Georgia,'Times New Roman',serif;color:#3A2315;">
   <tr>
     <td style="padding:0 16px 0 0;vertical-align:middle;"><img src="${SITE}/mail/logo.jpg" width="90" height="111" alt="Casa Tinto de Verano" style="display:block;width:90px;height:111px;border:0;"></td>
@@ -26,14 +26,15 @@ const HANDTEKENING_HTML = `
   </tr>
 </table>`;
 
-export function maakGastmail(tekst) {
+export function maakGastmail(tekst, taal) {
+  const en = taal === "en";
   const alineas = tekst.trim().split(/\n\s*\n/).map((a) =>
     `<p style="margin:0 0 14px;">${linkjes(esc(a.trim())).replace(/\n/g, "<br>")}</p>`).join("\n");
-  const html = `<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+  const html = `<!doctype html><html lang="${en ? "en" : "nl"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#ffffff;">
 <div style="max-width:600px;padding:20px 16px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;color:#3A2315;">
 ${alineas}
-${HANDTEKENING_HTML}
+${HANDTEKENING_HTML(en)}
 </div></body></html>`;
-  return { html, text: tekst.trim() + "\n\n" + HANDTEKENING_TEKST };
+  return { html, text: tekst.trim() + "\n\n" + HANDTEKENING_TEKST(en) };
 }

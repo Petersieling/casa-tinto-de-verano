@@ -1,4 +1,5 @@
 // Gedeelde hulpfuncties voor de serverkant (Cloudflare Pages Functions).
+import { landNaam } from "./landen.js";
 const KOP = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" };
 export const json = (data, status = 200, extra = {}) => new Response(JSON.stringify(data), { status, headers: { ...KOP, ...extra } });
 export const fout = (tekst, status = 400) => json({ fout: tekst }, status);
@@ -54,10 +55,11 @@ export const tekst = (v, max) => (typeof v === "string" ? v.trim().slice(0, max)
 // Noord-Amerika en Oceanië: straat / plaats postcode / land.
 const PLAATS_DAN_POSTCODE_REGEL = ["Verenigd Koninkrijk", "Ierland", "Guernsey", "Jersey", "Isle of Man", "Gibraltar"];
 const PLAATS_DAN_POSTCODE = ["Verenigde Staten", "Canada", "Australië", "Nieuw-Zeeland"];
-export const adresBlok = (b) => {
-  const r = PLAATS_DAN_POSTCODE_REGEL.includes(b.land) ? [b.adres, b.plaats, b.postcode, b.land]
-    : PLAATS_DAN_POSTCODE.includes(b.land) ? [b.adres, [b.plaats, b.postcode].filter(Boolean).join(" "), b.land]
-    : [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), b.land];
+export const adresBlok = (b, taal) => {
+  const land = taal ? landNaam(b.land, taal) : b.land;
+  const r = PLAATS_DAN_POSTCODE_REGEL.includes(b.land) ? [b.adres, b.plaats, b.postcode, land]
+    : PLAATS_DAN_POSTCODE.includes(b.land) ? [b.adres, [b.plaats, b.postcode].filter(Boolean).join(" "), land]
+    : [b.adres, [b.postcode, b.plaats].filter(Boolean).join(" "), land];
   return r.filter(Boolean).join("\n");
 };
 export const getal = (v) => (Number.isFinite(+v) && +v >= 0 ? Math.round(+v * 100) / 100 : 0);

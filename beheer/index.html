@@ -231,8 +231,18 @@ function h(tag, attrs, ...kids) {
   return el;
 }
 const euro = (n) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" }).format(n || 0);
+window.euroNl = euro;
 const datum = (iso, lang) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: lang ? "long" : "short", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
+window.datumNl = datum;
 const periode = (b) => `${datum(b.aankomst)} t/m ${datum(b.vertrek)}`;
+// Voor gasten die de Engelse website gebruikten: datums, bedragen en gezelschap in het Engels.
+const euroEn = (n) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "EUR" }).format(n || 0);
+const datumEn = (iso) => new Intl.DateTimeFormat("en-GB", { weekday: undefined, day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
+function gezelschapEn(b) {
+  if (b.volwassenen == null && b.kinderen == null) return b.personen ? `${b.personen} people` : "";
+  const v = b.volwassenen || 0, k = b.kinderen || 0;
+  return `${v} ${v === 1 ? "adult" : "adults"}` + (k ? `, ${k} ${k === 1 ? "child" : "children"}` + (b.leeftijden ? ` (aged ${b.leeftijden})` : "") : ", no children");
+}
 // "2 volwassenen, 1 kind (6 jaar)"; bij oudere boekingen alleen het aantal personen.
 function gezelschap(b) {
   if (b.volwassenen == null && b.kinderen == null) return b.personen ? `${b.personen} personen` : "";
@@ -376,6 +386,7 @@ function boekingFormulier(b, nieuw) {
     { naam: "schoonmaak", label: "Eindschoonmaak (€)", type: "number", groep: "gast" },
     { naam: "borg", label: "Borg (€)", type: "number", groep: "gast" },
     !nieuw && { naam: "betaald", label: "Betaald", type: "checkbox", groep: "gast" },
+    { naam: "taal", label: "Taal van mails en factuur", type: "select", opties: [["nl", "Nederlands"], ["en", "Engels"]], groep: "gast" },
     { naam: "notitie", label: "Notitie (alleen voor jou)", type: "textarea", breed: true }
   ].filter(Boolean);
   const blok = !nieuw && b.status === "geblokkeerd";
@@ -417,7 +428,9 @@ function gegevensAlinea(b) {
   const r = (D.registraties || {})[b.id];
   if (!r || r.ingevuld) return "";
   const uiterlijk = new Date(b.aankomst + "T12:00:00"); uiterlijk.setDate(uiterlijk.getDate() - 7);
-  const wanneer = uiterlijk.toISOString().slice(0, 10) > D.vandaag ? `uiterlijk ${datum(uiterlijk.toISOString().slice(0, 10), true)}` : "zo snel mogelijk";
+  const op = uiterlijk.toISOString().slice(0, 10) > D.vandaag;
+  if (b.taal === "en") return `Guest details\nSpanish law requires us to report the details of everyone staying in the penthouse to the authorities. Please fill them in ${op ? `no later than ${datumEn(uiterlijk.toISOString().slice(0, 10))}` : "as soon as possible"} via your personal link:\n${r.link}\nPlease have the passports or identity cards to hand.\n\n`;
+  const wanneer = op ? `uiterlijk ${datum(uiterlijk.toISOString().slice(0, 10), true)}` : "zo snel mogelijk";
   return `Gegevens van de gasten\nDe Spaanse wet verplicht ons de gegevens van iedereen die in het penthouse verblijft door te geven aan de overheid. Vul ze ${wanneer} in via je persoonlijke link:\n${r.link}\nHoud daarvoor de paspoorten of identiteitskaarten bij de hand.\n\n`;
 }
 
@@ -465,7 +478,30 @@ async function toonGastgegevens(b) {
   dlg.showModal();
 }
 
+function mailInhoudEn(b, soort) {
+  const aanbetaling = Math.round(totaal(b) * AANBETALING);
+  const uiterlijk = new Date(b.aankomst + "T12:00:00"); uiterlijk.setDate(uiterlijk.getDate() - RESTANT_DAGEN);
+  const uiterlijkIso = uiterlijk.toISOString().slice(0, 10), kort = uiterlijkIso <= D.vandaag;
+  const site = "https://www.casatintodeverano.com";
+  const betalen = kort
+    ? "You will receive the invoice shortly. As your arrival is within 8 weeks, you pay the full amount and the security deposit straight after receiving the invoice."
+    : `You will receive the invoice shortly. The down payment of ${euroEn(aanbetaling)} (30% of the rent and final cleaning) is due within 7 days of the invoice. The balance and the security deposit are due no later than ${datumEn(uiterlijkIso)}.`;
+  const voorwaarden = b.bron === "site"
+    ? `With your request you agreed to our rental terms. You can read them again at ${site}/huurvoorwaarden?lang=en`
+    : `By paying ${kort ? "the invoice" : "the down payment"} you agree to our rental terms. You can read them at ${site}/huurvoorwaarden?lang=en`;
+  const groet = `Dear ${b.naam || "guest"},\n\n`;
+  const tekst = soort === "bevestig"
+    ? `${groet}Your booking at Casa Tinto de Verano is confirmed.\n\nArrival: ${datumEn(b.aankomst)} (check-in from 3 pm)\nDeparture: ${datumEn(b.vertrek)} (check-out before 10 am)\nGuests: ${gezelschapEn(b)}\nOnly these guests may stay overnight in the penthouse. For an extra person who was not stated, we charge €50 per night. If there are more than 4 people, we may require all guests to leave the penthouse immediately, without a refund of the rent and the final cleaning (article 3 of the rental terms).\n\n` +
+      `Check-in and check-out\nA few days before your arrival, and no later than 24 hours beforehand, our contact person in Punta Prima will get in touch to arrange a time for check-in. Our contact person will give you the key, show you around the penthouse and be your point of contact during your stay. You also arrange check-out with our contact person.\n\n` +
+      `${gegevensAlinea(b)}Rent: ${euroEn(b.huur)}\nFinal cleaning: ${euroEn(b.schoonmaak)}\nTotal: ${euroEn(totaal(b))}\nSecurity deposit: ${euroEn(b.borg)}\n\n` +
+      `Electricity: ${kwhInbegrepen(b.aankomst, b.vertrek)} kWh is included in your stay. If you use more, you pay €${KWH_PRIJS.toFixed(2)} per kWh, which we settle with the security deposit on departure.\n\n` +
+      `Payment\n${betalen}\n\n${voorwaarden}\n\nIf you have any questions, just let us know. We look forward to welcoming you in Punta Prima.\n\n`
+    : `${groet}Thank you for your request for Casa Tinto de Verano from ${datumEn(b.aankomst)} to ${datumEn(b.vertrek)}. Unfortunately we are unable to reserve this period for you.\n\nPerhaps another period suits you? You can see the available dates at ${site}/prijzen?lang=en\n\nWe hope to welcome you in Punta Prima another time.\n\n`;
+  const onderwerp = soort === "bevestig" ? "Booking confirmation Casa Tinto de Verano" : "Your request for Casa Tinto de Verano";
+  return { onderwerp, tekst };
+}
 function mailInhoud(b, soort) {
+  if (b.taal === "en") return mailInhoudEn(b, soort);
   const groet = `Beste ${b.naam || "gast"},\n\n`;
   // Betaaltermijnen zoals in de huurvoorwaarden: aanbetaling binnen 7 dagen, restant en borg uiterlijk 8 weken voor aankomst.
   const aanbetaling = Math.round(totaal(b) * AANBETALING);
@@ -498,11 +534,11 @@ function openMail(b, soort) {
   if (!b.email) return;
   const inhoud = mailInhoud(b, soort);
   if (!D.mailVersturen) return openMailprogramma(b, inhoud);
-  formulier(soort === "bevestig" ? "Bevestiging aan " + (b.naam || "de gast") : "Afwijzing aan " + (b.naam || "de gast"), [
+  formulier((soort === "bevestig" ? "Bevestiging aan " : "Afwijzing aan ") + (b.naam || "de gast") + (b.taal === "en" ? " (in het Engels)" : ""), [
     { naam: "onderwerp", label: "Onderwerp", breed: true },
     { naam: "tekst", label: "Bericht (je handtekening met logo komt er vanzelf onder)", type: "textarea", rijen: 16, breed: true }
   ], { onderwerp: inhoud.onderwerp, tekst: inhoud.tekst.trim() },
-  (w) => api("beheer/mail", "POST", { aan: b.email, onderwerp: w.onderwerp, tekst: w.tekst }).then(() => alert("De mail is verstuurd naar " + b.email + ". Een kopie staat in je eigen inbox.")),
+  (w) => api("beheer/mail", "POST", { aan: b.email, onderwerp: w.onderwerp, tekst: w.tekst, taal: b.taal }).then(() => alert("De mail is verstuurd naar " + b.email + ". Een kopie staat in je eigen inbox.")),
   (inv, form) => {
     form.querySelector("[type=submit]").textContent = "Versturen";
     const annuleer = form.querySelector(".onder .licht");
@@ -586,7 +622,7 @@ const VIEWS = {
       const f = factuurVan[b.id], gast = b.status === "geblokkeerd" ? (b.notitie || "Geblokkeerd") : (b.naam || "");
       return h("tr", null,
         h("td", null, periode(b), h("div", { class: "klein-tekst" }, `${nachten(b.aankomst, b.vertrek)} nachten`)),
-        h("td", null, gast, b.status !== "geblokkeerd" && gezelschap(b) ? h("div", { class: "klein-tekst" }, gezelschap(b)) : null, b.status === "bevestigd" ? regStatus(b) : null),
+        h("td", null, gast, b.status !== "geblokkeerd" && gezelschap(b) ? h("div", { class: "klein-tekst" }, gezelschap(b)) : null, b.status === "bevestigd" ? regStatus(b) : null, b.taal === "en" && b.status !== "geblokkeerd" ? h("div", { class: "klein-tekst" }, "Engelstalig") : null),
         h("td", null, h("span", { class: "pil " + b.status }, STATUS[b.status])),
         h("td", { class: "bedrag" }, b.status === "geblokkeerd" ? "" : euro(totaal(b))),
         h("td", null, b.status === "bevestigd" ? h("button", { type: "button", class: "pil " + (b.betaald ? "betaald" : "open"), style: "border:0;cursor:pointer", title: "Klik om te wisselen",
@@ -675,9 +711,11 @@ const VIEWS = {
       ["afzender_naam", "Je naam (afzender op de factuur)"], ["afzender_adres", "Je adres", true], ["afzender_email", "E-mail"], ["afzender_telefoon", "Telefoon"],
       ["afzender_nummer", "Fiscaal nummer (bijvoorbeeld NIE of NIF), als dat op de factuur moet"], ["iban", "IBAN"], ["iban_naam", "Rekening op naam van"],
       ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true],
+      ["btw_regel_en", "Btw-regel op een Engelse factuur", true], ["betaal_tekst_en", "Betaalinstructie onderaan een Engelse factuur", true],
       ["verblijf_adres", "Adres van het penthouse (komt alleen op de factuur, niet op de website)", true]
     ];
-    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Bedankt voor je reservering. We wensen je een fijn verblijf." };
+    const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Bedankt voor je reservering. We wensen je een fijn verblijf.",
+      btw_regel_en: "Rental exempt from IVA (Spanish VAT).", betaal_tekst_en: "Thank you for your booking. We wish you a wonderful stay." };
     const inv = {};
     const form = h("form", { style: "display:grid;gap:1rem;max-width:44rem", onsubmit: async (e) => {
       e.preventDefault();
@@ -700,6 +738,16 @@ const VIEWS = {
 // ---- Factuur tonen en afdrukken ----
 function toonFactuur(f) {
   const g = f.gegevens, a = g.afzender || {};
+  // Engelse factuur voor een Engelstalige gast: vaste woorden, datums en bedragen in het Engels.
+  const EN = g.taal === "en";
+  const W = { Creditfactuur: "Credit note", Factuur: "Invoice", Nummer: "Number", Datum: "Date", Van: "From", Aan: "To", "Verblijf in Casa Tinto de Verano": "Stay at Casa Tinto de Verano",
+    Gezelschap: "Guests", Omschrijving: "Description", Bedrag: "Amount", Totaal: "Total", Betaling: "Payment", "Overmaken naar": "Transfer to", IBAN: "IBAN", "Ten name van": "Account holder",
+    Toelichting: "Notes", "Hoort bij": "Relates to", "t/m": "to" };
+  const T = (t) => (EN && W[t]) || t;
+  const euro = EN ? euroEn : window.euroNl;
+  const datum = (iso, lang) => EN ? datumEn(iso) : window.datumNl(iso, lang);
+  const btwRegel = EN ? (a.btw_regel_en || a.btw_regel) : a.btw_regel;
+  const betaalTekst = EN ? (a.betaal_tekst_en || a.betaal_tekst) : a.betaal_tekst;
   const regelTekst = (...delen) => delen.filter(Boolean).join("\n");
   // Lege onderdelen (null) overslaan, anders verschijnt het woord "null" op de factuur.
   const vul = (el, ...delen) => el.replaceChildren(...delen.flat().filter((d) => d != null && d !== false));
@@ -707,48 +755,50 @@ function toonFactuur(f) {
     h("div", { class: "f-kop" },
       h("img", { src: "logo.webp?v=3", alt: "Casa Tinto de Verano", width: 420, height: 520 }),
       h("div", { class: "f-titel" },
-        h("h1", { style: g.soort === "credit" ? "font-size:1.9rem;letter-spacing:.14em;margin-right:-.14em" : "" }, g.soort === "credit" ? "Creditfactuur" : "Factuur"),
-        h("dl", null, h("dt", null, "Nummer"), h("dd", null, f.nummer), h("dt", null, "Datum"), h("dd", null, datum(f.datum, true))))),
+        h("h1", { style: g.soort === "credit" ? "font-size:1.9rem;letter-spacing:.14em;margin-right:-.14em" : "" }, g.soort === "credit" ? T("Creditfactuur") : T("Factuur")),
+        h("dl", null, h("dt", null, T("Nummer")), h("dd", null, f.nummer), h("dt", null, T("Datum")), h("dd", null, datum(f.datum, true))))),
     h("div", { class: "f-partijen" },
-      h("div", null, h("p", { class: "label" }, "Van"), h("p", { class: "f-naam" }, a.afzender_naam || ""),
+      h("div", null, h("p", { class: "label" }, T("Van")), h("p", { class: "f-naam" }, a.afzender_naam || ""),
         h("p", null, regelTekst(a.afzender_adres, a.afzender_email, a.afzender_telefoon, a.afzender_nummer))),
-      h("div", null, h("p", { class: "label" }, "Aan"), h("p", { class: "f-naam" }, g.klant?.naam || ""),
+      h("div", null, h("p", { class: "label" }, T("Aan")), h("p", { class: "f-naam" }, g.klant?.naam || ""),
         h("p", null, regelTekst(g.klant?.adres, g.klant?.email)))),
-    g.aankomst && g.vertrek ? h("p", { class: "f-verblijf" }, "Verblijf in Casa Tinto de Verano", h("span", null, "♥"),
-      `${datum(g.aankomst, true)} t/m ${datum(g.vertrek, true)}`) : null,
+    g.aankomst && g.vertrek ? h("p", { class: "f-verblijf" }, T("Verblijf in Casa Tinto de Verano"), h("span", null, "♥"),
+      `${datum(g.aankomst, true)} ${T("t/m")} ${datum(g.vertrek, true)}`) : null,
     g.verblijf_adres ? h("p", { class: "f-adres" }, g.verblijf_adres.replace(/\s*\n\s*/g, ", ")) : null,
     g.gezelschap && g.soort !== "credit" ? h("div", { class: "f-gezelschap" },
-      h("p", { class: "label" }, "Gezelschap"),
+      h("p", { class: "label" }, T("Gezelschap")),
       h("p", { class: "f-gez-wie" }, g.gezelschap),
-      h("p", { class: "f-gez-noot" }, g.personen
+      h("p", { class: "f-gez-noot" }, EN
+        ? (g.personen ? `This booking is for ${g.personen} ${g.personen === 1 ? "person" : "people"}. No more people may stay overnight.` : "Only the stated guests may stay overnight in the penthouse.")
+        : g.personen
         ? `Deze reservering geldt voor ${g.personen} ${g.personen === 1 ? "persoon" : "personen"}. Meer personen mogen er niet overnachten.`
         : "Alleen de opgegeven personen mogen in het penthouse overnachten.")) : null,
     h("table", null,
-      h("thead", null, h("tr", null, h("th", null, "Omschrijving"), h("th", { class: "bedrag" }, "Bedrag"))),
+      h("thead", null, h("tr", null, h("th", null, T("Omschrijving")), h("th", { class: "bedrag" }, T("Bedrag")))),
       h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
-      h("tfoot", null, h("tr", null, h("td", null, "Totaal"), h("td", { class: "bedrag" }, euro(f.totaal))))),
+      h("tfoot", null, h("tr", null, h("td", null, T("Totaal")), h("td", { class: "bedrag" }, euro(f.totaal))))),
     g.stroom && g.soort !== "credit" ? h("p", { class: "f-stroom" }, g.stroom) : null,
     g.termijnen && g.soort !== "credit"
       ? h("div", { class: "f-betaling" },
-          h("div", null, h("p", { class: "label" }, "Betaling"),
+          h("div", null, h("p", { class: "label" }, T("Betaling")),
             h("div", { class: "f-termijnen" }, g.termijnen.map((t) => h("div", { class: "f-termijn" },
               h("div", null, h("p", { class: "f-t-wat" }, t.omschrijving), h("p", { class: "f-t-wanneer" }, t.wanneer)),
               h("p", { class: "f-t-bedrag" }, euro(t.bedrag)))))),
-          h("div", { class: "f-over" }, h("p", { class: "label" }, "Overmaken naar"),
+          h("div", { class: "f-over" }, h("p", { class: "label" }, T("Overmaken naar")),
             h("dl", null,
               a.iban ? [h("dt", null, "IBAN"), h("dd", { class: "f-iban" }, a.iban)] : null,
-              a.iban_naam ? [h("dt", null, "Ten name van"), h("dd", null, a.iban_naam)] : null,
-              h("dt", null, "Omschrijving"), h("dd", { class: "f-ref" }, f.nummer))))
+              a.iban_naam ? [h("dt", null, T("Ten name van")), h("dd", null, a.iban_naam)] : null,
+              h("dt", null, EN ? "Reference" : "Omschrijving"), h("dd", { class: "f-ref" }, f.nummer))))
       : h("div", { class: "f-betaling" },
-          h("div", null, h("p", { class: "label" }, g.soort === "credit" ? "Toelichting" : "Betaling"),
-            h("p", null, regelTekst(g.betaling, g.borg ? `Daarnaast te voldoen: borg ${euro(g.borg)}.` : "", g.soort === "credit" ? "" : a.betaal_tekst))),
+          h("div", null, h("p", { class: "label" }, g.soort === "credit" ? T("Toelichting") : T("Betaling")),
+            h("p", null, regelTekst(g.betaling, g.borg ? (EN ? `Also payable: security deposit ${euro(g.borg)}.` : `Daarnaast te voldoen: borg ${euro(g.borg)}.`) : "", g.soort === "credit" ? "" : betaalTekst))),
           g.soort === "credit"
-            ? h("div", null, h("p", { class: "label" }, "Hoort bij"), h("p", null, `Factuur ${g.credit_van}`))
-            : h("div", null, h("p", { class: "label" }, "Overmaken naar"),
-              h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `Ten name van: ${a.iban_naam}` : "", `Onder vermelding van: ${f.nummer}`)))),
-    g.termijnen && g.soort !== "credit" && a.betaal_tekst ? h("p", { class: "f-betaaltekst" }, a.betaal_tekst) : null,
+            ? h("div", null, h("p", { class: "label" }, T("Hoort bij")), h("p", null, `${T("Factuur")} ${g.credit_van}`))
+            : h("div", null, h("p", { class: "label" }, T("Overmaken naar")),
+              h("p", null, regelTekst(a.iban ? `IBAN: ${a.iban}` : "", a.iban_naam ? `${T("Ten name van")}: ${a.iban_naam}` : "", `${EN ? "Reference" : "Onder vermelding van"}: ${f.nummer}`)))),
+    g.termijnen && g.soort !== "credit" && betaalTekst ? h("p", { class: "f-betaaltekst" }, betaalTekst) : null,
     h("div", { class: "f-voet" },
-      a.btw_regel ? h("p", null, a.btw_regel) : null,
+      btwRegel ? h("p", null, btwRegel) : null,
       h("p", { class: "f-slogan" }, "Your place under the sun"),
       h("p", null, "Casa Tinto de Verano · Punta Prima · Costa Blanca")));
   $("#factuurlaag").hidden = false;

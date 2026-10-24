@@ -16,7 +16,7 @@ export const VERWANTSCHAP = [["kind", "Kind"], ["kleinkind", "Kleinkind"], ["bro
 
 const dagenTussen = (van, tot) => Math.round((Date.parse(tot + "T12:00:00Z") - Date.parse(van + "T12:00:00Z")) / 864e5);
 const nlDatum = (iso) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
-export const linkVoor = (token) => `${SITE}/gasten?t=${token}`;
+export const linkVoor = (token, taal) => `${SITE}/gasten?t=${token}${taal === "en" ? "&lang=en" : ""}`;
 
 function nieuwToken() {
   const b = new Uint8Array(24); crypto.getRandomValues(b);
@@ -77,8 +77,8 @@ export function leesGasten(invoer, boeking) {
 }
 
 // ---- Herinneringen en wissen, hooguit een paar keer per dag ----
-async function verstuur(env, aan, onderwerp, tekst) {
-  const { html, text } = maakGastmail(tekst);
+async function verstuur(env, aan, onderwerp, tekst, taal) {
+  const { html, text } = maakGastmail(tekst, taal);
   const kopie = env.MAIL_KOPIE || env.MELDING_EMAIL;
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -90,6 +90,12 @@ async function verstuur(env, aan, onderwerp, tekst) {
 }
 
 export function herinneringTekst(b, token, dagen) {
+  if (b.taal === "en") {
+    const when = dagen <= 1 ? "Tomorrow" : `In ${dagen} days`;
+    return `Dear ${b.naam || "guest"},\n\n${when} you will be arriving at Casa Tinto de Verano in Punta Prima. We are looking forward to it!\n\n` +
+      `We have not yet received the details of the guests. Spanish law requires us to report everyone staying in the penthouse to the authorities. Could you fill them in via your personal link?\n${linkVoor(token, "en")}\n\n` +
+      `It only takes a few minutes. Please have the passports or identity cards of all guests to hand.\n\nThank you in advance!`;
+  }
   const wanneer = dagen <= 1 ? "Morgen" : `Over ${dagen} dagen`;
   return `Beste ${b.naam || "gast"},\n\n${wanneer} kom je naar Casa Tinto de Verano in Punta Prima. We kijken ernaar uit!\n\n` +
     `We hebben de gegevens van de gasten nog niet ontvangen. De Spaanse wet verplicht ons die van iedereen die in het penthouse verblijft door te geven aan de overheid. Wil je ze invullen via je persoonlijke link?\n${linkVoor(token)}\n\n` +
@@ -114,7 +120,7 @@ export async function dagelijks(env, d) {
 
     if (!env.RESEND_API_KEY || !env.MAIL_VAN) return;
     const { results } = await d.prepare(
-      "SELECT b.id, b.naam, b.email, b.aankomst, r.token, r.aangemaakt, r.herinnerd1, r.herinnerd2 FROM boekingen b JOIN registraties r ON r.boeking_id = b.id " +
+      "SELECT b.id, b.naam, b.email, b.aankomst, b.taal, r.token, r.aangemaakt, r.herinnerd1, r.herinnerd2 FROM boekingen b JOIN registraties r ON r.boeking_id = b.id " +
       "WHERE b.status = 'bevestigd' AND b.aankomst > ? AND r.ingevuld IS NULL AND b.email != ''"
     ).bind(dag).all();
     for (const b of results) {
@@ -124,7 +130,8 @@ export async function dagelijks(env, d) {
       if (dagen <= HERINNERING_2 && !b.herinnerd2 && !kort && !(b.herinnerd1 && dagenTussen(b.herinnerd1, dag) < 2)) kolom = "herinnerd2";
       else if (dagen <= HERINNERING_1 && dagen > HERINNERING_2 && !b.herinnerd1 && !kort) kolom = "herinnerd1";
       if (!kolom) continue;
-      if (await verstuur(env, b.email, "Herinnering: gegevens van de gasten voor Casa Tinto de Verano", herinneringTekst(b, b.token, dagen))) {
+      const onderwerp = b.taal === "en" ? "Reminder: guest details for Casa Tinto de Verano" : "Herinnering: gegevens van de gasten voor Casa Tinto de Verano";
+      if (await verstuur(env, b.email, onderwerp, herinneringTekst(b, b.token, dagen), b.taal)) {
         await d.prepare(`UPDATE registraties SET ${kolom} = ? WHERE boeking_id = ?`).bind(dag, b.id).run();
       }
     }
