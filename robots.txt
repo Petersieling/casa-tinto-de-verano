@@ -3,4 +3,4 @@ Disallow: /beheer/
 Disallow: /api/
 Disallow: /mail/
 
-Sitemap: https://casa-tinto-de-verano.pages.dev/sitemap.xml
+Sitemap: https://www.casatintodeverano.com/sitemap.xml
