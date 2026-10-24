@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Gegevens van de gasten doorgeven voor je verblijf in Casa Tinto de Verano.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Gegevens van de gasten · Casa Tinto de Verano</title>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+/* Layout: de boog uit het logo keert terug als vorm; brede rustige kolom, prijslijst als seizoenslijn met balken op schaal. */
+:root {
+  --paper: #FDFAF5;
+  --panel: #F7EFE0;
+  --ink: #3A2315;
+  --muted: #7B6552;
+  --gold: #B98A2E;
+  --gold-text: #8A6016;
+  --gold-soft: #F3DDB0;
+  --line: #E6D8BE;
+  --orange: #D6731B;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+  --body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+a { color: var(--gold-text); }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--orange); outline-offset: 2px;
+}
+.wrap { max-width: 68rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+/* kop */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1.5rem; padding-block: .7rem; }
+.brand { font-family: var(--display); font-weight: 600; font-size: 1.25rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: .7rem; }
+.brand img { height: 2.6rem; width: auto; mix-blend-mode: multiply; flex: none; }
+@media (max-width: 24rem) { .top .brand { font-size: .8rem; letter-spacing: .04em; gap: .45rem; } .top .brand img { height: 2.1rem; } .top .menu-knop { padding: .3rem .75rem; } }
+.top nav { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+.top nav a { color: var(--ink); text-decoration: none; font-size: .95rem; padding-block: .15rem; border-bottom: 1px solid transparent; }
+.top nav a:hover { border-bottom-color: var(--gold); }
+
+/* hero */
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; padding-block: clamp(2rem, 6vw, 4.5rem); }
+.eyebrow { font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1rem; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.15rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); }
+h3 { font-size: 1.45rem; }
+.script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.25em; line-height: 1; }
+.lead { font-size: 1.2rem; max-width: 34rem; margin: 1.25rem 0 0; color: var(--ink); }
+.facts { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin: 2rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid var(--line); list-style: none; }
+.facts li { display: flex; flex-direction: column; }
+.facts b { font-family: var(--display); font-weight: 600; font-size: 1.9rem; line-height: 1.1; }
+.facts span { font-size: .85rem; color: var(--muted); }
+.cta { display: inline-block; margin-top: 2rem; background: var(--ink); color: var(--paper); text-decoration: none; padding: .8rem 1.5rem; border-radius: 999px; font-weight: 500; }
+.cta:hover { background: var(--gold-text); }
+.crest { justify-self: center; width: min(100%, 26rem); }
+.crest img { display: block; width: 100%; height: auto; mix-blend-mode: multiply; -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent); mask-composite: intersect; }
+
+/* secties */
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.band { background: var(--panel); border-block: 1px solid var(--line); }
+.head { max-width: 40rem; margin-bottom: 2rem; }
+.head p { color: var(--muted); margin: .75rem 0 0; }
+
+.rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
+.rooms ul { list-style: none; margin: 1rem 0 0; padding: 0; }
+.rooms li { padding: .7rem 0; border-top: 1px solid var(--line); }
+.rooms li small { display: block; color: var(--muted); font-size: .9rem; }
+
+/* prijslijst */
+.prices { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.tablebox { min-width: 0; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+caption { text-align: left; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding-bottom: .6rem; }
+th, td { padding: .7rem .75rem; border-top: 1px solid var(--line); text-align: left; font-weight: 400; }
+thead th { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+td.amt, th.amt { text-align: right; white-space: nowrap; font-weight: 600; }
+td.bar { width: 38%; }
+td.bar i { display: block; height: .5rem; border-radius: 999px; background: var(--gold); }
+tr.peak th, tr.peak td { background: var(--gold-soft); }
+tr.peak td.bar i { background: var(--orange); }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+/* rekenhulp */
+.calc { background: var(--paper); border: 1px solid var(--gold); border-radius: 10rem 10rem .75rem .75rem; padding: 3.25rem clamp(1.1rem, 3vw, 1.75rem) 1.5rem; min-width: 0; }
+.calc h3 { text-align: center; }
+.calc .sub { text-align: center; color: var(--muted); font-size: .9rem; margin: .4rem 0 1.25rem; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .9rem; }
+.fields label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
+.fields .wide { grid-column: 1 / -1; }
+select, input[type="date"] { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .55rem .6rem; width: 100%; min-width: 0; }
+.sum { margin: 1.25rem 0 0; font-variant-numeric: tabular-nums; }
+.sum div { display: flex; justify-content: space-between; gap: 1rem; padding: .45rem 0; border-top: 1px solid var(--line); }
+.sum dt { color: var(--muted); }
+.sum dd { margin: 0; white-space: nowrap; }
+.sum .total dt, .sum .total dd { color: var(--ink); font-weight: 600; font-size: 1.15rem; }
+.note { font-size: .85rem; color: var(--muted); margin: .9rem 0 0; }
+
+/* praktisch */
+.terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0 clamp(1.5rem, 4vw, 3rem); margin: 0; }
+.terms div { padding: 1rem 0; border-top: 1px solid var(--line); }
+.terms dt { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); }
+.terms dd { margin: .3rem 0 0; }
+.terms dd b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.2; display: block; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.contact > * { min-width: 0; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 1rem 0 0; }
+.mail span { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; user-select: all; }
+button { font: inherit; cursor: pointer; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .55rem 1.1rem; }
+button:hover { background: var(--gold-text); }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+button.ghost:hover { background: var(--ink); color: var(--paper); }
+.where { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+.where li { padding: .6rem 0; border-top: 1px solid var(--line); }
+.msg { background: var(--panel); border: 1px solid var(--line); border-radius: .5rem; padding: 1rem; margin: 1rem 0; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--body); font-size: .95rem; line-height: 1.55; user-select: all; }
+[role="status"] { font-size: .85rem; color: var(--gold-text); min-height: 1.3em; margin: .5rem 0 0; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2rem; text-align: center; color: var(--muted); font-size: .8rem; letter-spacing: .3em; text-transform: uppercase; }
+
+@media (max-width: 52rem) {
+  .hero .wrap, .prices, .contact { grid-template-columns: minmax(0, 1fr); }
+  .crest { order: -1; width: min(100%, 17rem); }
+  td.bar { display: none; }
+  thead th.bar { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  td.bar i { transition: width .3s; }
+}
+section[id] { scroll-margin-top: 5.5rem; }
+</style>
+<style>
+.reg { max-width: 46rem; margin-inline: auto; }
+.reg .lead { margin-top: 1rem; font-size: 1.1rem; }
+.reg .klein { color: var(--muted); font-size: .95rem; margin: .75rem 0 0; }
+.verblijf { margin: 1.75rem 0 0; padding: 1rem 1.2rem; background: var(--panel); border-radius: .6rem; display: grid; gap: .2rem; }
+.verblijf b { font-weight: 600; }
+.gast { margin-top: 2rem; padding: 1.4rem 1.25rem 1.5rem; border: 1px solid var(--line); border-radius: .8rem; background: #fff; }
+.gast h2 { font-size: 1.6rem; }
+.gast h2 small { font-family: var(--body); font-size: .85rem; color: var(--muted); font-weight: 400; letter-spacing: 0; margin-left: .4rem; }
+.velden { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem 1rem; margin-top: 1rem; }
+.velden .breed { grid-column: 1 / -1; }
+.velden label { display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; color: var(--muted); min-width: 0; }
+.velden input, .velden select { font: inherit; font-size: 1rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: .4rem; padding: .6rem .65rem; width: 100%; min-width: 0; }
+.velden input:focus, .velden select:focus { border-color: var(--gold); outline: none; }
+.vink { flex-direction: row !important; align-items: center; gap: .55rem !important; font-size: .95rem !important; color: var(--ink) !important; }
+.vink input { width: auto; accent-color: var(--ink); }
+.adres[hidden] { display: none; }
+.fout { color: #A3321C; min-height: 1.5em; margin: 1.25rem 0 0; }
+.verstuur { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1rem; }
+.verstuur button { padding: .85rem 1.6rem; font-size: 1rem; }
+.privacy { color: var(--muted); font-size: .88rem; margin-top: 1.5rem; }
+.privacy a { color: var(--gold-text); }
+.klaar { margin-top: 2rem; padding: 1.4rem 1.3rem; border-radius: .8rem; background: var(--panel); }
+.klaar h2 { font-size: 1.8rem; }
+.klaar p { margin: .6rem 0 0; }
+.klaar button { margin-top: 1rem; }
+.melding { margin-top: 2rem; padding: 1.2rem; border-radius: .6rem; background: var(--panel); }
+@media (max-width: 34rem) { .velden { grid-template-columns: minmax(0, 1fr); } .gast { padding: 1.1rem .95rem 1.25rem; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/logo-klein.webp" width="107" height="132" alt="">Casa Tinto de Verano</a>
+  </div>
+</header>
+<main>
+  <section>
+    <div class="wrap reg">
+      <p class="eyebrow">Je verblijf</p>
+      <h1>Gegevens van de <span class="script">gasten</span></h1>
+      <div id="inhoud"><p class="klein">Even geduld…</p></div>
+    </div>
+  </section>
+</main>
+<script>
+(function () {
+  var t = new URLSearchParams(location.search).get("t") || "";
+  var vak = document.getElementById("inhoud"), D = null;
+  function h(tag, attrs) {
+    var el = document.createElement(tag), kids = [].slice.call(arguments, 2);
+    for (var k in attrs || {}) { var v = attrs[k]; if (v == null || v === false) continue;
+      if (k.indexOf("on") === 0) el.addEventListener(k.slice(2), v); else if (k === "class") el.className = v; else if (k in el) el[k] = v; else el.setAttribute(k, v); }
+    kids.flat(9).forEach(function (c) { if (c != null && c !== false) el.append(c.nodeType ? c : String(c)); });
+    return el;
+  }
+  var maanden = ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+  function datum(iso) { var p = iso.split("-"); return +p[2] + " " + maanden[+p[1] - 1] + " " + p[0]; }
+  function leeftijd(geb, op) { if (!geb) return null; var a = geb.split("-").map(Number), b = op.split("-").map(Number); return b[0] - a[0] - (b[1] < a[1] || (b[1] === a[1] && b[2] < a[2]) ? 1 : 0); }
+  function opties(lijst, leeg) { return [h("option", { value: "" }, leeg)].concat(lijst.map(function (o) { return h("option", { value: o[0] }, o[1]); })); }
+
+  function melding(tekst) { vak.replaceChildren(h("div", { class: "melding" }, h("p", null, tekst))); }
+
+  fetch("/api/registratie?t=" + encodeURIComponent(t)).then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.fout || "Er ging iets mis."); return d; }); })
+    .then(function (d) { D = d; d.ingevuld && d.gegevens ? toonKlaar(false) : toonFormulier(); })
+    .catch(function (e) { melding(e.message); });
+
+  function gastBlok(i, g) {
+    g = g || {};
+    var veld = function (naam, label, el, breed) { el.name = naam; el.id = "g" + i + "-" + naam; return h("label", { class: breed ? "breed" : "", for: el.id }, label, el); };
+    var inp = function (naam, waarde, extra) { var el = h("input", Object.assign({ type: "text", value: waarde || "" }, extra || {})); return el; };
+    var sel = function (lijst, leeg, waarde) { var el = h("select", null, opties(lijst, leeg)); el.value = waarde || ""; return el; };
+    var gebEl = inp("geboortedatum", g.geboortedatum, { type: "date", max: new Date().toISOString().slice(0, 10), min: "1900-01-01", required: true });
+    var verwEl = sel(D.keuzes.verwantschap, "Kies…", g.verwantschap);
+    var verw = veld("verwantschap", "Wat is deze gast van gast 1?", verwEl, true);
+    var adres = h("div", { class: "velden breed adres", style: "margin-top:0" },
+      veld("adres", "Straat en huisnummer", inp("adres", g.adres, { autocomplete: i ? "off" : "street-address" }), true),
+      veld("postcode", "Postcode", inp("postcode", g.postcode, { autocomplete: i ? "off" : "postal-code" })),
+      veld("plaats", "Woonplaats", inp("plaats", g.plaats, { autocomplete: i ? "off" : "address-level2" })),
+      veld("land", "Land", inp("land", g.land || (i ? "" : "Nederland"), { autocomplete: i ? "off" : "country-name" }), true));
+    var zelfde = i ? h("input", { type: "checkbox", name: "zelfde_adres", checked: g.zelfde_adres !== false && !g.adres }) : null;
+    function werk() {
+      var l = leeftijd(gebEl.value, D.aankomst);
+      verw.hidden = !(i > 0 && l != null && l < 18);
+      if (zelfde) adres.hidden = zelfde.checked;
+    }
+    gebEl.addEventListener("input", werk); if (zelfde) zelfde.addEventListener("change", werk);
+    var blok = h("fieldset", { class: "gast", style: "min-width:0" },
+      h("h2", null, "Gast " + (i + 1), i === 0 ? h("small", null, "hoofdhuurder") : null),
+      h("div", { class: "velden" },
+        veld("voornaam", "Voornaam (zoals in het paspoort)", inp("voornaam", g.voornaam, { autocomplete: i ? "off" : "given-name" })),
+        veld("achternaam", "Achternaam", inp("achternaam", g.achternaam, { autocomplete: i ? "off" : "family-name" })),
+        veld("geslacht", "Geslacht", sel(D.keuzes.geslachten, "Kies…", g.geslacht)),
+        veld("geboortedatum", "Geboortedatum", gebEl),
+        veld("nationaliteit", "Nationaliteit", inp("nationaliteit", g.nationaliteit || (i ? "" : "Nederlandse"))),
+        veld("document", "Soort document", sel(D.keuzes.documenten, "Kies…", g.document)),
+        veld("documentnummer", "Documentnummer", inp("documentnummer", g.documentnummer, { autocapitalize: "characters", spellcheck: false }), true),
+        verw,
+        i ? h("label", { class: "vink breed" }, zelfde, "Zelfde adres als gast 1") : null,
+        adres));
+    blok.style.border = "1px solid var(--line)";
+    werk();
+    return blok;
+  }
+
+  function toonFormulier() {
+    var bestaand = (D.gegevens && D.gegevens.gasten) || [];
+    var blokken = [];
+    // Gast 1: naam en adres uit de aanvraag alvast invullen, zodat de gast ze niet opnieuw hoeft te typen.
+    if (!bestaand.length) {
+      var delen = (D.naam || "").split(" ");
+      bestaand = [Object.assign({ voornaam: delen[0] || "", achternaam: delen.slice(1).join(" ") }, D.adres || {})];
+    }
+    for (var i = 0; i < D.personen; i++) blokken.push(gastBlok(i, bestaand[i]));
+    var tel = h("input", { type: "tel", id: "tel", value: (D.gegevens && D.gegevens.telefoon) || D.telefoon || "", autocomplete: "tel" });
+    var foutEl = h("p", { class: "fout", role: "alert" });
+    var knop = h("button", { type: "submit" }, D.ingevuld ? "Wijzigingen opslaan" : "Gegevens versturen");
+    var form = h("form", { novalidate: true, onsubmit: function (e) {
+      e.preventDefault(); foutEl.textContent = "";
+      var gasten = blokken.map(function (b) {
+        var o = {}; b.querySelectorAll("input, select").forEach(function (el) { o[el.name] = el.type === "checkbox" ? el.checked : el.value; }); return o;
+      });
+      knop.disabled = true; knop.textContent = "Bezig met versturen…";
+      fetch("/api/registratie", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ t: t, gasten: gasten, telefoon: tel.value }) })
+        .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.fout || "Er ging iets mis."); }); })
+        .then(function () { D.gegevens = { gasten: gasten, telefoon: tel.value }; D.ingevuld = new Date().toISOString(); toonKlaar(true); })
+        .catch(function (err) { foutEl.textContent = err.message; knop.disabled = false; knop.textContent = D.ingevuld ? "Wijzigingen opslaan" : "Gegevens versturen"; });
+    } },
+      h("p", { class: "lead" }, "Fijn dat je komt! De Spaanse wet verplicht ons de gegevens van iedereen die in het penthouse verblijft door te geven aan de overheid. Vul ze hieronder in voor alle " + D.personen + " gasten, uiterlijk " + D.invullenDagen + " dagen voor aankomst."),
+      h("p", { class: "klein" }, "Houd de paspoorten of identiteitskaarten bij de hand. Bij het inchecken kijkt onze contactpersoon even naar de documenten."),
+      h("div", { class: "verblijf" },
+        h("span", null, h("b", null, "Verblijf: "), datum(D.aankomst) + " t/m " + datum(D.vertrek)),
+        h("span", null, h("b", null, "Op naam van: "), D.naam || "")),
+      blokken,
+      h("div", { class: "gast" }, h("h2", null, "Contact"),
+        h("div", { class: "velden" },
+          h("label", { class: "breed", for: "tel" }, "Telefoonnummer van gast 1, ook bereikbaar tijdens je verblijf", tel))),
+      foutEl,
+      h("div", { class: "verstuur" }, knop),
+      h("p", { class: "privacy" }, "We gebruiken deze gegevens alleen om ze door te geven aan de Spaanse overheid, zoals de wet vraagt, en bewaren ze niet langer dan nodig. Lees meer in onze ", h("a", { href: "/privacy" }, "privacyverklaring"), "."));
+    vak.replaceChildren(form);
+  }
+
+  function toonKlaar(net) {
+    var g = D.gegevens.gasten || [];
+    vak.replaceChildren(h("div", { class: "klaar" },
+      h("h2", null, net ? "Bedankt!" : "Je gegevens zijn binnen"),
+      h("p", null, net ? "We hebben de gegevens van alle gasten ontvangen. Je hoeft verder niets te doen." : "De gegevens van de gasten hebben we al ontvangen. Je hoeft verder niets te doen."),
+      h("p", null, "Gasten: " + g.map(function (x) { return x.voornaam + " " + x.achternaam; }).join(", ") + "."),
+      D.wijzigbaar ? h("button", { type: "button", class: "ghost", onclick: toonFormulier }, "Iets wijzigen") : null),
+      h("p", { class: "privacy" }, "Tot ziens in Punta Prima!"));
+  }
+})();
+</script>
+</body>
+</html>

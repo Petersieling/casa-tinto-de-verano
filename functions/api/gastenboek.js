@@ -1,8 +1,11 @@
 import { db, json, veilig, ipVan, tekst, teVaak, noteerPoging, stuurMelding, Melding } from "../../src/lib.js";
+import { dagelijks } from "../../src/registratie.js";
 
 // Openbaar: goedgekeurde berichten tonen.
-export const onRequestGet = veilig(async ({ env }) => {
+export const onRequestGet = veilig(async ({ env, waitUntil }) => {
   const d = await db(env);
+  // Elke paginaweergave toont de sterren onderin; dat is ook het moment voor de herinneringen (hooguit een paar keer per dag).
+  waitUntil(dagelijks(env, d));
   const { results } = await d.prepare("SELECT naam, verblijf, bericht, sterren, aangemaakt FROM gastenboek WHERE zichtbaar = 1 ORDER BY id DESC LIMIT 200").all();
   return json({ berichten: results }, 200, { "cache-control": "public, max-age=60" });
 });

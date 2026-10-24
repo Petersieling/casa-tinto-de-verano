@@ -2,5 +2,6 @@ User-agent: *
 Disallow: /beheer/
 Disallow: /api/
 Disallow: /mail/
+Disallow: /gasten
 
 Sitemap: https://www.casatintodeverano.com/sitemap.xml

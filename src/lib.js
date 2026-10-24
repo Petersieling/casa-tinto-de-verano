@@ -13,6 +13,7 @@ const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS facturen (id INTEGER PRIMARY KEY AUTOINCREMENT, nummer TEXT UNIQUE NOT NULL, boeking_id INTEGER UNIQUE, datum TEXT, gegevens TEXT, totaal REAL)`,
   `CREATE TABLE IF NOT EXISTS instellingen (sleutel TEXT PRIMARY KEY, waarde TEXT)`,
   `CREATE TABLE IF NOT EXISTS pogingen (soort TEXT, ip TEXT, tijd INTEGER)`,
+  `CREATE TABLE IF NOT EXISTS registraties (boeking_id INTEGER PRIMARY KEY, token TEXT UNIQUE NOT NULL, gegevens TEXT, ingevuld TEXT, herinnerd1 TEXT, herinnerd2 TEXT, aangemaakt TEXT)`,
   `CREATE TABLE IF NOT EXISTS gastenboek (id INTEGER PRIMARY KEY AUTOINCREMENT, naam TEXT NOT NULL, verblijf TEXT, bericht TEXT NOT NULL, sterren INTEGER, zichtbaar INTEGER DEFAULT 0, aangemaakt TEXT)`
 ];
 let schemaKlaar = false;

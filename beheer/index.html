@@ -62,6 +62,10 @@ main { padding-block: 1.75rem 4rem; display: grid; gap: 1.5rem; }
 .kaart .bericht { background: var(--panel); border-radius: .4rem; padding: .6rem .75rem; white-space: pre-wrap; font-size: .95rem; }
 .acties { display: flex; flex-wrap: wrap; gap: .4rem; }
 .klein-tekst { font-size: .875rem; color: var(--muted); }
+.gg { width: min(36rem, 100%); } .gg-lijst { display: grid; gap: .75rem; margin-top: .75rem; }
+.gg-gast { border: 1px solid var(--line); border-radius: .5rem; padding: .75rem .9rem; margin-top: .75rem; }
+.gg-gast h3 { font-size: 1.05rem; margin: 0 0 .4rem; }
+.gg dl { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: .2rem .75rem; margin: 0; font-size: .92rem; } .gg dt { color: var(--muted); } .gg dd { margin: 0; overflow-wrap: anywhere; }
 
 /* tabellen */
 .tabel { overflow-x: auto; border: 1px solid var(--line); border-radius: .5rem; background: #fff; }
@@ -408,6 +412,59 @@ function klantFormulier(k) {
 }
 
 // ---- Mail aan de gast ----
+// Alinea over de gastgegevens voor de Spaanse registratie, met de persoonlijke link.
+function gegevensAlinea(b) {
+  const r = (D.registraties || {})[b.id];
+  if (!r || r.ingevuld) return "";
+  const uiterlijk = new Date(b.aankomst + "T12:00:00"); uiterlijk.setDate(uiterlijk.getDate() - 7);
+  const wanneer = uiterlijk.toISOString().slice(0, 10) > D.vandaag ? `uiterlijk ${datum(uiterlijk.toISOString().slice(0, 10), true)}` : "zo snel mogelijk";
+  return `Gegevens van de gasten\nDe Spaanse wet verplicht ons de gegevens van iedereen die in het penthouse verblijft door te geven aan de overheid. Vul ze ${wanneer} in via je persoonlijke link:\n${r.link}\nHoud daarvoor de paspoorten of identiteitskaarten bij de hand. Heb je het nog niet ingevuld, dan sturen we je voor aankomst een herinnering.\n\n`;
+}
+
+// Gastgegevens bekijken, om over te nemen in SES.Hospedajes.
+const KEUZE = { paspoort: "Paspoort", "id-kaart": "Identiteitskaart", nie: "Spaans NIE", dni: "Spaans DNI", man: "Man", vrouw: "Vrouw", anders: "Anders",
+  kind: "Kind", kleinkind: "Kleinkind", "broer-zus": "Broer of zus", "neef-nicht": "Neef of nicht", voogdij: "Onder voogdij" };
+function regStatus(b) {
+  const r = (D.registraties || {})[b.id];
+  if (!r) return null;
+  if (r.ingevuld) return h("div", { class: "klein-tekst", style: "color:var(--ok)" }, "✓ Gastgegevens ingevuld");
+  const h2 = r.herinnerd2 || r.herinnerd1;
+  return h("div", { class: "klein-tekst", style: "color:var(--stop)" }, "Gastgegevens nog niet ingevuld" + (h2 ? ` · herinnerd op ${datum(h2)}` : ""));
+}
+async function toonGastgegevens(b) {
+  const r = (D.registraties || {})[b.id], dlg = $("#dlg");
+  let data = { gegevens: null };
+  try { if (r && r.ingevuld) data = await api("beheer/registratie/" + b.id); } catch (e) { alert(e.message); return; }
+  const g = data.gegevens, eerste = g && g.gasten[0];
+  const regels = (x, i) => [
+    ["Voornaam", x.voornaam], ["Achternaam", x.achternaam], ["Geslacht", KEUZE[x.geslacht]], ["Geboortedatum", alsDatum(x.geboortedatum)],
+    ["Nationaliteit", x.nationaliteit], ["Document", KEUZE[x.document]], ["Documentnummer", x.documentnummer],
+    x.verwantschap ? ["Relatie tot gast 1", KEUZE[x.verwantschap]] : null,
+    ["Adres", x.zelfde_adres ? `${eerste.adres}, ${eerste.postcode} ${eerste.plaats}, ${eerste.land} (zelfde als gast 1)` : `${x.adres}, ${x.postcode} ${x.plaats}, ${x.land}`]
+  ].filter(Boolean);
+  const alsTekst = g ? g.gasten.map((x, i) => `Gast ${i + 1}\n` + regels(x, i).map(([k, v]) => `${k}: ${v}`).join("\n")).join("\n\n") + `\n\nTelefoon: ${g.telefoon}\nE-mail: ${b.email}\nBetaalwijze: overboeking` : "";
+  const status = h("p", { class: "klein-tekst", role: "status" });
+  dlg.replaceChildren(h("div", { class: "gg" },
+    h("h2", null, "Gastgegevens · " + (b.naam || "")),
+    h("p", { class: "uitleg" }, periode(b) + " · " + gezelschap(b)),
+    g ? [
+      h("p", { class: "uitleg" }, `Ingevuld op ${datum(data.ingevuld.slice(0, 10))}. Neem deze gegevens over in SES.Hospedajes, uiterlijk 24 uur na aankomst.`),
+      h("div", { class: "gg-lijst" }, g.gasten.map((x, i) => h("div", { class: "gg-gast" }, h("h3", null, `Gast ${i + 1}`, i === 0 ? " (hoofdhuurder)" : ""),
+        h("dl", null, regels(x, i).flatMap(([k, v]) => [h("dt", null, k), h("dd", null, v)]))))),
+      h("div", { class: "gg-gast" }, h("h3", null, "Contact en betaling"), h("dl", null, h("dt", null, "Telefoon"), h("dd", null, g.telefoon), h("dt", null, "E-mail"), h("dd", null, b.email || ""), h("dt", null, "Betaalwijze"), h("dd", null, "Overboeking")))
+    ] : [
+      h("p", { class: "uitleg" }, "De gast heeft de gegevens nog niet ingevuld. De link staat in de bevestigingsmail. Herinneringen gaan vanzelf: 10 dagen en 4 dagen voor aankomst." +
+        (r && (r.herinnerd1 || r.herinnerd2) ? ` Laatste herinnering: ${datum(r.herinnerd2 || r.herinnerd1)}.` : "")),
+      r ? h("p", null, h("code", { style: "word-break:break-all" }, r.link)) : h("p", { class: "uitleg" }, "Er is nog geen link: de boeking is niet bevestigd.")
+    ],
+    status,
+    h("div", { class: "onder" },
+      h("button", { type: "button", class: "licht", onclick: () => dlg.close() }, "Sluiten"),
+      g ? h("button", { type: "button", onclick: () => navigator.clipboard.writeText(alsTekst).then(() => { status.textContent = "Gekopieerd."; }) }, "Kopieer alles")
+        : r ? h("button", { type: "button", onclick: () => navigator.clipboard.writeText(r.link).then(() => { status.textContent = "Link gekopieerd. Plak hem in een mail of app aan de gast."; }) }, "Kopieer link") : null)));
+  dlg.showModal();
+}
+
 function mailInhoud(b, soort) {
   const groet = `Beste ${b.naam || "gast"},\n\n`;
   // Betaaltermijnen zoals in de huurvoorwaarden: aanbetaling binnen 7 dagen, restant en borg uiterlijk 8 weken voor aankomst.
@@ -423,7 +480,7 @@ function mailInhoud(b, soort) {
     ? `Bij je aanvraag ben je akkoord gegaan met onze huurvoorwaarden. Je kunt ze nog eens nalezen op ${link}`
     : `Met het betalen van ${uiterlijkIso <= D.vandaag ? "de factuur" : "de aanbetaling"} ga je akkoord met onze huurvoorwaarden. Je leest ze op ${link}`;
   const tekst = soort === "bevestig"
-    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nGezelschap: ${gezelschap(b)}\nAlleen dit gezelschap mag in het penthouse overnachten. Voor een extra persoon die niet is opgegeven rekenen we € 50 per nacht. Zijn er meer dan 4 personen, dan mogen we eisen dat alle gasten het penthouse direct verlaten, zonder terugbetaling van de huur en de eindschoonmaak (artikel 3 van de huurvoorwaarden).\n\nInchecken en uitchecken\nEen paar dagen voor je aankomst, en uiterlijk 24 uur van tevoren, neemt onze contactpersoon in Punta Prima contact met je op om een tijd voor het inchecken af te spreken. Onze contactpersoon geeft je de sleutel, laat je het penthouse zien en is tijdens je verblijf je aanspreekpunt. Ook het uitchecken spreek je met onze contactpersoon af.\n\nHuur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nElektriciteit: ${kwhInbegrepen(b.aankomst, b.vertrek)} kWh is inbegrepen bij je verblijf. Verbruik je meer, dan betaal je € ${KWH_PRIJS.toFixed(2).replace(".", ",")} per kWh; dat verrekenen we bij vertrek met de borg.\n\nBetalen\n${betalen}\n\n${voorwaarden}\n\nHeb je nog vragen, dan horen we het graag. We kijken ernaar uit je te verwelkomen in Punta Prima.\n\n`
+    ? `${groet}Je reservering van Casa Tinto de Verano is bevestigd.\n\nAankomst: ${datum(b.aankomst, true)} (inchecken vanaf 15:00)\nVertrek: ${datum(b.vertrek, true)} (uitchecken voor 10:00)\nGezelschap: ${gezelschap(b)}\nAlleen dit gezelschap mag in het penthouse overnachten. Voor een extra persoon die niet is opgegeven rekenen we € 50 per nacht. Zijn er meer dan 4 personen, dan mogen we eisen dat alle gasten het penthouse direct verlaten, zonder terugbetaling van de huur en de eindschoonmaak (artikel 3 van de huurvoorwaarden).\n\nInchecken en uitchecken\nEen paar dagen voor je aankomst, en uiterlijk 24 uur van tevoren, neemt onze contactpersoon in Punta Prima contact met je op om een tijd voor het inchecken af te spreken. Onze contactpersoon geeft je de sleutel, laat je het penthouse zien en is tijdens je verblijf je aanspreekpunt. Ook het uitchecken spreek je met onze contactpersoon af.\n\n${gegevensAlinea(b)}Huur: ${euro(b.huur)}\nEindschoonmaak: ${euro(b.schoonmaak)}\nTotaal: ${euro(totaal(b))}\nBorg: ${euro(b.borg)}\n\nElektriciteit: ${kwhInbegrepen(b.aankomst, b.vertrek)} kWh is inbegrepen bij je verblijf. Verbruik je meer, dan betaal je € ${KWH_PRIJS.toFixed(2).replace(".", ",")} per kWh; dat verrekenen we bij vertrek met de borg.\n\nBetalen\n${betalen}\n\n${voorwaarden}\n\nHeb je nog vragen, dan horen we het graag. We kijken ernaar uit je te verwelkomen in Punta Prima.\n\n`
     : `${groet}Bedankt voor je aanvraag voor Casa Tinto de Verano van ${datum(b.aankomst, true)} t/m ${datum(b.vertrek, true)}. Helaas kunnen we deze periode niet voor je reserveren.\n\nMisschien past een andere periode? De vrije data bekijk je op https://www.casatintodeverano.com/prijzen\n\nWe hopen je in de toekomst alsnog te mogen verwelkomen in Punta Prima.\n\n`;
   const onderwerp = soort === "bevestig" ? "Bevestiging reservering Casa Tinto de Verano" : "Je aanvraag voor Casa Tinto de Verano";
   return { onderwerp, tekst };
@@ -528,7 +585,7 @@ const VIEWS = {
       const f = factuurVan[b.id], gast = b.status === "geblokkeerd" ? (b.notitie || "Geblokkeerd") : (b.naam || "");
       return h("tr", null,
         h("td", null, periode(b), h("div", { class: "klein-tekst" }, `${nachten(b.aankomst, b.vertrek)} nachten`)),
-        h("td", null, gast, b.status !== "geblokkeerd" && gezelschap(b) ? h("div", { class: "klein-tekst" }, gezelschap(b)) : null),
+        h("td", null, gast, b.status !== "geblokkeerd" && gezelschap(b) ? h("div", { class: "klein-tekst" }, gezelschap(b)) : null, b.status === "bevestigd" ? regStatus(b) : null),
         h("td", null, h("span", { class: "pil " + b.status }, STATUS[b.status])),
         h("td", { class: "bedrag" }, b.status === "geblokkeerd" ? "" : euro(totaal(b))),
         h("td", null, b.status === "bevestigd" ? h("button", { type: "button", class: "pil " + (b.betaald ? "betaald" : "open"), style: "border:0;cursor:pointer", title: "Klik om te wisselen",
@@ -537,6 +594,7 @@ const VIEWS = {
           b.status === "bevestigd" && (f ? h("button", { type: "button", class: "klein licht", onclick: () => toonFactuur(f) }, "Factuur " + f.nummer)
             : h("button", { type: "button", class: "klein", onclick: () => doe(() => api("beheer/factuur", "POST", { boeking_id: b.id })) }, "Maak factuur")),
           b.status === "bevestigd" && b.email ? h("button", { type: "button", class: "klein licht", onclick: () => openMail(b, "bevestig") }, "Mail bevestiging") : null,
+          b.status === "bevestigd" && (D.registraties || {})[b.id] ? h("button", { type: "button", class: "klein licht", onclick: () => toonGastgegevens(b) }, "Gastgegevens") : null,
           h("button", { type: "button", class: "klein licht", onclick: () => boekingFormulier(b, false) }, "Bewerken"),
           b.status === "bevestigd" ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Deze boeking annuleren? De periode komt weer vrij op de website.")) doe(() => api(`beheer/boeking/${b.id}/status`, "POST", { status: "geannuleerd" })); } }, "Annuleren") : null,
           b.status !== "bevestigd" ? h("button", { type: "button", class: "klein rood", onclick: () => { if (confirm("Definitief verwijderen?")) doe(() => api("beheer/boeking/" + b.id, "DELETE")); } }, "Verwijderen") : null)));

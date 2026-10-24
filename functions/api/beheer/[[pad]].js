@@ -1,5 +1,6 @@
 import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Melding, adresBlok } from "../../../src/lib.js";
 import { maakGastmail } from "../../../src/gastmail.js";
+import { zorgVoorLinks, dagelijks, linkVoor } from "../../../src/registratie.js";
 import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../../../src/prijzen.js";
 
 // Beheer-API: boekingen, blokkades, klanten, facturen en instellingen. Alleen bereikbaar na inloggen.
@@ -42,7 +43,7 @@ async function klantVoor(d, boeking) {
   return r.meta.last_row_id;
 }
 
-export const onRequest = veilig(async ({ request, env, params }) => {
+export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
   const d = await db(env);
   const m = request.method;
   const [deel, idTekst, actie] = Array.isArray(params.pad) ? params.pad : [params.pad];
@@ -51,12 +52,15 @@ export const onRequest = veilig(async ({ request, env, params }) => {
 
   // ---- Alles in één keer ophalen ----
   if (deel === "overzicht" && m === "GET") {
-    const [bo, kl, fa, ins, gb] = await d.batch([
+    await zorgVoorLinks(d);
+    if (waitUntil) waitUntil(dagelijks(env, d));
+    const [bo, kl, fa, ins, gb, rg] = await d.batch([
       d.prepare("SELECT * FROM boekingen ORDER BY aankomst"),
       d.prepare("SELECT * FROM klanten ORDER BY naam COLLATE NOCASE"),
       d.prepare("SELECT * FROM facturen ORDER BY id DESC"),
       d.prepare("SELECT * FROM instellingen"),
-      d.prepare("SELECT * FROM gastenboek ORDER BY id DESC")
+      d.prepare("SELECT * FROM gastenboek ORDER BY id DESC"),
+      d.prepare("SELECT boeking_id, token, ingevuld, herinnerd1, herinnerd2 FROM registraties")
     ]);
     const u = new URL(request.url);
     return json({
@@ -64,12 +68,19 @@ export const onRequest = veilig(async ({ request, env, params }) => {
       boekingen: bo.results,
       klanten: kl.results,
       gastenboek: gb.results,
+      registraties: Object.fromEntries(rg.results.map((r) => [r.boeking_id, { ...r, link: linkVoor(r.token) }])),
       facturen: fa.results.map((f) => ({ ...f, gegevens: JSON.parse(f.gegevens || "{}") })),
       instellingen: Object.fromEntries(ins.results.map((r) => [r.sleutel, r.waarde])),
       agendaUrl: `${u.origin}/api/agenda?sleutel=${await agendaSleutel(env)}`,
       // Versturen vanuit het beheer kan pas als het domein bij Resend is gekoppeld en MAIL_VAN is ingesteld.
       mailVersturen: !!(env.RESEND_API_KEY && env.MAIL_VAN)
     });
+  }
+
+  // ---- Gastgegevens van één boeking (voor SES.Hospedajes) ----
+  if (deel === "registratie" && id && m === "GET") {
+    const r = await d.prepare("SELECT gegevens, ingevuld FROM registraties WHERE boeking_id = ?").bind(id).first();
+    return json({ ingevuld: r?.ingevuld || null, gegevens: r?.gegevens ? JSON.parse(r.gegevens) : null });
   }
 
   // ---- Mail aan een gast versturen ----
