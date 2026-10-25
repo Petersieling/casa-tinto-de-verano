@@ -237,6 +237,24 @@ section[id] { scroll-margin-top: 5.5rem; }
 .cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
 .voet .cam { color: #E0B45C; }
 </style>
+<style>
+/* Lightbox: foto groot bekijken en doorbladeren */
+.fotos img { cursor: zoom-in; }
+.lb { position: fixed; inset: 0; z-index: 100; background: rgba(28, 17, 10, .97); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; color: #EFE3D0; }
+.lb[hidden] { display: none; }
+.lb-kop { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1rem; font-size: .9rem; letter-spacing: .08em; color: #C9B79C; }
+.lb-beeld { position: relative; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 0 3.5rem; touch-action: pan-y; }
+.lb-beeld img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: .4rem; box-shadow: 0 20px 60px rgba(0,0,0,.45); user-select: none; -webkit-user-drag: none; }
+.lb-onder { text-align: center; padding: .9rem 1rem 1.4rem; }
+.lb-titel { font-family: var(--script); color: #E0B45C; font-size: 2rem; line-height: 1.1; }
+.lb-sub { display: block; font-size: .9rem; color: #C9B79C; margin-top: .2rem; }
+.lb button { background: transparent; color: #EFE3D0; border: 1px solid rgba(239, 227, 208, .35); border-radius: 999px; cursor: pointer; font: inherit; }
+.lb button:hover, .lb button:focus-visible { background: rgba(239, 227, 208, .12); outline: none; }
+.lb-sluit { width: 2.6rem; height: 2.6rem; font-size: 1.4rem; line-height: 1; }
+.lb-pijl { position: absolute; top: 50%; transform: translateY(-50%); width: 2.8rem; height: 2.8rem; font-size: 1.6rem; line-height: 1; }
+.lb-vorige { left: .6rem; } .lb-volgende { right: .6rem; }
+@media (max-width: 40rem) { .lb-beeld { padding: 0 .5rem; } .lb-pijl { display: none; } .lb-titel { font-size: 1.6rem; } }
+</style>
 </head>
 <body>
 <header class="top">
@@ -396,5 +414,60 @@ section[id] { scroll-margin-top: 5.5rem; }
   </div>
   <div class="voet-onder"><div class="wrap"><span>&copy; 2026 Casa Tinto de Verano</span><span id="voet-sterren">Punta Prima · Costa Blanca</span></div></div>
 </footer>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto's">
+  <div class="lb-kop"><span id="lb-teller"></span><button type="button" class="lb-sluit" id="lb-sluit" aria-label="Sluiten">&times;</button></div>
+  <div class="lb-beeld" id="lb-beeld">
+    <button type="button" class="lb-pijl lb-vorige" id="lb-vorige" aria-label="Vorige foto">&lsaquo;</button>
+    <img id="lb-img" alt="">
+    <button type="button" class="lb-pijl lb-volgende" id="lb-volgende" aria-label="Volgende foto">&rsaquo;</button>
+  </div>
+  <div class="lb-onder"><span class="lb-titel" id="lb-titel"></span><span class="lb-sub" id="lb-sub"></span></div>
+</div>
+<script>
+// Lightbox: tik op een foto om hem groot te bekijken; swipe of pijltjes om door te bladeren.
+(function () {
+  var figs = [].slice.call(document.querySelectorAll(".fotos figure"));
+  if (!figs.length) return;
+  var lb = document.getElementById("lb"), img = document.getElementById("lb-img"), nu = 0, terug = null;
+  function tekst(fig) {
+    var c = fig.querySelector("figcaption"), sub = c && c.querySelector("small");
+    var titel = c ? [].slice.call(c.childNodes).filter(function (n) { return n.nodeType === 3; }).map(function (n) { return n.nodeValue; }).join("").trim() : "";
+    return { titel: titel, sub: sub ? sub.textContent.trim() : "" };
+  }
+  function toon(i) {
+    nu = (i + figs.length) % figs.length;
+    var bron = figs[nu].querySelector("img"), t = tekst(figs[nu]);
+    img.src = bron.currentSrc || bron.src; img.alt = bron.alt;
+    document.getElementById("lb-titel").textContent = t.titel;
+    document.getElementById("lb-sub").textContent = t.sub;
+    document.getElementById("lb-teller").textContent = (nu + 1) + " / " + figs.length;
+  }
+  function open(i) { terug = document.activeElement; toon(i); lb.hidden = false; document.body.style.overflow = "hidden"; document.getElementById("lb-sluit").focus(); }
+  function sluit() { lb.hidden = true; document.body.style.overflow = ""; if (terug) terug.focus(); }
+  figs.forEach(function (fig, i) {
+    var f = fig.querySelector("img");
+    f.setAttribute("tabindex", "0"); f.setAttribute("role", "button");
+    f.addEventListener("click", function () { open(i); });
+    f.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); } });
+  });
+  document.getElementById("lb-sluit").addEventListener("click", sluit);
+  document.getElementById("lb-vorige").addEventListener("click", function () { toon(nu - 1); });
+  document.getElementById("lb-volgende").addEventListener("click", function () { toon(nu + 1); });
+  lb.addEventListener("click", function (e) { if (e.target === lb || e.target.id === "lb-beeld") sluit(); });
+  document.addEventListener("keydown", function (e) {
+    if (lb.hidden) return;
+    if (e.key === "Escape") sluit(); else if (e.key === "ArrowLeft") toon(nu - 1); else if (e.key === "ArrowRight") toon(nu + 1);
+  });
+  // Swipen op de telefoon
+  var x0 = null, y0 = null, beeld = document.getElementById("lb-beeld");
+  beeld.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  beeld.addEventListener("touchend", function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) toon(nu + (dx < 0 ? 1 : -1));
+    else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) sluit();
+  });
+})();
+</script>
 </body>
 </html>

@@ -6,12 +6,12 @@ export const PERIODES = [
   { naam: "April", prijs: 945, van: [4, 1], tot: [4, 30] },
   { naam: "Mei", prijs: 995, van: [5, 1], tot: [5, 31] },
   { naam: "Juni", prijs: 1195, van: [6, 1], tot: [6, 30] },
-  { naam: "Juli", prijs: 1400, piek: true, van: [7, 1], tot: [7, 31] },
+  { naam: "Juli", prijs: 1550, piek: true, van: [7, 1], tot: [7, 31] },
   { naam: "Augustus", prijs: 1500, piek: true, van: [8, 1], tot: [8, 31] },
   { naam: "September", prijs: 1150, van: [9, 1], tot: [9, 30] },
   { naam: "Oktober", prijs: 945, van: [10, 1], tot: [10, 31] },
   { naam: "November – half december", prijs: 845, van: [11, 1], tot: [12, 14] },
-  { naam: "Kerst & Oud en Nieuw", prijs: 1145, piek: true, van: [12, 15], tot: [12, 31] }
+  { naam: "Kerst & Oud en Nieuw", prijs: 1550, piek: true, van: [12, 15], tot: [12, 31] }
 ];
 export const SCHOONMAAK = 150;
 export const BORG = 300;

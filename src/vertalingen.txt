@@ -1645,3 +1645,12 @@ Hallway
 
 met zicht op keuken en woonkamer
 with a view of the kitchen and living room
+
+Foto's
+Photos
+
+Vorige foto
+Previous photo
+
+Volgende foto
+Next photo
