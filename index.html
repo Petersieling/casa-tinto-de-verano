@@ -359,7 +359,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 </style>
 <style>
 /* Kop compacter: minder ruimte tussen zin, cijfers en knop */
-/* Computer: filmpje rechts uitgelijnd, boven gelijk met de kop en onder gelijk met de knop (hoogte via script) */
+/* Computer: filmpje rechts uitgelijnd, boven gelijk met de kop en onder gelijk met de streep boven de cijfers (hoogte via script) */
 @media (min-width: 40.01rem) {
   .hero-foto .wrap { align-items: start; }
   .film-boog { justify-self: end; width: auto; margin-top: var(--film-boven, 0); }
@@ -497,13 +497,13 @@ if (location.hash === "#prijzen" || location.hash === "#beschikbaar") location.r
 })();
 </script>
 <script>
-// Filmpje op de computer even hoog als de tekst ernaast: van de bovenkant van de kop tot de onderkant van de knop.
+// Filmpje op de computer naast de tekst: van de bovenkant van de kop tot de streep boven de cijfers.
 (function () {
-  var f = document.querySelector(".film-boog"), kop = document.querySelector(".hero-foto h1"), knop = document.querySelector(".hero-foto .cta");
+  var f = document.querySelector(".film-boog"), kop = document.querySelector(".hero-foto h1"), knop = document.querySelector(".hero-foto .facts");
   if (!f || !kop || !knop) return;
   function zet() {
     if (window.matchMedia("(max-width: 40rem)").matches) { f.style.removeProperty("--film-boven"); f.style.removeProperty("--film-hoogte"); return; }
-    var blok = kop.parentElement.getBoundingClientRect().top, k = kop.getBoundingClientRect().top, onder = knop.getBoundingClientRect().bottom;
+    var blok = kop.parentElement.getBoundingClientRect().top, k = kop.getBoundingClientRect().top, onder = knop.getBoundingClientRect().top;
     var rand = parseFloat(getComputedStyle(f).paddingTop) * 2 + 2;
     f.style.setProperty("--film-boven", Math.max(0, k - blok) + "px");
     f.style.setProperty("--film-hoogte", Math.max(200, onder - k - rand) + "px");
