@@ -359,7 +359,12 @@ section[id] { scroll-margin-top: 5.5rem; }
 </style>
 <style>
 /* Kop compacter: minder ruimte tussen zin, cijfers en knop */
-@media (min-width: 40.01rem) { .film-boog { width: min(100%, 17.5rem); } }
+/* Computer: filmpje rechts uitgelijnd, boven gelijk met de kop en onder gelijk met de knop (hoogte via script) */
+@media (min-width: 40.01rem) {
+  .hero-foto .wrap { align-items: start; }
+  .film-boog { justify-self: end; width: auto; margin-top: var(--film-boven, 0); }
+  .hero-film { height: var(--film-hoogte, auto); width: auto; max-width: 100%; }
+}
 .hero-foto .wrap { padding-block: clamp(2rem, 4.5vw, 3.75rem); }
 .hero-foto .lead { margin-top: .9rem; line-height: 1.5; }
 .hero-foto .facts { margin-top: 1.35rem; padding-top: .85rem; }
@@ -489,6 +494,23 @@ if (location.hash === "#prijzen" || location.hash === "#beschikbaar") location.r
   if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
   k.addEventListener("click", function () { if (v.paused) v.play(); else v.pause(); });
   v.addEventListener("play", zet); v.addEventListener("pause", zet); zet();
+})();
+</script>
+<script>
+// Filmpje op de computer even hoog als de tekst ernaast: van de bovenkant van de kop tot de onderkant van de knop.
+(function () {
+  var f = document.querySelector(".film-boog"), kop = document.querySelector(".hero-foto h1"), knop = document.querySelector(".hero-foto .cta");
+  if (!f || !kop || !knop) return;
+  function zet() {
+    if (window.matchMedia("(max-width: 40rem)").matches) { f.style.removeProperty("--film-boven"); f.style.removeProperty("--film-hoogte"); return; }
+    var blok = kop.parentElement.getBoundingClientRect().top, k = kop.getBoundingClientRect().top, onder = knop.getBoundingClientRect().bottom;
+    var rand = parseFloat(getComputedStyle(f).paddingTop) * 2 + 2;
+    f.style.setProperty("--film-boven", Math.max(0, k - blok) + "px");
+    f.style.setProperty("--film-hoogte", Math.max(200, onder - k - rand) + "px");
+  }
+  zet(); window.addEventListener("resize", zet);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zet);
+  window.addEventListener("load", zet);
 })();
 </script>
 </body>
