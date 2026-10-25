@@ -170,6 +170,15 @@ section[id] { scroll-margin-top: 5.5rem; }
 .loc .tekst { margin-top: 1rem; color: var(--muted); }
 .tips { margin: 2.5rem auto 0; max-width: 26rem; border: 1px solid var(--gold); border-radius: 13rem 13rem .75rem .75rem; padding: 3.5rem 1.5rem 1.75rem; display: grid; justify-items: center; gap: .4rem; }
 .reis { margin-top: 3.5rem; text-align: left; }
+.afstanden { margin-top: 4rem; text-align: left; }
+.afstanden h2 { text-align: center; }
+.af-groepen { margin-top: 1.75rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.75rem clamp(1.5rem, 4vw, 3rem); }
+.af-groep { padding: 0; }
+.af-groep h3 { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-text); font-family: var(--body); font-weight: 500; padding-bottom: .6rem; border-bottom: 1px solid var(--gold); margin: 0; }
+.af-groep dl { margin: 0; }
+.af-groep dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid var(--line); }
+.af-groep dt { font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.25; }
+.af-groep dd { margin: 0; color: var(--muted); font-size: .92rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .omgeving { margin-top: 4rem; text-align: left; }
 .omgeving h2 { text-align: center; }
 .og-groep { margin-top: 2.25rem; padding: 0; }
@@ -290,6 +299,20 @@ section[id] { scroll-margin-top: 5.5rem; }
             <div><dt>Huurauto</dt><dd><b>Vrijheid ter plaatse</b>We raden je aan bij aankomst een auto te huren bij een van de verhuurmaatschappijen op de luchthaven. Zo ontdek je de omgeving in je eigen tempo.</dd></div>
             <div><dt>Parkeren</dt><dd><b>Je eigen plek in de garage</b>Je auto staat overdekt op je eigen parkeerplaats in de garage van het complex.</dd></div>
           </dl>
+        </div>
+
+        <div class="afstanden">
+          <h2>Alles <span class="script">dichtbij</span></h2>
+          <p class="reis-intro">Strand, winkels en terrassen liggen om de hoek.</p>
+          <div class="af-groepen">
+            <section class="af-groep"><h3>Stranden</h3><dl><div><dt>Strand Punta Prima</dt><dd>ca. 1 km</dd></div><div><dt>Strand Playa Flamenca</dt><dd>ca. 3 km</dd></div><div><dt>Strand La Zenia</dt><dd>ca. 4 km</dd></div></dl></section>
+            <section class="af-groep"><h3>Boodschappen en uit eten</h3><dl><div><dt>Supermarkten</dt><dd>ca. 300 – 600 m</dd></div><div><dt>Restaurants en terrassen</dt><dd>vanaf ca. 300 m</dd></div><div><dt>Cafés en ontbijt</dt><dd>op korte afstand</dd></div></dl></section>
+            <section class="af-groep"><h3>Winkelen</h3><dl><div><dt>Winkelcentrum Punta Marina</dt><dd>ca. 1 km</dd></div><div><dt>La Zenia Boulevard</dt><dd>ca. 4 km</dd></div></dl></section>
+            <section class="af-groep"><h3>Golf</h3><dl><div><dt>Villamartín Golf</dt><dd>ca. 5 km</dd></div><div><dt>Las Ramblas Golf</dt><dd>ca. 7 km</dd></div><div><dt>Campoamor Golf</dt><dd>ca. 7 km</dd></div></dl></section>
+            <section class="af-groep"><h3>Torrevieja</h3><dl><div><dt>Jachthaven</dt><dd>ca. 5 km</dd></div><div><dt>Centrum</dt><dd>ca. 5 km</dd></div></dl></section>
+            <section class="af-groep"><h3>Reizen</h3><dl><div><dt>Luchthaven Alicante</dt><dd>ca. 45 – 50 km</dd></div></dl></section>
+          </div>
+          <p class="og-noot">Afstanden zijn indicatief en kunnen per route verschillen.</p>
         </div>
 
         <div class="omgeving">
