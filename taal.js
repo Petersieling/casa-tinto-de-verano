@@ -42,6 +42,7 @@
     [/^1 jaar$/, "1 year"],
     [/^(\d+) jaar$/, "$1 years"],
     [/^Het penthouse is voor maximaal (\d+) personen\.$/, "The penthouse is for a maximum of $1 guests."],
+    [/^Het penthouse is voor maximaal (\d+) personen, kinderen meegerekend\. Kies minder volwassenen of kinderen\.$/, "The penthouse is for a maximum of $1 guests, including children. Please choose fewer adults or children."],
     [/^Vul de leeftijd van kind (\d) in \(0 tot en met 17 jaar\)\.$/, "Please enter the age of child $1 (0 to 17)."],
     [/^Vul je aankomst- en vertrekdatum in als dag-maand-jaar, bijvoorbeeld 04-07-2027\. Het minimale verblijf is (\d+) nachten\.$/,
       "Enter your arrival and departure dates as day-month-year, for example 04-07-2027. The minimum stay is $1 nights."],

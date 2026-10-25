@@ -557,7 +557,7 @@ function gezelschap() {
   const v = $("volwassenen").value, k = $("kinderen").value;
   if (!v) return { fout: "Kies het aantal volwassenen.", veld: "volwassenen" };
   if (k === "") return { fout: "Kies het aantal kinderen. Kies Geen als er geen kinderen meekomen.", veld: "kinderen" };
-  if (+v + +k > MAX_PERSONEN) return { fout: `Het penthouse is voor maximaal ${MAX_PERSONEN} personen.`, veld: "kinderen" };
+  if (+v + +k > MAX_PERSONEN) return { fout: `Het penthouse is voor maximaal ${MAX_PERSONEN} personen, kinderen meegerekend. Kies minder volwassenen of kinderen.`, veld: "kinderen" };
   const leeftijden = [];
   for (let i = 1; i <= +k; i++) {
     const veld = $("leeftijd-" + i), w = veld ? veld.value : "";
@@ -569,6 +569,13 @@ function gezelschap() {
 const gezelschapTekst = (g) => g.fout ? "(nog invullen)" : `${g.volwassenen} ${g.volwassenen === 1 ? "volwassene" : "volwassenen"}` + (g.kinderen ? ` en ${g.kinderen} ${g.kinderen === 1 ? "kind" : "kinderen"} (${g.leeftijden.join(", ")} jaar)` : ", geen kinderen");
 $("kinderen").addEventListener("input", tekenLeeftijden);
 $("kinderen").addEventListener("change", tekenLeeftijden);
+// Maximaal 4 personen: meteen melden als volwassenen en kinderen samen meer zijn.
+function controleerAantal() {
+  const v = +$("volwassenen").value || 0, k = +$("kinderen").value || 0, teVeel = v + k > MAX_PERSONEN;
+  $("gasten-melding").hidden = !teVeel;
+  $("gasten-melding").textContent = teVeel ? `Het penthouse is voor maximaal ${MAX_PERSONEN} personen, kinderen meegerekend. Kies minder volwassenen of kinderen.` : "";
+}
+["input", "change"].forEach((ev) => { $("volwassenen").addEventListener(ev, controleerAantal); $("kinderen").addEventListener(ev, controleerAantal); });
 
 // ---- Aanvraag ----
 // Datums typ je als dag-maand-jaar, bijvoorbeeld 04-07-2027. Intern rekenen we met jaar-maand-dag.
