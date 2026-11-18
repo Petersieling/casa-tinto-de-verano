@@ -15,7 +15,7 @@ export const PERIODES = [
 ];
 // Schoolvakanties: de site rekent ze elk jaar zelf uit met vaste regels, zodat er niets bijgehouden hoeft te worden.
 // Wijkt een officiële vakantie af, zet de juiste data dan in VAKANTIE_CORRECTIES (per jaar en per soort).
-export const VAKANTIE_PRIJZEN = { voorjaar: 895, pasen: 1045, mei: 1095, herfstNL: 1095, herfstBE: 895 };
+export const VAKANTIE_PRIJZEN = { voorjaar: 850, pasen: 995, mei: 1045, herfstNL: 1045, herfstBE: 850 };
 export const VAKANTIE_NAMEN = { voorjaar: "Krokus- en voorjaarsvakantie", pasen: "Pasen en paasvakantie", mei: "Meivakantie", herfstNL: "Herfstvakantie Nederland", herfstBE: "Herfstvakantie België" };
 export const VAKANTIE_CORRECTIES = {
   // voorbeeld: 2029: { herfstNL: ["2029-10-13", "2029-10-28"] }
