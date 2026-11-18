@@ -13,15 +13,13 @@ export const PERIODES = [
   { naam: "November – half december", prijs: 750, van: [11, 1], tot: [12, 14] },
   { naam: "Kerst & Oud en Nieuw", prijs: 1145, piek: true, van: [12, 15], tot: [12, 31] }
 ];
-// Schoolvakanties: per jaar met datum, want ze schuiven elk jaar. "van" en "tot" zijn beide inclusief.
-// Deze prijs gaat voor op de maandprijs hierboven. Elk jaar de nieuwe data toevoegen.
-export const VAKANTIES = [
-  { naam: "Krokus- en voorjaarsvakantie", prijs: 895, van: "2027-02-08", tot: "2027-02-28" },
-  { naam: "Pasen en paasvakantie", prijs: 1045, van: "2027-03-20", tot: "2027-04-11" },
-  { naam: "Meivakantie", prijs: 1095, van: "2027-04-24", tot: "2027-05-09" },
-  { naam: "Herfstvakantie Nederland", prijs: 1095, van: "2027-10-16", tot: "2027-10-31" },
-  { naam: "Herfstvakantie België", prijs: 895, van: "2027-11-01", tot: "2027-11-07" }
-];
+// Schoolvakanties: de site rekent ze elk jaar zelf uit met vaste regels, zodat er niets bijgehouden hoeft te worden.
+// Wijkt een officiële vakantie af, zet de juiste data dan in VAKANTIE_CORRECTIES (per jaar en per soort).
+export const VAKANTIE_PRIJZEN = { voorjaar: 895, pasen: 1045, mei: 1095, herfstNL: 1095, herfstBE: 895 };
+export const VAKANTIE_NAMEN = { voorjaar: "Krokus- en voorjaarsvakantie", pasen: "Pasen en paasvakantie", mei: "Meivakantie", herfstNL: "Herfstvakantie Nederland", herfstBE: "Herfstvakantie België" };
+export const VAKANTIE_CORRECTIES = {
+  // voorbeeld: 2029: { herfstNL: ["2029-10-13", "2029-10-28"] }
+};
 export const SCHOONMAAK = 150;
 export const BORG = 300;
 export const MIN_NACHTEN = 10;
@@ -39,10 +37,40 @@ export const naarIso = (t) => new Date(t).toISOString().slice(0, 10);
 export const isDatum = (s) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && naarIso(naarTijd(s)) === s;
 export const nachten = (aankomst, vertrek) => Math.round((naarTijd(vertrek) - naarTijd(aankomst)) / DAG);
 
+// ---- Schoolvakanties uitrekenen ----
+const plus = (iso, dagen) => naarIso(naarTijd(iso) + dagen * DAG);
+const weekdag = (iso) => (new Date(naarTijd(iso)).getUTCDay() + 6) % 7; // maandag 0 ... zondag 6
+function pasen(jaar) { // Gregoriaanse paasdatum (Meeus/Jones/Butcher)
+  const a = jaar % 19, b = Math.floor(jaar / 100), c = jaar % 100, d = Math.floor(b / 4), e = b % 4;
+  const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const maand = Math.floor((h + l - 7 * m + 114) / 31), dag = ((h + l - 7 * m + 114) % 31) + 1;
+  return `${jaar}-${String(maand).padStart(2, "0")}-${String(dag).padStart(2, "0")}`;
+}
+function maandagVanWeek(jaar, week) { // maandag van ISO-week
+  const vier = `${jaar}-01-04`;
+  return plus(plus(vier, -weekdag(vier)), (week - 1) * 7);
+}
+const cache = {};
+export function vakantiesVoor(jaar) {
+  if (cache[jaar]) return cache[jaar];
+  const p = pasen(jaar), koningsdag = `${jaar}-04-27`, novEen = `${jaar}-11-01`;
+  const perioden = {
+    voorjaar: [plus(maandagVanWeek(jaar, 6), -2), plus(maandagVanWeek(jaar, 8), 6)],   // za voor week 6 t/m zo week 8
+    pasen: [plus(p, -8), plus(p, 14)],                                                  // za voor Palmzondag t/m 2 weken na Pasen
+    mei: [plus(koningsdag, -((weekdag(koningsdag) + 2) % 7)), null],                    // za op of voor Koningsdag, 2 weken
+    herfstNL: [plus(maandagVanWeek(jaar, 42), -2), plus(maandagVanWeek(jaar, 43), 6)], // za voor week 42 t/m zo week 43
+    herfstBE: [plus(novEen, -weekdag(novEen)), plus(novEen, 6 - weekdag(novEen))]       // de week (ma t/m zo) met 1 november
+  };
+  perioden.mei[1] = plus(perioden.mei[0], 15);
+  Object.assign(perioden, VAKANTIE_CORRECTIES[jaar] || {});
+  return (cache[jaar] = Object.entries(perioden).map(([soort, [van, tot]]) => ({ soort, naam: VAKANTIE_NAMEN[soort], prijs: VAKANTIE_PRIJZEN[soort], van, tot })));
+}
+
 // Weekprijs die geldt voor de nacht die op deze datum begint.
 export function weekprijs(iso) {
-  const v = VAKANTIES.find((v) => iso >= v.van && iso <= v.tot);
-  if (v) return v.prijs;
+  const vak = vakantiesVoor(+iso.slice(0, 4)).filter((v) => iso >= v.van && iso <= v.tot);
+  if (vak.length) return Math.max(...vak.map((v) => v.prijs)); // overlappen twee vakanties, dan telt de hoogste
   const sleutel = +iso.slice(5, 7) * 100 + +iso.slice(8, 10);
   const p = PERIODES.find((p) => sleutel >= p.van[0] * 100 + p.van[1] && sleutel <= p.tot[0] * 100 + p.tot[1]);
   return p ? p.prijs : 0;
