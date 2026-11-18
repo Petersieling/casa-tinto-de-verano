@@ -22,7 +22,7 @@ export const VAKANTIE_CORRECTIES = {
 };
 export const SCHOONMAAK = 150;
 export const BORG = 300;
-export const MIN_NACHTEN = 7;
+export const MIN_NACHTEN = 10;
 export const MAX_PERSONEN = 4;
 export const KWH_PER_WEEK = 120;      // inbegrepen elektriciteit per week, het hele jaar
 export const AANBETALING = 0.30;     // deel van huur en eindschoonmaak dat bij boeking wordt betaald
