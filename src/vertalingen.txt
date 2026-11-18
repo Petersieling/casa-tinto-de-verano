@@ -299,8 +299,8 @@ information
 Minimaal verblijf
 Minimum stay
 
-10 nachten
-10 nights
+7 nachten
+7 nights
 
 Inchecken
 Check-in
@@ -438,8 +438,8 @@ Total stay
 Vraag deze periode aan
 Request this period
 
-Alle prijzen zijn per week, minimaal verblijf 10 nachten. In de schoolvakanties gelden andere prijzen: kies je data in de kalender, dan zie je meteen de juiste prijs. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
-All prices are per week, minimum stay 10 nights. Different prices apply during school holidays: choose your dates in the calendar to see the right price straight away. A stay that does not consist of full weeks is charged pro rata per night.
+Alle prijzen zijn per week, minimaal verblijf 7 nachten. In de schoolvakanties gelden andere prijzen: kies je data in de kalender, dan zie je meteen de juiste prijs. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
+All prices are per week, minimum stay 7 nights. Different prices apply during school holidays: choose your dates in the calendar to see the right price straight away. A stay that does not consist of full weeks is charged pro rata per night.
 
 Januari – maart
 January – March
@@ -538,8 +538,8 @@ Choose your arrival day
 Kies je vertrekdag
 Choose your departure day
 
-Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 10 nachten.
-Enter your arrival and departure dates as day-month-year, or tap them in the calendar. The minimum stay is 10 nights.
+Vul je aankomst- en vertrekdatum in als dag-maand-jaar, of tik ze aan in de kalender. Het minimale verblijf is 7 nachten.
+Enter your arrival and departure dates as day-month-year, or tap them in the calendar. The minimum stay is 7 nights.
 
 Naam
 Name
@@ -744,8 +744,8 @@ The lead tenant is at least 24 years old and is responsible for all guests in th
 Verblijf en gezelschap
 Stay and party
 
-Het minimale verblijf is 10 nachten.
-The minimum stay is 10 nights.
+Het minimale verblijf is 7 nachten.
+The minimum stay is 7 nights.
 
 Inchecken kan vanaf 15:00 uur op de dag van aankomst. Uitchecken doe je voor 10:00 uur op de dag van vertrek. Deze tijden staan vast; eerder inchecken of later uitchecken is niet mogelijk.
 Check-in is possible from 15:00 on the day of arrival. Check-out is before 10:00 on the day of departure. These times are fixed; early check-in or late check-out is not possible.

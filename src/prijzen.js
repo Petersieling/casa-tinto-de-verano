@@ -1,28 +1,28 @@
 // Prijslijst 2026/2027. Deze lijst wordt gebruikt door de website én door de server.
 // "van" en "tot" zijn [maand, dag], beide inclusief. Prijzen zijn per week.
 export const PERIODES = [
-  { naam: "Januari – februari", prijs: 750, van: [1, 1], tot: [2, 29] },
-  { naam: "Maart", prijs: 850, van: [3, 1], tot: [3, 31] },
-  { naam: "April", prijs: 945, van: [4, 1], tot: [4, 30] },
-  { naam: "Mei", prijs: 945, van: [5, 1], tot: [5, 31] },
-  { naam: "Juni", prijs: 1145, van: [6, 1], tot: [6, 30] },
-  { naam: "Juli", prijs: 1500, piek: true, van: [7, 1], tot: [7, 31] },
-  { naam: "Augustus", prijs: 1500, piek: true, van: [8, 1], tot: [8, 31] },
-  { naam: "September", prijs: 1145, van: [9, 1], tot: [9, 30] },
-  { naam: "Oktober", prijs: 945, van: [10, 1], tot: [10, 31] },
-  { naam: "November – half december", prijs: 750, van: [11, 1], tot: [12, 14] },
-  { naam: "Kerst & Oud en Nieuw", prijs: 1145, piek: true, van: [12, 15], tot: [12, 31] }
+  { naam: "Januari – februari", prijs: 650, van: [1, 1], tot: [2, 29] },
+  { naam: "Maart", prijs: 750, van: [3, 1], tot: [3, 31] },
+  { naam: "April", prijs: 850, van: [4, 1], tot: [4, 30] },
+  { naam: "Mei", prijs: 895, van: [5, 1], tot: [5, 31] },
+  { naam: "Juni", prijs: 1045, van: [6, 1], tot: [6, 30] },
+  { naam: "Juli", prijs: 1295, piek: true, van: [7, 1], tot: [7, 31] },
+  { naam: "Augustus", prijs: 1295, piek: true, van: [8, 1], tot: [8, 31] },
+  { naam: "September", prijs: 1045, van: [9, 1], tot: [9, 30] },
+  { naam: "Oktober", prijs: 850, van: [10, 1], tot: [10, 31] },
+  { naam: "November – half december", prijs: 650, van: [11, 1], tot: [12, 14] },
+  { naam: "Kerst & Oud en Nieuw", prijs: 1095, piek: true, van: [12, 15], tot: [12, 31] }
 ];
 // Schoolvakanties: de site rekent ze elk jaar zelf uit met vaste regels, zodat er niets bijgehouden hoeft te worden.
 // Wijkt een officiële vakantie af, zet de juiste data dan in VAKANTIE_CORRECTIES (per jaar en per soort).
-export const VAKANTIE_PRIJZEN = { voorjaar: 850, pasen: 995, mei: 1045, herfstNL: 1045, herfstBE: 850 };
+export const VAKANTIE_PRIJZEN = { voorjaar: 750, pasen: 950, mei: 995, herfstNL: 950, herfstBE: 750 };
 export const VAKANTIE_NAMEN = { voorjaar: "Krokus- en voorjaarsvakantie", pasen: "Pasen en paasvakantie", mei: "Meivakantie", herfstNL: "Herfstvakantie Nederland", herfstBE: "Herfstvakantie België" };
 export const VAKANTIE_CORRECTIES = {
   // voorbeeld: 2029: { herfstNL: ["2029-10-13", "2029-10-28"] }
 };
 export const SCHOONMAAK = 150;
 export const BORG = 300;
-export const MIN_NACHTEN = 10;
+export const MIN_NACHTEN = 7;
 export const MAX_PERSONEN = 4;
 export const KWH_PER_WEEK = 120;      // inbegrepen elektriciteit per week, het hele jaar
 export const AANBETALING = 0.30;     // deel van huur en eindschoonmaak dat bij boeking wordt betaald
