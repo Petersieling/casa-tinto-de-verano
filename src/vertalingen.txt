@@ -438,8 +438,8 @@ Total stay
 Vraag deze periode aan
 Request this period
 
-Alle prijzen zijn per week. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
-All prices are per week. A stay that does not consist of full weeks is charged pro rata per night.
+Alle prijzen zijn per week, minimaal verblijf 10 nachten. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
+All prices are per week, minimum stay 10 nights. A stay that does not consist of full weeks is charged pro rata per night.
 
 Januari – maart
 January – March
