@@ -13,6 +13,15 @@ export const PERIODES = [
   { naam: "November – half december", prijs: 750, van: [11, 1], tot: [12, 14] },
   { naam: "Kerst & Oud en Nieuw", prijs: 1145, piek: true, van: [12, 15], tot: [12, 31] }
 ];
+// Schoolvakanties: per jaar met datum, want ze schuiven elk jaar. "van" en "tot" zijn beide inclusief.
+// Deze prijs gaat voor op de maandprijs hierboven. Elk jaar de nieuwe data toevoegen.
+export const VAKANTIES = [
+  { naam: "Krokus- en voorjaarsvakantie", prijs: 895, van: "2027-02-08", tot: "2027-02-28" },
+  { naam: "Pasen en paasvakantie", prijs: 1045, van: "2027-03-20", tot: "2027-04-11" },
+  { naam: "Meivakantie", prijs: 1095, van: "2027-04-24", tot: "2027-05-09" },
+  { naam: "Herfstvakantie Nederland", prijs: 1095, van: "2027-10-16", tot: "2027-10-31" },
+  { naam: "Herfstvakantie België", prijs: 895, van: "2027-11-01", tot: "2027-11-07" }
+];
 export const SCHOONMAAK = 150;
 export const BORG = 300;
 export const MIN_NACHTEN = 10;
@@ -32,6 +41,8 @@ export const nachten = (aankomst, vertrek) => Math.round((naarTijd(vertrek) - na
 
 // Weekprijs die geldt voor de nacht die op deze datum begint.
 export function weekprijs(iso) {
+  const v = VAKANTIES.find((v) => iso >= v.van && iso <= v.tot);
+  if (v) return v.prijs;
   const sleutel = +iso.slice(5, 7) * 100 + +iso.slice(8, 10);
   const p = PERIODES.find((p) => sleutel >= p.van[0] * 100 + p.van[1] && sleutel <= p.tot[0] * 100 + p.tot[1]);
   return p ? p.prijs : 0;

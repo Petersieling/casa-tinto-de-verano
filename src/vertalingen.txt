@@ -438,8 +438,8 @@ Total stay
 Vraag deze periode aan
 Request this period
 
-Alle prijzen zijn per week, minimaal verblijf 10 nachten. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
-All prices are per week, minimum stay 10 nights. A stay that does not consist of full weeks is charged pro rata per night.
+Alle prijzen zijn per week, minimaal verblijf 10 nachten. In de schoolvakanties gelden andere prijzen: kies je data in de kalender, dan zie je meteen de juiste prijs. Een verblijf dat niet uit hele weken bestaat, rekenen we naar rato per nacht.
+All prices are per week, minimum stay 10 nights. Different prices apply during school holidays: choose your dates in the calendar to see the right price straight away. A stay that does not consist of full weeks is charged pro rata per night.
 
 Januari – maart
 January – March
@@ -2041,3 +2041,18 @@ January – February
 
 Maart
 March
+
+Krokus- en voorjaarsvakantie
+February half-term (BE/NL)
+
+Pasen en paasvakantie
+Easter holidays
+
+Meivakantie
+May holidays (NL)
+
+Herfstvakantie Nederland
+Autumn half-term (NL)
+
+Herfstvakantie België
+Autumn half-term (BE)
