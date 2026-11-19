@@ -181,6 +181,21 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
   .f-betaaltekst { margin-top: .8rem !important; font-size: .88rem; }
   .f-voet { margin-top: .8rem; gap: .15rem; }
   .f-voet .f-slogan { font-size: 1.5rem; }
+  /* Met de IVA-uitsplitsing is de factuur langer: nog iets compacter, zodat alles op één A4 blijft. */
+  #factuur { padding: 9mm 14mm; font-size: 9.2pt; }
+  .f-kop img { width: 4.4rem; }
+  .f-titel h1 { font-size: 1.9rem; }
+  .f-partijen { margin-block: .7rem; }
+  .f-gezelschap { margin-top: .5rem; padding: .45rem .9rem; }
+  #factuur table { margin-top: .7rem; }
+  #factuur th, #factuur td { padding: .32rem 0; }
+  #factuur tr.f-btw td { padding: .08rem 0; font-size: .8rem; }
+  #factuur tr.f-btw:first-of-type td, #factuur tbody tr:not(.f-btw) + tr.f-btw td { padding-top: .35rem; }
+  #factuur tr.f-btw:last-child td { padding-bottom: .35rem; }
+  .f-betaling { margin-top: .8rem; padding: .65rem 1rem; }
+  .f-voet { margin-top: .5rem; }
+  .f-voet .f-slogan { font-size: 1.3rem; }
+  #factuur > * { break-inside: avoid; }
 }
 </style>
 </head>
