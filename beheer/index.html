@@ -134,6 +134,10 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 .f-gezelschap { text-align: center; margin: 1rem 0 0; padding: .9rem 1rem; background: var(--panel); border-radius: .5rem; break-inside: avoid; }
 .f-gez-wie { font-family: var(--display); font-weight: 600; font-size: 1.15rem; }
 .f-gez-noot { color: var(--muted); font-size: .85rem; margin-top: .2rem !important; }
+#factuur tr.f-btw td { border-top: 0; padding: .15rem 0; font-size: .85rem; color: var(--muted); }
+#factuur tr.f-btw:first-of-type td, #factuur tbody tr:not(.f-btw) + tr.f-btw td { border-top: 1px solid var(--line); padding-top: .6rem; }
+#factuur tr.f-btw:last-child td { padding-bottom: .6rem; }
+.f-incl { display: inline-block; margin-left: .5rem; font-size: .72rem; letter-spacing: .04em; color: var(--gold-text); }
 .f-termijnen { display: grid; gap: .55rem; }
 .f-termijn { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline; padding-bottom: .55rem; border-bottom: 1px solid var(--line); }
 .f-termijn:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -717,10 +721,13 @@ const VIEWS = {
       ["afzender_nummer", "Fiscaal nummer (bijvoorbeeld NIE of NIF), als dat op de factuur moet"], ["iban", "IBAN"], ["iban_naam", "Rekening op naam van"],
       ["btw_regel", "Btw-regel op de factuur", true], ["betaal_tekst", "Betaalinstructie onderaan de factuur", true],
       ["btw_regel_en", "Btw-regel op een Engelse factuur", true], ["betaal_tekst_en", "Betaalinstructie onderaan een Engelse factuur", true],
+      ["btw_regel_iva", "Btw-regel op een factuur met IVA (verblijf vanaf 1 december 2026)", true], ["btw_regel_iva_en", "Btw-regel op een Engelse factuur met IVA", true],
       ["verblijf_adres", "Adres van het penthouse (komt alleen op de factuur, niet op de website)", true]
     ];
     const standaard = { btw_regel: "Verhuur vrijgesteld van IVA.", betaal_tekst: "Bedankt voor je reservering. We wensen je een fijn verblijf.",
-      btw_regel_en: "Rental exempt from IVA (Spanish VAT).", betaal_tekst_en: "Thank you for your booking. We wish you a wonderful stay." };
+      btw_regel_en: "Rental exempt from IVA (Spanish VAT).",
+      btw_regel_iva: "De huur en de eindschoonmaak zijn inclusief 10% IVA. De borg valt buiten de IVA.",
+      btw_regel_iva_en: "Rent and final cleaning include 10% IVA (Spanish VAT). The security deposit is not subject to IVA.", betaal_tekst_en: "Thank you for your booking. We wish you a wonderful stay." };
     const inv = {};
     const form = h("form", { style: "display:grid;gap:1rem;max-width:44rem", onsubmit: async (e) => {
       e.preventDefault();
@@ -751,7 +758,18 @@ function toonFactuur(f) {
   const T = (t) => (EN && W[t]) || t;
   const euro = EN ? euroEn : window.euroNl;
   const datum = (iso, lang) => EN ? datumEn(iso) : window.datumNl(iso, lang);
-  const btwRegel = EN ? (a.btw_regel_en || a.btw_regel) : a.btw_regel;
+  const btwRegel = g.btw
+    ? (EN ? (a.btw_regel_iva_en || "Rent and final cleaning include 10% IVA (Spanish VAT). The security deposit is not subject to IVA.")
+          : (a.btw_regel_iva || "De huur en de eindschoonmaak zijn inclusief 10% IVA. De borg valt buiten de IVA."))
+    : (EN ? (a.btw_regel_en || a.btw_regel) : a.btw_regel);
+  const fiscaal = a.afzender_nummer ? (g.btw && !/^\s*(NIF|NIE)/i.test(a.afzender_nummer) ? "NIF: " + a.afzender_nummer : a.afzender_nummer) : "";
+  const b = g.btw;
+  const btwRijen = b ? [
+    h("tr", { class: "f-btw" }, h("td", null, EN ? `Taxable amount (excl. ${b.tarief}% IVA)` : `Grondslag (zonder ${b.tarief}% IVA)`), h("td", { class: "bedrag" }, euro(b.grondslag))),
+    h("tr", { class: "f-btw" }, h("td", null, EN ? `IVA ${b.tarief}%` : `IVA ${b.tarief}%`), h("td", { class: "bedrag" }, euro(b.bedrag))),
+    b.vrijgesteld ? h("tr", { class: "f-btw" }, h("td", null, EN ? "Exempt from IVA (nights before 1 December 2026)" : "Vrijgesteld van IVA (nachten vóór 1 december 2026)"), h("td", { class: "bedrag" }, euro(b.vrijgesteld))) : null,
+    g.regels.some((r) => !r.btw) ? h("tr", { class: "f-btw" }, h("td", null, EN ? "Not subject to IVA (security deposit)" : "Buiten de IVA (borg)"), h("td", { class: "bedrag" }, euro(g.regels.filter((r) => !r.btw).reduce((s, r) => s + r.bedrag, 0)))) : null
+  ].filter(Boolean) : [];
   const betaalTekst = EN ? (a.betaal_tekst_en || a.betaal_tekst) : a.betaal_tekst;
   const regelTekst = (...delen) => delen.filter(Boolean).join("\n");
   // Lege onderdelen (null) overslaan, anders verschijnt het woord "null" op de factuur.
@@ -764,7 +782,7 @@ function toonFactuur(f) {
         h("dl", null, h("dt", null, T("Nummer")), h("dd", null, f.nummer), h("dt", null, T("Datum")), h("dd", null, datum(f.datum, true))))),
     h("div", { class: "f-partijen" },
       h("div", null, h("p", { class: "label" }, T("Van")), h("p", { class: "f-naam" }, a.afzender_naam || ""),
-        h("p", null, regelTekst(a.afzender_adres, a.afzender_email, a.afzender_telefoon, a.afzender_nummer))),
+        h("p", null, regelTekst(a.afzender_adres, a.afzender_email, a.afzender_telefoon, fiscaal))),
       h("div", null, h("p", { class: "label" }, T("Aan")), h("p", { class: "f-naam" }, g.klant?.naam || ""),
         h("p", null, regelTekst(g.klant?.adres, g.klant?.email)))),
     g.aankomst && g.vertrek ? h("p", { class: "f-verblijf" }, T("Verblijf in Casa Tinto de Verano"), h("span", null, "♥"),
@@ -780,7 +798,7 @@ function toonFactuur(f) {
         : "Alleen de opgegeven personen mogen in het penthouse overnachten.")) : null,
     h("table", null,
       h("thead", null, h("tr", null, h("th", null, T("Omschrijving")), h("th", { class: "bedrag" }, T("Bedrag")))),
-      h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving), h("td", { class: "bedrag" }, euro(r.bedrag))))),
+      h("tbody", null, (g.regels || []).map((r) => h("tr", null, h("td", null, r.omschrijving, r.btw ? h("small", { class: "f-incl" }, EN ? `incl. ${b.tarief}% IVA` : `incl. ${b.tarief}% IVA`) : null), h("td", { class: "bedrag" }, euro(r.bedrag)))), btwRijen),
       h("tfoot", null, h("tr", null, h("td", null, T("Totaal")), h("td", { class: "bedrag" }, euro(f.totaal))))),
     g.stroom && g.soort !== "credit" ? h("p", { class: "f-stroom" }, g.stroom) : null,
     g.termijnen && g.soort !== "credit"

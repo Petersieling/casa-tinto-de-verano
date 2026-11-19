@@ -31,6 +31,19 @@ export const ANNULEER_DAGEN = 56;    // tot 8 weken voor aankomst is alleen de a
 export const BORG_TERUG_DAGEN = 14;  // borg terug binnen 2 weken na vertrek
 export const KWH_PRIJS = 0.35; // euro per kWh boven het inbegrepen verbruik
 
+// Spaanse btw (IVA) op korte vakantieverhuur, Real Decreto-ley 29/2026: 10% voor nachten vanaf 1 december 2026,
+// bij een verblijf van hooguit 30 nachten. Langere verblijven blijven vrijgesteld. De prijzen zijn inclusief IVA.
+export const BTW_TARIEF = 0.10;
+export const BTW_VANAF = "2026-12-01";
+export const BTW_MAX_NACHTEN = 30;
+// Deel van het verblijf waarover IVA geldt (0 tot 1), naar het aantal nachten vanaf BTW_VANAF.
+export function btwDeel(aankomst, vertrek) {
+  const n = nachten(aankomst, vertrek);
+  if (n <= 0 || n > BTW_MAX_NACHTEN || vertrek <= BTW_VANAF) return 0;
+  if (aankomst >= BTW_VANAF) return 1;
+  return nachten(BTW_VANAF, vertrek) / n;
+}
+
 const DAG = 864e5;
 export const naarTijd = (iso) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
 export const naarIso = (t) => new Date(t).toISOString().slice(0, 10);

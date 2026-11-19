@@ -1,10 +1,10 @@
 import { db, json, veilig, vandaag, tekst, getal, overlapt, agendaSleutel, Melding, adresBlok } from "../../../src/lib.js";
 import { maakGastmail } from "../../../src/gastmail.js";
 import { zorgVoorLinks, dagelijks, linkVoor } from "../../../src/registratie.js";
-import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../../../src/prijzen.js";
+import { isDatum, nachten, naarTijd, naarIso, AANBETALING, RESTANT_DAGEN, BORG_TERUG_DAGEN, KWH_PRIJS, kwhInbegrepen, BTW_TARIEF, btwDeel } from "../../../src/prijzen.js";
 
 // Beheer-API: boekingen, blokkades, klanten, facturen en instellingen. Alleen bereikbaar na inloggen.
-const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst", "btw_regel_en", "betaal_tekst_en", "verblijf_adres"];
+const INSTELLINGEN = ["afzender_naam", "afzender_adres", "afzender_email", "afzender_telefoon", "afzender_nummer", "iban", "iban_naam", "btw_regel", "betaal_tekst", "btw_regel_en", "btw_regel_iva", "btw_regel_iva_en", "betaal_tekst_en", "verblijf_adres"];
 const datumEn = (iso) => new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 const datumNl = (iso) => new Intl.DateTimeFormat("nl-NL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
 
@@ -196,7 +196,8 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
     const gegevens = {
       soort: "credit", credit_van: origineel.nummer, afzender: og.afzender, klant: og.klant, borg: 0, taal: og.taal || "nl",
       aankomst: og.aankomst, vertrek: og.vertrek,
-      regels: (og.regels || []).map((r) => ({ omschrijving: r.omschrijving, bedrag: -r.bedrag })),
+      regels: (og.regels || []).map((r) => ({ ...r, bedrag: -r.bedrag })),
+      btw: og.btw ? { ...og.btw, grondslag: -og.btw.grondslag, bedrag: -og.btw.bedrag, met_btw: -og.btw.met_btw, vrijgesteld: -(og.btw.vrijgesteld || 0) } : null,
       betaling: og.taal === "en"
         ? `Credit note for invoice ${origineel.nummer} of ${datumEn(origineel.datum)}.\nAnything you have already paid will be settled or refunded.`
         : `Creditfactuur bij factuur ${origineel.nummer} van ${datumNl(origineel.datum)}.\nWat je al hebt betaald, wordt verrekend of teruggestort.`
@@ -224,6 +225,16 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
     if (bo.schoonmaak) regels.push({ omschrijving: en ? "Final cleaning" : "Eindschoonmaak", bedrag: bo.schoonmaak });
     if (bo.borg) regels.push({ omschrijving: en ? `Security deposit (refunded within ${BORG_TERUG_DAGEN} days after departure, after inspection of the penthouse)` : `Borg (terug binnen ${BORG_TERUG_DAGEN} dagen na vertrek, na controle van het penthouse)`, bedrag: bo.borg });
     const totaal = regels.reduce((s, r) => s + r.bedrag, 0);
+    // IVA: huur en eindschoonmaak zijn inclusief 10% IVA voor het deel van het verblijf vanaf 1 december 2026. De borg valt erbuiten.
+    const deel = btwDeel(bo.aankomst, bo.vertrek);
+    let btw = null;
+    if (deel > 0) {
+      if (!ins.afzender_nummer) throw new Melding("Vul eerst je fiscaal nummer (NIF/NIE) in bij Instellingen. Dat moet op een factuur met IVA.");
+      const metBtw = Math.round(((bo.huur || 0) + (bo.schoonmaak || 0)) * deel * 100) / 100;
+      const bedrag = Math.round((metBtw - metBtw / (1 + BTW_TARIEF)) * 100) / 100;
+      btw = { tarief: Math.round(BTW_TARIEF * 100), grondslag: Math.round((metBtw - bedrag) * 100) / 100, bedrag, met_btw: metBtw, vrijgesteld: Math.round(((bo.huur || 0) + (bo.schoonmaak || 0) - metBtw) * 100) / 100 };
+      regels[0].btw = true; if (bo.schoonmaak) regels[1].btw = true;
+    }
     const euro = (n) => new Intl.NumberFormat(en ? "en-GB" : "nl-NL", { style: "currency", currency: "EUR" }).format(n);
     const aanbetaling = Math.round(((bo.huur || 0) + (bo.schoonmaak || 0)) * AANBETALING);
     const uiterlijk = naarIso(naarTijd(bo.aankomst) - RESTANT_DAGEN * 864e5);
@@ -256,7 +267,7 @@ export const onRequest = veilig(async ({ request, env, params, waitUntil }) => {
       taal: en ? "en" : "nl",
       afzender: ins, gezelschap, stroom, personen: (bo.volwassenen == null && bo.kinderen == null) ? (bo.personen || 0) : v + k, termijnen, verblijf_adres: ins.verblijf_adres || "",
       klant: { naam: klant?.naam || bo.naam, adres: en && bo.adres ? adresBlok(bo, "en") : (klant?.adres || adresBlok(bo)), email: klant?.email || bo.email || "" },
-      regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek
+      regels, borg: 0, betaling, aankomst: bo.aankomst, vertrek: bo.vertrek, btw
     };
     await d.prepare("INSERT INTO facturen (nummer, boeking_id, datum, gegevens, totaal) VALUES (?, ?, ?, ?, ?)").bind(nummer, bo.id, datum, JSON.stringify(gegevens), totaal).run();
     return json({ ok: true, nummer });
