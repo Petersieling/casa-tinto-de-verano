@@ -1,21 +1,21 @@
 // Prijslijst 2026/2027. Deze lijst wordt gebruikt door de website én door de server.
 // "van" en "tot" zijn [maand, dag], beide inclusief. Prijzen zijn per week.
 export const PERIODES = [
-  { naam: "Januari – februari", prijs: 685, van: [1, 1], tot: [2, 29] },
-  { naam: "Maart", prijs: 790, van: [3, 1], tot: [3, 31] },
+  { naam: "Januari – februari", prijs: 695, van: [1, 1], tot: [2, 29] },
+  { naam: "Maart", prijs: 795, van: [3, 1], tot: [3, 31] },
   { naam: "April", prijs: 895, van: [4, 1], tot: [4, 30] },
-  { naam: "Mei", prijs: 940, van: [5, 1], tot: [5, 31] },
+  { naam: "Mei", prijs: 945, van: [5, 1], tot: [5, 31] },
   { naam: "Juni", prijs: 1095, van: [6, 1], tot: [6, 30] },
-  { naam: "Juli", prijs: 1360, piek: true, van: [7, 1], tot: [7, 31] },
-  { naam: "Augustus", prijs: 1360, piek: true, van: [8, 1], tot: [8, 31] },
+  { naam: "Juli", prijs: 1345, piek: true, van: [7, 1], tot: [7, 31] },
+  { naam: "Augustus", prijs: 1345, piek: true, van: [8, 1], tot: [8, 31] },
   { naam: "September", prijs: 1095, van: [9, 1], tot: [9, 30] },
   { naam: "Oktober", prijs: 895, van: [10, 1], tot: [10, 31] },
-  { naam: "November – half december", prijs: 685, van: [11, 1], tot: [12, 14] },
-  { naam: "Kerst & Oud en Nieuw", prijs: 1150, piek: true, van: [12, 15], tot: [12, 31] }
+  { naam: "November – half december", prijs: 695, van: [11, 1], tot: [12, 14] },
+  { naam: "Kerst & Oud en Nieuw", prijs: 1145, piek: true, van: [12, 15], tot: [12, 31] }
 ];
 // Schoolvakanties: de site rekent ze elk jaar zelf uit met vaste regels, zodat er niets bijgehouden hoeft te worden.
 // Wijkt een officiële vakantie af, zet de juiste data dan in VAKANTIE_CORRECTIES (per jaar en per soort).
-export const VAKANTIE_PRIJZEN = { voorjaar: 790, pasen: 995, mei: 1045, herfstNL: 995, herfstBE: 790 };
+export const VAKANTIE_PRIJZEN = { voorjaar: 795, pasen: 995, mei: 1045, herfstNL: 995, herfstBE: 795 };
 export const VAKANTIE_NAMEN = { voorjaar: "Krokus- en voorjaarsvakantie", pasen: "Pasen en paasvakantie", mei: "Meivakantie", herfstNL: "Herfstvakantie Nederland", herfstBE: "Herfstvakantie België" };
 export const VAKANTIE_CORRECTIES = {
   // voorbeeld: 2029: { herfstNL: ["2029-10-13", "2029-10-28"] }

@@ -818,7 +818,7 @@ function toonFactuur(f) {
     b.vrijgesteld ? h("tr", { class: "f-btw" }, h("td", null, EN ? "Exempt from IVA (nights before 1 December 2026)" : "Vrijgesteld van IVA (nachten vóór 1 december 2026)"), h("td", { class: "bedrag" }, euro(b.vrijgesteld))) : null,
     g.regels.some((r) => !r.btw) ? h("tr", { class: "f-btw" }, h("td", null, EN ? "Not subject to IVA (security deposit)" : "Buiten de IVA (borg)"), h("td", { class: "bedrag" }, euro(g.regels.filter((r) => !r.btw).reduce((s, r) => s + r.bedrag, 0)))) : null
   ].filter(Boolean) : [];
-  const betaalTekst = EN ? (a.betaal_tekst_en || a.betaal_tekst) : a.betaal_tekst;
+  const betaalTekst = EN ? (a.betaal_tekst_en || "Thank you for your booking. We wish you a wonderful stay.") : a.betaal_tekst;
   const regelTekst = (...delen) => delen.filter(Boolean).join("\n");
   // Lege onderdelen (null) overslaan, anders verschijnt het woord "null" op de factuur.
   const vul = (el, ...delen) => el.replaceChildren(...delen.flat().filter((d) => d != null && d !== false));
