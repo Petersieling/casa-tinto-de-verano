@@ -218,7 +218,7 @@ dialog form { display: grid; gap: 1rem; padding: 1.5rem; }
 </div>
 
 <script type="module">
-import { huurprijs, nachten, isDatum, SCHOONMAAK, BORG, AANBETALING, RESTANT_DAGEN, KWH_PRIJS, kwhInbegrepen } from "../src/prijzen.js";
+import { huurprijs, nachten, isDatum, SCHOONMAAK, BORG, AANBETALING, RESTANT_DAGEN, KWH_PRIJS, kwhInbegrepen, BTW_TARIEF } from "../src/prijzen.js";
 
 const $ = (s) => document.querySelector(s);
 // Bouwt een element op zonder HTML-tekst, zodat invoer van bezoekers nooit als code wordt uitgevoerd.
@@ -738,7 +738,9 @@ const VIEWS = {
         inv[s].value = D.instellingen[s] ?? standaard[s] ?? "";
         return h("label", { class: groot ? "breed" : "", for: "i-" + s }, label, inv[s]);
       })),
-      h("div", null, h("button", { type: "submit" }, "Opslaan")));
+      h("div", { style: "display:flex;gap:.6rem;flex-wrap:wrap" }, h("button", { type: "submit" }, "Opslaan"),
+        h("button", { type: "button", class: "licht", onclick: () => voorbeeldFactuur(Object.fromEntries(velden.map(([s]) => [s, inv[s].value])), "nl") }, "Voorbeeldfactuur bekijken"),
+        h("button", { type: "button", class: "licht", onclick: () => voorbeeldFactuur(Object.fromEntries(velden.map(([s]) => [s, inv[s].value])), "en") }, "Voorbeeld in het Engels")));
     return [
       h("div", { class: "kopregel" }, h("h1", null, "Instellingen")),
       h("p", { class: "uitleg" }, "Deze gegevens komen op je facturen. Laat de opmaak en de btw-regel één keer controleren door je boekhouder of gestor."),
@@ -746,6 +748,37 @@ const VIEWS = {
     ];
   }
 };
+
+// ---- Voorbeeldfactuur: toont een factuur met de ingevulde gegevens, zonder iets op te slaan of een nummer te gebruiken ----
+function voorbeeldFactuur(ins, taal) {
+  const en = taal === "en";
+  const jaar = new Date().getFullYear() + 1;
+  const aankomst = `${jaar}-06-05`, vertrek = `${jaar}-06-15`, n = nachten(aankomst, vertrek);
+  const huur = huurprijs(aankomst, vertrek), metBtw = huur + SCHOONMAAK;
+  const bedrag = Math.round((metBtw - metBtw / (1 + BTW_TARIEF)) * 100) / 100;
+  const dt = en ? datumEn : (iso) => window.datumNl(iso, true);
+  const aanbetaling = Math.round(metBtw * AANBETALING), totaal = metBtw + BORG;
+  toonFactuur({
+    nummer: en ? "SAMPLE" : "VOORBEELD", datum: new Date().toISOString().slice(0, 10), totaal,
+    gegevens: {
+      taal: en ? "en" : "nl", afzender: ins, verblijf_adres: ins.verblijf_adres || "", aankomst, vertrek, personen: 2,
+      gezelschap: en ? "2 adults, no children" : "2 volwassenen, geen kinderen",
+      klant: { naam: en ? "Sample Guest" : "Voorbeeld Gast", adres: en ? "1 Sample Street\nLondon SW1A 1AA\nUnited Kingdom" : "Voorbeeldstraat 1\n1234 AB Utrecht\nNederland", email: "gast@example.com" },
+      regels: [
+        { omschrijving: en ? `Rent Casa Tinto de Verano, ${dt(aankomst)} to ${dt(vertrek)} (${n} nights)` : `Huur Casa Tinto de Verano, ${dt(aankomst)} t/m ${dt(vertrek)} (${n} nachten)`, bedrag: huur, btw: true },
+        { omschrijving: en ? "Final cleaning" : "Eindschoonmaak", bedrag: SCHOONMAAK, btw: true },
+        { omschrijving: en ? "Security deposit (refunded within 14 days after departure, after inspection of the penthouse)" : "Borg (terug binnen 14 dagen na vertrek, na controle van het penthouse)", bedrag: BORG }
+      ],
+      btw: { tarief: Math.round(BTW_TARIEF * 100), grondslag: Math.round((metBtw - bedrag) * 100) / 100, bedrag, met_btw: metBtw, vrijgesteld: 0 },
+      stroom: en ? `Electricity: ${kwhInbegrepen(aankomst, vertrek)} kWh included in this stay. Additional use €${KWH_PRIJS.toFixed(2)} per kWh, settled with the security deposit on departure.`
+                 : `Elektriciteit: ${kwhInbegrepen(aankomst, vertrek)} kWh inbegrepen bij dit verblijf. Meerverbruik € ${KWH_PRIJS.toFixed(2).replace(".", ",")} per kWh, bij vertrek verrekend met de borg.`,
+      termijnen: [
+        { omschrijving: en ? `Down payment (${Math.round(AANBETALING * 100)}%)` : `Aanbetaling (${Math.round(AANBETALING * 100)}%)`, wanneer: en ? "Within 7 days of the invoice" : "Binnen 7 dagen na de factuur", bedrag: aanbetaling },
+        { omschrijving: en ? "Balance and security deposit" : "Restant en borg", wanneer: en ? "8 weeks before arrival" : "8 weken voor aankomst", bedrag: totaal - aanbetaling }
+      ]
+    }
+  });
+}
 
 // ---- Factuur tonen en afdrukken ----
 function toonFactuur(f) {
