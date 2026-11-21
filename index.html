@@ -356,6 +356,47 @@ section[id] { scroll-margin-top: 5.5rem; }
 
 .cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
 .voet .cam { color: #E0B45C; }
+
+/* ---- Homepage: pluspunten, eerste indruk, ligging ---- */
+.blok { padding-block: clamp(3rem, 7vw, 5rem); }
+.blok-kop { text-align: center; margin: 0 auto clamp(1.8rem, 4vw, 2.6rem); max-width: 36rem; }
+.blok-kop .eyebrow { margin: 0 0 .4rem; }
+.blok-kop h2 { font-family: var(--display); font-weight: 500; font-size: clamp(1.9rem, 4.2vw, 2.6rem); line-height: 1.15; margin: 0; }
+.blok-kop h2 .script, .slot h2 .script { font-family: var(--script); font-weight: 400; color: var(--gold-text); font-size: 1.2em; }
+.plus { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.6rem); }
+.plus li { text-align: center; padding: 1.6rem 1.1rem 1.4rem; background: #fff; border: 1px solid var(--line); border-radius: 9rem 9rem .6rem .6rem; }
+.plus svg { width: 2.4rem; height: 2.4rem; stroke: var(--gold); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; margin-top: .6rem; }
+.plus h3 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1.2; margin: .6rem 0 .35rem; }
+.plus p { margin: 0; font-size: .92rem; color: var(--muted); line-height: 1.5; }
+.indruk { background: var(--panel); }
+.strook { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(.8rem, 2vw, 1.3rem); }
+.strook li { margin: 0; }
+.strook a { display: block; text-decoration: none; color: var(--ink); }
+.strook .lijst { padding: .4rem; background: var(--paper); border: 1px solid var(--gold); border-radius: 50% 50% .5rem .5rem / 34% 34% .5rem .5rem; box-shadow: 0 18px 36px -24px rgba(58, 35, 21, .55); }
+.strook img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 50% 50% .3rem .3rem / 33% 33% .3rem .3rem; }
+.strook span { display: block; text-align: center; font-family: var(--display); font-size: 1.15rem; margin-top: .6rem; }
+.naar { text-align: center; margin: clamp(1.6rem, 4vw, 2.2rem) 0 0; }
+.naar a { font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: .1rem; }
+.ligging .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.8rem, 5vw, 4rem); align-items: center; }
+.ligging .blok-kop { text-align: left; margin: 0 0 1rem; }
+.ligging p.tekst { margin: 0 0 1.4rem; color: var(--muted); }
+.ligging .naar { text-align: left; margin: 0; }
+.afstand { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.afstand li { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.afstand li b { font-weight: 500; }
+.afstand li span { color: var(--gold-text); white-space: nowrap; }
+.slot { text-align: center; padding-block: clamp(3rem, 7vw, 4.5rem); border-top: 1px solid var(--line); }
+.slot h2 { font-family: var(--display); font-weight: 500; font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0 0 .4rem; }
+.slot p { margin: 0; color: var(--muted); }
+.slot .cta { margin-top: 1.4rem; }
+@media (max-width: 860px) {
+  .plus { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ligging .wrap { grid-template-columns: 1fr; }
+  .strook { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .6rem; margin-inline: calc(-1 * clamp(1rem, 4vw, 2.5rem)); padding-inline: clamp(1rem, 4vw, 2.5rem); scrollbar-width: none; }
+  .strook::-webkit-scrollbar { display: none; }
+  .strook li { flex: 0 0 62%; scroll-snap-align: center; }
+}
+@media (max-width: 420px) { .plus li { padding: 1.3rem .7rem 1.1rem; } .plus h3 { font-size: 1.2rem; } .plus p { font-size: .85rem; } }
 </style>
 <style>
 /* Kop compacter: minder ruimte tussen zin, cijfers en knop */
@@ -437,6 +478,56 @@ section[id] { scroll-margin-top: 5.5rem; }
       </div>
     </div>
   </div>
+
+  <section class="blok plus-blok">
+    <div class="wrap">
+      <div class="blok-kop"><p class="eyebrow">Waarom Casa Tinto de Verano</p><h2>Alles voor een heerlijke <span class="script">vakantie</span></h2></div>
+      <ul class="plus">
+        <li><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 20h36M10 20l14-10 14 10M12 20v18M36 20v18M8 38h32"/><circle cx="24" cy="29" r="4"/></svg><h3>Dakterras van 63 m²</h3><p>Met pergola, lounge, ligbedden en buitenkeuken.</p></li>
+        <li><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 40V12a5 5 0 0 1 10 0"/><path d="M24 16h6"/><path d="M27 20v3M31 20v4M35 20v3M29 27v3M33 27v3"/><path d="M8 40h32"/></svg><h3>Twee badkamers</h3><p>Allebei met inloopdouche, fijn met z'n vieren.</p></li>
+        <li><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 30c3 0 3 2 6 2s3-2 6-2 3 2 6 2 3-2 6-2 3 2 6 2 3-2 6-2"/><path d="M6 38c3 0 3 2 6 2s3-2 6-2 3 2 6 2 3-2 6-2 3 2 6 2 3-2 6-2"/><path d="M16 26V10M30 26V10M16 14h14M16 20h14"/></svg><h3>Zwembad</h3><p>Gemeenschappelijk zwembad en kinderbad in de tuin.</p></li>
+        <li><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="34" cy="13" r="5"/><path d="M8 40c5-3 10-3 16 0s11 3 16 0"/><path d="M14 34 22 14"/><path d="M10 18c4-6 14-6 18 0"/></svg><h3>Strand op ca. 1 km</h3><p>Supermarkt en terrassen op loopafstand.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="blok indruk">
+    <div class="wrap">
+      <div class="blok-kop"><p class="eyebrow">Impressie</p><h2>Een eerste <span class="script">indruk</span></h2></div>
+      <ul class="strook">
+        <li><a href="impressie.html"><div class="lijst"><img src="fotos/dakterras-lounge.jpg" alt="Lounge onder de pergola op het dakterras" loading="lazy"></div><span>Dakterras</span></a></li>
+        <li><a href="impressie.html"><div class="lijst"><img src="fotos/woonkamer.jpg" alt="Woonkamer met eethoek en open keuken" loading="lazy"></div><span>Woonkamer</span></a></li>
+        <li><a href="impressie.html"><div class="lijst"><img src="fotos/slaapkamer-1.jpg" alt="Slaapkamer met tweepersoonsbed" loading="lazy"></div><span>Slaapkamer</span></a></li>
+        <li><a href="impressie.html"><div class="lijst"><img src="fotos/zwembad.jpg" alt="Gemeenschappelijk zwembad in de tuin" loading="lazy"></div><span>Zwembad</span></a></li>
+      </ul>
+      <p class="naar"><a href="impressie.html">Bekijk alle foto's</a></p>
+    </div>
+  </section>
+
+  <section class="blok ligging">
+    <div class="wrap">
+      <div>
+        <div class="blok-kop"><p class="eyebrow">Locatie</p><h2>Zon, zee en alles <span class="script">dichtbij</span></h2></div>
+        <p class="tekst">Punta Prima ligt aan de zuidelijke Costa Blanca, vlak bij Torrevieja. Het strand, de supermarkt en gezellige terrassen liggen om de hoek, en de luchthaven van Alicante is een korte rit.</p>
+        <p class="naar"><a href="locatie.html">Meer over de omgeving</a></p>
+      </div>
+      <ul class="afstand">
+        <li><b>Strand Punta Prima</b><span>ca. 1 km</span></li>
+        <li><b>Supermarkten</b><span>ca. 300 – 600 m</span></li>
+        <li><b>Restaurants en terrassen</b><span>vanaf ca. 300 m</span></li>
+        <li><b>La Zenia Boulevard</b><span>ca. 4 km</span></li>
+        <li><b>Luchthaven Alicante</b><span>ca. 45 minuten</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="slot">
+    <div class="wrap">
+      <h2>Zin in de <span class="script">zon?</span></h2>
+      <p>Bekijk de prijzen en kies je data in de kalender.</p>
+      <a class="cta" href="prijzen.html">Bekijk prijzen en beschikbaarheid</a>
+    </div>
+  </section>
 </main>
 
 <footer class="voet">
