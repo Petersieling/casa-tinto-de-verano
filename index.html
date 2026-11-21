@@ -356,6 +356,78 @@ section[id] { scroll-margin-top: 5.5rem; }
 
 .cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
 .voet .cam { color: #E0B45C; }
+
+/* ---- Homepage, sjieke versie: veel lucht, grote foto's, rustige typografie ---- */
+.hero-foto { min-height: min(86vh, 52rem); display: flex; align-items: center; }
+.hero-foto .wrap { width: 100%; }
+.hero-foto h1 { font-weight: 500; letter-spacing: -.01em; font-size: clamp(2.6rem, 6.4vw, 4.6rem); line-height: 1.02; }
+.hero-foto .lead { font-size: 1.15rem; max-width: 30rem; opacity: .92; }
+.hero-foto .facts b { font-weight: 500; }
+
+.intro { padding-block: clamp(4.5rem, 11vw, 8.5rem) clamp(3.5rem, 8vw, 6rem); }
+.intro .wrap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); gap: clamp(2.5rem, 7vw, 6rem); align-items: end; }
+.intro-tekst { font-family: var(--display); font-weight: 400; font-size: clamp(1.75rem, 3.4vw, 2.55rem); line-height: 1.22; margin: 0; max-width: 24ch; text-wrap: pretty; }
+.intro-tekst em { font-style: italic; color: var(--gold-text); }
+.specs { margin: 0; border-top: 1px solid var(--ink); }
+.specs div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid var(--line); }
+.specs dt { color: var(--muted); font-size: .95rem; }
+.specs dd { margin: 0; font-family: var(--display); font-size: 1.35rem; font-weight: 500; }
+
+.verhaal { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.verhaal .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 6.5rem); align-items: center; }
+.verhaal.om .collage { order: 2; }
+.collage { position: relative; padding-bottom: 14%; }
+.collage .groot { display: block; width: 78%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 16rem 16rem .4rem .4rem; }
+.collage .klein { position: absolute; right: 0; bottom: 0; width: 44%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: .4rem; border: .45rem solid var(--paper); box-shadow: 0 30px 60px -34px rgba(43, 26, 16, .7); }
+.breed-foto { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: 18rem 18rem .4rem .4rem; }
+.verhaal h2 { font-weight: 500; font-size: clamp(2.1rem, 4.4vw, 3.1rem); line-height: 1.05; margin: 0 0 1.1rem; }
+.verhaal p { color: var(--muted); margin: 0 0 1.4rem; max-width: 32rem; }
+.kenmerken { list-style: none; margin: 0 0 1.8rem; padding: 0; display: grid; gap: .55rem; }
+.kenmerken li { display: flex; gap: .8rem; align-items: baseline; }
+.kenmerken li::before { content: ""; flex: none; width: 1.4rem; height: 1px; background: var(--gold); transform: translateY(-.3rem); }
+.tekstlink { color: var(--ink); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: .15rem; }
+.tekstlink:hover { color: var(--gold-text); }
+
+.galerij { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(4rem, 9vw, 7rem); }
+.galerij-kop { display: flex; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: clamp(1.5rem, 3vw, 2.2rem); }
+.galerij-kop h2 { font-weight: 500; font-size: clamp(1.9rem, 3.8vw, 2.6rem); }
+.rij { display: grid; grid-template-columns: 1.15fr .85fr 1fr; gap: clamp(.8rem, 2vw, 1.4rem); align-items: end; }
+.rij a { display: block; color: var(--ink); text-decoration: none; }
+.rij img { display: block; width: 100%; object-fit: cover; border-radius: .4rem; }
+.rij a:nth-child(1) img { aspect-ratio: 4 / 5; }
+.rij a:nth-child(2) img { aspect-ratio: 3 / 4; border-radius: 9rem 9rem .4rem .4rem; }
+.rij a:nth-child(3) img { aspect-ratio: 1 / 1; }
+.rij span { display: block; margin-top: .55rem; font-size: .9rem; color: var(--muted); }
+
+.ligging-band { background: #2B1A10; color: #F4EADB; padding-block: clamp(4rem, 9vw, 6.5rem); }
+.ligging-band .wrap { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2.5rem, 7vw, 6rem); align-items: start; }
+.ligging-band h2 { font-weight: 500; color: #fff; font-size: clamp(2.1rem, 4.4vw, 3.1rem); line-height: 1.05; margin: 0 0 1.1rem; }
+.ligging-band p { color: rgba(244, 234, 219, .78); margin: 0 0 1.6rem; max-width: 30rem; }
+.ligging-band .tekstlink { color: #fff; border-bottom-color: #E0B45C; }
+.afstanden-kort { margin: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(1.5rem, 4vw, 3rem); }
+.afstanden-kort div { padding: 1.1rem 0; border-top: 1px solid rgba(224, 180, 92, .35); }
+.afstanden-kort dt { font-size: .92rem; color: rgba(244, 234, 219, .72); }
+.afstanden-kort dd { margin: .2rem 0 0; font-family: var(--display); font-size: 1.7rem; font-weight: 500; color: #F3DDB0; line-height: 1.1; }
+
+.slotregel { text-align: center; padding-block: clamp(4.5rem, 10vw, 7.5rem); }
+.slotregel .prijs { font-family: var(--display); font-weight: 400; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.1; margin: 0; }
+.slotregel .prijs b { font-weight: 600; }
+.slotregel p.uitleg { color: var(--muted); margin: .7rem 0 0; }
+.slotregel .knoppen { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem 1.6rem; margin-top: 2rem; }
+.slotregel .cta { margin: 0; }
+
+@media (max-width: 860px) {
+  .intro .wrap, .verhaal .wrap, .ligging-band .wrap { grid-template-columns: 1fr; }
+  .verhaal.om .collage { order: 0; }
+  .collage { max-width: 30rem; }
+  .rij { grid-template-columns: 1fr 1fr; }
+  .rij a:nth-child(3) { display: none; }
+  .galerij-kop { flex-direction: column; align-items: start; }
+}
+@media (max-width: 40rem) {
+  .hero-foto { min-height: 0; }
+  .afstanden-kort dd { font-size: 1.45rem; }
+}
 </style>
 <style>
 /* Kop compacter: minder ruimte tussen zin, cijfers en knop */
@@ -437,6 +509,100 @@ section[id] { scroll-margin-top: 5.5rem; }
       </div>
     </div>
   </div>
+
+  <section class="intro">
+    <div class="wrap">
+      <p class="intro-tekst">Een licht penthouse voor vier, met een dakterras waar je de dag begint met <em>ontbijt in de zon</em> en eindigt onder de pergola.</p>
+      <dl class="specs">
+        <div><dt>Woonoppervlak</dt><dd>ca. 71 m²</dd></div>
+        <div><dt>Dakterras</dt><dd>63 m²</dd></div>
+        <div><dt>Balkon</dt><dd>16 m²</dd></div>
+        <div><dt>Slaapkamers en badkamers</dt><dd>2 en 2</dd></div>
+        <div><dt>Strand Punta Prima</dt><dd>ca. 1 km</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="verhaal">
+    <div class="wrap">
+      <div class="collage">
+        <img class="groot" src="fotos/dakterras-lounge.jpg" alt="Lounge onder de pergola op het dakterras" loading="lazy">
+        <img class="klein" src="fotos/buitenkeuken.jpg" alt="Buitenkeuken met buitendouche op het dakterras" loading="lazy">
+      </div>
+      <div>
+        <h2>Het dakterras</h2>
+        <p>Boven heb je 63 m² helemaal voor jezelf. Zon de hele dag, schaduw wanneer je wilt, en 's avonds een glas wijn met uitzicht over Punta Prima.</p>
+        <ul class="kenmerken">
+          <li>Pergola met loungebank</li>
+          <li>Twee ligbedden</li>
+          <li>Buitenkeuken met minikoelkast en spoelbak</li>
+          <li>Buitendouche</li>
+        </ul>
+        <a class="tekstlink" href="penthouse.html">Alles over het penthouse</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="verhaal om">
+    <div class="wrap">
+      <div class="collage">
+        <img class="breed-foto" src="fotos/woonkamer.jpg" alt="Woonkamer met eethoek en open keuken" loading="lazy">
+      </div>
+      <div>
+        <h2>Binnen</h2>
+        <p>Een open woonkamer met keuken, twee slaapkamers en twee badkamers met inloopdouche. Airco in het hele penthouse, snelle wifi en alles wat je nodig hebt om te koken.</p>
+        <ul class="kenmerken">
+          <li>Tweepersoonsbed 180 × 200 en twee eenpersoonsbedden</li>
+          <li>Twee badkamers met inloopdouche</li>
+          <li>Bedlinnen en handdoeken inbegrepen</li>
+        </ul>
+        <a class="tekstlink" href="impressie.html">Bekijk de foto's</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="galerij">
+    <div class="wrap">
+      <div class="galerij-kop">
+        <h2>Rondkijken</h2>
+        <a class="tekstlink" href="impressie.html">Alle foto's bekijken</a>
+      </div>
+      <div class="rij">
+        <a href="impressie.html"><img src="fotos/slaapkamer-1.jpg" alt="Slaapkamer met tweepersoonsbed" loading="lazy"><span>Slaapkamer</span></a>
+        <a href="impressie.html"><img src="fotos/balkon.jpg" alt="Balkon met eettafel en zonnescherm" loading="lazy"><span>Balkon</span></a>
+        <a href="impressie.html"><img src="fotos/zwembad.jpg" alt="Gemeenschappelijk zwembad in de tuin" loading="lazy"><span>Zwembad</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ligging-band">
+    <div class="wrap">
+      <div>
+        <h2>Punta Prima, aan de Costa Blanca</h2>
+        <p>Het strand, de supermarkt en de terrassen liggen om de hoek. De luchthaven van Alicante is een korte rit, en met de auto ben je zo in Torrevieja of op een van de golfbanen.</p>
+        <a class="tekstlink" href="locatie.html">Meer over de omgeving</a>
+      </div>
+      <dl class="afstanden-kort">
+        <div><dt>Strand Punta Prima</dt><dd>ca. 1 km</dd></div>
+        <div><dt>Supermarkten</dt><dd>ca. 300 – 600 m</dd></div>
+        <div><dt>La Zenia Boulevard</dt><dd>ca. 4 km</dd></div>
+        <div><dt>Villamartín Golf</dt><dd>ca. 5 km</dd></div>
+        <div><dt>Centrum Torrevieja</dt><dd>ca. 5 km</dd></div>
+        <div><dt>Luchthaven Alicante</dt><dd>ca. 45 minuten</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="slotregel">
+    <div class="wrap">
+      <p class="prijs">Vanaf <b>€ 695</b> per week</p>
+      <p class="uitleg">Kies je data in de kalender en je ziet meteen de totaalprijs.</p>
+      <div class="knoppen">
+        <a class="cta" href="prijzen.html">Bekijk prijzen en beschikbaarheid</a>
+        <a class="tekstlink" href="mailto:info@casatintodeverano.com">Of stel eerst een vraag</a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="voet">
