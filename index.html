@@ -356,6 +356,62 @@ section[id] { scroll-margin-top: 5.5rem; }
 
 .cam { vertical-align: -4px; margin-right: .45rem; color: var(--gold); }
 .voet .cam { color: #E0B45C; }
+
+/* ---- Homepage, rustige versie: steeds hetzelfde ritme van kop, zin en een gelijk raster ---- */
+.sectie { padding-block: clamp(3.5rem, 8vw, 5.5rem); }
+.sectie + .sectie { border-top: 1px solid var(--line); }
+.sectie-kop { text-align: center; max-width: 36rem; margin: 0 auto clamp(2rem, 4vw, 2.75rem); }
+.sectie-kop h2 { font-weight: 500; font-size: clamp(2rem, 4vw, 2.6rem); }
+.sectie-kop p { color: var(--muted); margin: .7rem 0 0; }
+.sectie-voet { text-align: center; margin: clamp(1.8rem, 4vw, 2.4rem) 0 0; }
+.sectie-voet a { color: var(--ink); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: .15rem; }
+.sectie-voet a:hover { color: var(--gold-text); }
+
+.raster { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.9rem, 2vw, 1.4rem); }
+.vak { background: #fff; border: 1px solid var(--line); border-radius: .6rem; padding: 1.4rem 1.4rem 1.3rem; }
+.vak svg { width: 1.9rem; height: 1.9rem; stroke: var(--gold); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; display: block; margin-bottom: .8rem; }
+.vak h3 { font-weight: 600; font-size: 1.3rem; margin: 0 0 .25rem; }
+.vak p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.5; }
+.vak .afst { display: block; font-family: var(--display); font-size: 1.15rem; color: var(--gold-text); margin: -.1rem 0 .35rem; }
+.raster.vier { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.fotoraster { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.6rem, 1.5vw, 1rem); }
+.fotoraster a { display: block; text-decoration: none; color: var(--ink); }
+.fotoraster img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: .6rem; }
+.fotoraster span { display: block; margin-top: .45rem; font-size: .9rem; color: var(--muted); }
+
+.prijsblok { text-align: center; }
+.prijsblok .prijs { font-family: var(--display); font-weight: 500; font-size: clamp(2.2rem, 5vw, 3.1rem); line-height: 1.1; margin: 0; }
+.prijsblok p.uitleg { color: var(--muted); margin: .6rem 0 0; }
+.prijsblok .cta { margin-top: 1.6rem; }
+
+.berichtvak { background: var(--panel); }
+.berichtvak form { max-width: 38rem; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.1rem; }
+.berichtvak label { display: grid; gap: .35rem; font-size: .92rem; font-weight: 500; }
+.berichtvak label.heel { grid-column: 1 / -1; }
+.berichtvak input, .berichtvak textarea { font: inherit; font-weight: 400; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: .5rem; padding: .7rem .85rem; width: 100%; }
+.berichtvak input:focus, .berichtvak textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(185, 138, 46, .18); }
+.berichtvak textarea { min-height: 8rem; resize: vertical; }
+.berichtvak .onzichtbaar { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.berichtvak .verstuur { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.berichtvak .verstuur small { color: var(--muted); font-size: .85rem; }
+.berichtvak button { font: inherit; font-weight: 500; background: var(--ink); color: var(--paper); border: 0; border-radius: 999px; padding: .8rem 1.6rem; cursor: pointer; }
+.berichtvak button:hover { background: var(--gold-text); }
+.berichtvak button[disabled] { opacity: .6; cursor: default; }
+.berichtvak .melding { grid-column: 1 / -1; margin: 0; padding: .8rem 1rem; border-radius: .5rem; font-size: .95rem; }
+.berichtvak .melding.goed { background: #fff; border: 1px solid var(--gold); }
+.berichtvak .melding.fout { background: #FBEDE4; border: 1px solid #E4B79A; }
+
+@media (max-width: 860px) {
+  .raster, .raster.vier { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fotoraster { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 30rem) {
+  .vak { padding: 1.1rem 1rem 1rem; }
+  .vak h3 { font-size: 1.15rem; }
+  .vak p { font-size: .88rem; }
+  .berichtvak form { grid-template-columns: 1fr; }
+}
 </style>
 <style>
 /* Kop compacter: minder ruimte tussen zin, cijfers en knop */
@@ -437,6 +493,107 @@ section[id] { scroll-margin-top: 5.5rem; }
       </div>
     </div>
   </div>
+
+  <section class="sectie">
+    <div class="wrap">
+      <div class="sectie-kop">
+        <h2>Het penthouse</h2>
+        <p>Licht, ruim en modern, voor maximaal vier personen.</p>
+      </div>
+      <ul class="raster">
+        <li class="vak"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 13h24M7 13l9-7 9 7M8 13v13M24 13v13M5 26h22"/></svg><h3>Dakterras van 63 m²</h3><p>Met pergola, lounge en twee ligbedden.</p></li>
+        <li class="vak"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 20h22M8 20v7M24 20v7M6 20l3-9h14l3 9"/></svg><h3>Balkon van 16 m²</h3><p>Met eettafel en zonnescherm.</p></li>
+        <li class="vak"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 24V12M4 18h24v6M28 24v-4M8 18v-4h7v4"/></svg><h3>2 slaapkamers, 2 badkamers</h3><p>Allebei de badkamers met inloopdouche.</p></li>
+        <li class="vak"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 21c2 0 2 1.5 4 1.5s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5M4 26c2 0 2 1.5 4 1.5s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5M11 18V6M21 18V6M11 9h10M11 14h10"/></svg><h3>Zwembad en kinderbad</h3><p>Gemeenschappelijk, in de tuin van het complex.</p></li>
+        <li class="vak"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 27V5h10a7 7 0 0 1 0 14H6"/></svg><h3>Eigen parkeerplaats</h3><p>Overdekt in de garage, met lift naar boven.</p></li>
+        <li class="vak"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 12a17 17 0 0 1 24 0M8 16.5a11 11 0 0 1 16 0M12 21a5 5 0 0 1 8 0"/><circle cx="16" cy="25.5" r="1.2"/></svg><h3>Airco en snelle wifi</h3><p>Airco in het hele penthouse, wifi van 600 Mbit/s.</p></li>
+      </ul>
+      <p class="sectie-voet"><a href="penthouse.html">Alles over het penthouse</a></p>
+    </div>
+  </section>
+
+  <section class="sectie">
+    <div class="wrap">
+      <div class="sectie-kop">
+        <h2>Foto's</h2>
+        <p>Een eerste indruk van binnen en buiten.</p>
+      </div>
+      <ul class="fotoraster">
+        <li><a href="impressie.html"><img src="fotos/dakterras-lounge.jpg" alt="Lounge onder de pergola op het dakterras" loading="lazy"><span>Dakterras</span></a></li>
+        <li><a href="impressie.html"><img src="fotos/woonkamer.jpg" alt="Woonkamer met eethoek en open keuken" loading="lazy"><span>Woonkamer</span></a></li>
+        <li><a href="impressie.html"><img src="fotos/keuken.jpg" alt="Open keuken met inductie, oven en magnetron" loading="lazy"><span>Keuken</span></a></li>
+        <li><a href="impressie.html"><img src="fotos/slaapkamer-1.jpg" alt="Slaapkamer met tweepersoonsbed" loading="lazy"><span>Slaapkamer</span></a></li>
+        <li><a href="impressie.html"><img src="fotos/balkon.jpg" alt="Balkon met eettafel en zonnescherm" loading="lazy"><span>Balkon</span></a></li>
+        <li><a href="impressie.html"><img src="fotos/zwembad.jpg" alt="Gemeenschappelijk zwembad in de tuin" loading="lazy"><span>Zwembad</span></a></li>
+      </ul>
+      <p class="sectie-voet"><a href="impressie.html">Bekijk alle foto's</a></p>
+    </div>
+  </section>
+
+  <section class="sectie">
+    <div class="wrap">
+      <div class="sectie-kop">
+        <h2>De omgeving</h2>
+        <p>Strand, winkels en terrassen liggen om de hoek.</p>
+      </div>
+      <ul class="raster vier">
+        <li class="vak"><h3>Strand Punta Prima</h3><span class="afst">ca. 1 km</span><p>Zandstrand met boulevard en strandtentjes.</p></li>
+        <li class="vak"><h3>Torrevieja</h3><span class="afst">ca. 5 km</span><p>Jachthaven, boulevard en de roze zoutmeren.</p></li>
+        <li class="vak"><h3>La Zenia Boulevard</h3><span class="afst">ca. 4 km</span><p>Het grootste winkelcentrum van de regio.</p></li>
+        <li class="vak"><h3>Golf</h3><span class="afst">vanaf ca. 5 km</span><p>Villamartín, Las Ramblas en Campoamor.</p></li>
+      </ul>
+      <p class="sectie-voet"><a href="locatie.html">Meer over de omgeving</a></p>
+    </div>
+  </section>
+
+  <section class="sectie prijsblok">
+    <div class="wrap">
+      <p class="prijs">Vanaf € 695 per week</p>
+      <p class="uitleg">Kies je data in de kalender en je ziet meteen de totaalprijs.</p>
+      <a class="cta" href="prijzen.html">Bekijk prijzen en beschikbaarheid</a>
+    </div>
+  </section>
+
+  <section class="sectie berichtvak" id="bericht">
+    <div class="wrap">
+      <div class="sectie-kop">
+        <h2>Stuur ons een bericht</h2>
+        <p>Heb je een vraag over het penthouse of je verblijf? We antwoorden zo snel mogelijk.</p>
+      </div>
+      <form id="berichtform" novalidate>
+        <label>Naam<input name="naam" autocomplete="name" required></label>
+        <label>E-mailadres<input name="email" type="email" autocomplete="email" required></label>
+        <label class="heel">Je bericht<textarea name="bericht" required></textarea></label>
+        <label class="onzichtbaar" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+        <p class="melding" id="berichtmelding" role="status" hidden></p>
+        <div class="verstuur">
+          <small>We gebruiken je gegevens alleen om je te antwoorden. Lees de <a href="privacy.html">privacyverklaring</a>.</small>
+          <button type="submit">Verstuur bericht</button>
+        </div>
+      </form>
+    </div>
+  </section>
+<script>
+(function () {
+  var f = document.getElementById("berichtform"), m = document.getElementById("berichtmelding");
+  if (!f) return;
+  var en = function () { return (window.ctvTaal || "nl") === "en"; };
+  function toon(tekst, goed) { m.hidden = false; m.className = "melding " + (goed ? "goed" : "fout"); m.setAttribute("data-nt", ""); m.textContent = tekst; }
+  f.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var d = Object.fromEntries(new FormData(f)); d.taal = en() ? "en" : "nl";
+    var knop = f.querySelector("button"); knop.disabled = true;
+    fetch("/api/bericht", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(d) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.ok, j: j }; }); })
+      .then(function (x) {
+        if (x.ok) { f.reset(); toon(en() ? "Thank you for your message. We will reply as soon as possible." : "Bedankt voor je bericht. We antwoorden zo snel mogelijk.", true); }
+        else toon(x.j.fout || (en() ? "Your message could not be sent. Please try again or email info@casatintodeverano.com." : "Je bericht kon niet worden verstuurd. Probeer het opnieuw of mail naar info@casatintodeverano.com."), false);
+      })
+      .catch(function () { toon(en() ? "Your message could not be sent. Please try again or email info@casatintodeverano.com." : "Je bericht kon niet worden verstuurd. Probeer het opnieuw of mail naar info@casatintodeverano.com.", false); })
+      .finally(function () { knop.disabled = false; });
+  });
+})();
+</script>
 </main>
 
 <footer class="voet">
